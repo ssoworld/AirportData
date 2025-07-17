@@ -4,7 +4,7 @@ import csv
 # Load known airport codes from airports.csv
 known_codes = set()
 with open("air/data/airports.csv", newline='', encoding='utf-8') as f:
-    reader = csv.DictReader(f)
+    reader = csv.DictReader(f, delimiter=';')
     for row in reader:
         code = row["iata_code"].strip().upper()
         known_codes.add(code)
