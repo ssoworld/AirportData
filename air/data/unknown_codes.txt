@@ -1,4 +1,3 @@
-IDL
-XYZ
+XYX
 ZYZ
 ZZZ
