@@ -23,6 +23,9 @@ jobs:
         with:
           python-version: '3.x'
 
+      - name: Debug alt_codes parsing
+        run: python air/scripts/debug_alt_codes.py
+
       - name: Install dependencies
         run: pip install -r requirements.txt || true
 
