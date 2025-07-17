@@ -1,21 +1,20 @@
 import os
-import csv
 
-# Load known airport codes
+# Load known airport codes from airports-master.csv
 known_codes = set()
-with open("air/data/airports.csv", newline='', encoding='utf-8') as f:
-    reader = csv.DictReader(f, delimiter=';')
-    for row in reader:
-        code = row["iata_code"].strip().upper()
-        known_codes.add(code)
+with open("air/data/airports-master.csv", encoding="utf-8") as f:
+    for line in f:
+        code = line.strip().upper()
+        if code:
+            known_codes.add(code)
 
-# Scan .alist files for unknown codes
+# Collect all codes from .alist files
 alist_dir = "air/data"
 found_codes = set()
 
 for filename in os.listdir(alist_dir):
     if filename.endswith(".alist"):
-        with open(os.path.join(alist_dir, filename), encoding='utf-8') as f:
+        with open(os.path.join(alist_dir, filename), encoding="utf-8") as f:
             for line in f:
                 code = line.strip().upper()
                 if code:
