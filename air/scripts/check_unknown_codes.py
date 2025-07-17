@@ -8,7 +8,7 @@ with open("air/data/airports-master.csv", encoding="utf-8") as f:
         if code:
             known_codes.add(code)
 
-# Collect all codes from .alist files
+# Collect all airport codes from .alist files
 alist_dir = "air/data"
 found_codes = set()
 
@@ -16,7 +16,11 @@ for filename in os.listdir(alist_dir):
     if filename.endswith(".alist"):
         with open(os.path.join(alist_dir, filename), encoding="utf-8") as f:
             for line in f:
-                code = line.strip().upper()
+                line = line.strip()
+                if not line or line.startswith("#"):
+                    continue  # Skip empty lines and comments
+                tokens = line.split()
+                code = tokens[0].upper()  # First token is the airport code
                 if code:
                     found_codes.add(code)
 
