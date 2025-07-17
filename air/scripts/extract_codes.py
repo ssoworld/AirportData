@@ -5,12 +5,12 @@ codes = set()
 with open("air/data/airports.csv", newline='', encoding="utf-8") as f:
     reader = csv.DictReader(f, delimiter=';')
     for row in reader:
-        # Add the primary IATA code
-        iata = row["iata_code"].strip().upper()
+        # Add primary IATA code
+        iata = row.get("iata_code", "").strip().upper()
         if iata:
             codes.add(iata)
 
-        # Add any alternate codes
+        # Add alternate codes
         alt = row.get("alt_codes", "").strip()
         if alt:
             for alt_code in alt.split(","):
@@ -18,7 +18,7 @@ with open("air/data/airports.csv", newline='', encoding="utf-8") as f:
                 if alt_code:
                     codes.add(alt_code)
 
-# Output one code per line
+# Write to airports-master.csv
 with open("air/data/airports-master.csv", "w", encoding="utf-8") as out:
     for code in sorted(codes):
         out.write(code + "\n")
