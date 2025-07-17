@@ -1,17 +1,24 @@
 import csv
 
-iata_codes = set()
+codes = set()
 
-with open('air/data/airports.csv', newline='', encoding='utf-8') as infile:
-    reader = csv.reader(infile, delimiter=';')
-    next(reader)  # Skip header
+with open("air/data/airports.csv", newline='', encoding="utf-8") as f:
+    reader = csv.DictReader(f, delimiter=';')
     for row in reader:
-        if row[1]:  # Ensure IATA code exists
-            iata_codes.add(row[1].strip())
+        # Add the primary IATA code
+        iata = row["iata_code"].strip().upper()
+        if iata:
+            codes.add(iata)
 
-sorted_codes = sorted(iata_codes)
+        # Add any alternate codes
+        alt = row.get("alt_codes", "").strip()
+        if alt:
+            for alt_code in alt.split(","):
+                alt_code = alt_code.strip().upper()
+                if alt_code:
+                    codes.add(alt_code)
 
-with open('air/data/airports-master.csv', 'w', newline='', encoding='utf-8') as outfile:
-    writer = csv.writer(outfile)
-    for code in sorted_codes:
-        writer.writerow([code])
+# Output one code per line
+with open("air/data/airports-master.csv", "w", encoding="utf-8") as out:
+    for code in sorted(codes):
+        out.write(code + "\n")
