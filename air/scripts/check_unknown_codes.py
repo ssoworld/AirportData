@@ -6,7 +6,7 @@ known_codes = set()
 with open("air/data/airports.csv", newline='', encoding='utf-8') as f:
     reader = csv.DictReader(f)
     for row in reader:
-        code = row["Code"].strip().upper()
+        code = row["iata_code"].strip().upper()
         known_codes.add(code)
 
 # Scan .alist files for unknown codes
