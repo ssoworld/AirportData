@@ -29,12 +29,14 @@ jobs:
       - name: Run build script
         run: python air/scripts/build_data.py
 
+      - name: Check for unknown airport codes
+        run: python air/scripts/check_unknown_codes.py
+
       - name: Commit and push updated JSON
         run: |
           git config user.name "GitHub Action"
           git config user.email "action@github.com"
           git add air/data/*.json
           git commit -m "Auto-update JSON from .alist" || echo "Nothing to commit"
-          git fetch origin master
-          git rebase origin/master
           git push origin master
+
