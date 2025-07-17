@@ -8,15 +8,17 @@ with open("air/data/airports.csv", newline='', encoding="utf-8") as f:
         iata = row.get("iata_code", "").strip().upper()
         if iata:
             codes.add(iata)
-            print(f"Added IATA: {iata}")
 
         alt = row.get("alt_codes", "").strip()
         if alt:
-         for alt_code in alt.split(","):
+            for alt_code in alt.split(","):
                 alt_code = alt_code.strip().upper()
                 if alt_code:
                     codes.add(alt_code)
-                    print(f"Added ALT: {alt_code}")
+
+# Debug print to confirm IDL is in the set
+if "IDL" in codes:
+    print("✅ IDL is in the set of codes")
 
 # Write to airports-master.csv
 with open("air/data/airports-master.csv", "w", encoding="utf-8") as out:
