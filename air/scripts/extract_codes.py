@@ -10,7 +10,7 @@ with open("air/data/airports.csv", newline='', encoding="utf-8") as f:
         if iata:
             codes.add(iata)
 
-        # Add alternate codes
+        # Add alternate codes (comma-separated)
         alt = row.get("alt_codes", "").strip()
         if alt:
             for alt_code in alt.split(","):
