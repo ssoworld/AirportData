@@ -29,6 +29,9 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt || true
 
+      - name: Extract airport codes  # ✅ NEW STEP
+        run: python air/scripts/extract_codes.py
+
       - name: Run build script
         run: python air/scripts/build_data.py
 
