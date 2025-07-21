@@ -34,6 +34,7 @@ Hovering over an airport (or clicking on the icon) will identify it with the nam
 * After a user's .alist is updated, the browser cache must be cleared manually in order to see the updated map.
 * Many airports are missing. So far only airports visited by at least one user have been added.
 * Airport placement is inconsistent. Some icons are centered on runways, some on terminals, and some at other positions on airport property. Many locations were automatically generated using Copilot.
+* The location defaults to the U.S., but it's worth exploring a default location personalized to a user's visited airports.
 
 ## Future plans:
 
