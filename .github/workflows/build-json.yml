@@ -9,6 +9,7 @@ on:
       - 'air/data/**.alist'
       - 'air/data/airports.csv'
       - 'air/scripts/build_data.py'
+  workflow_dispatch: {}
 
 jobs:
   build:
@@ -22,11 +23,28 @@ jobs:
         with:
           python-version: '3.x'
 
+      - name: Debug alt_codes parsing
+        run: python air/scripts/debug_alt_codes.py
+
       - name: Install dependencies
         run: pip install -r requirements.txt || true
 
+      - name: Extract airport codes  # ✅ NEW STEP
+        run: python air/scripts/extract_codes.py
+
       - name: Run build script
         run: python air/scripts/build_data.py
+
+      - name: Check for unknown airport codes
+        run: python air/scripts/check_unknown_codes.py
+
+      - name: Commit unknown_codes.txt
+        run: |
+          git config user.name "GitHub Action"
+          git config user.email "action@github.com"
+          git add air/data/unknown_codes.txt
+          git commit -m "Update list of unknown airport codes" || echo "Nothing to commit"
+          git push origin master
 
       - name: Commit and push updated JSON
         run: |
@@ -34,6 +52,4 @@ jobs:
           git config user.email "action@github.com"
           git add air/data/*.json
           git commit -m "Auto-update JSON from .alist" || echo "Nothing to commit"
-          git fetch origin main
-          git rebase origin/main
-          git push
+          git push origin master
