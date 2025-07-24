@@ -303,8 +303,8 @@
   {
     "code": "DUB",
     "name": "Dublin Airport",
-    "lat": 53.4286,
-    "lon": -6.2625,
+    "lat": 53.421389,
+    "lon": -6.27,
     "country": "IRL",
     "visits": []
   },
@@ -1556,6 +1556,102 @@
     "lat": 51.1139,
     "lon": -114.0203,
     "country": "CAN",
+    "visits": []
+  },
+  {
+    "code": "AHO",
+    "name": "Alghero - Riviera del Corallo Airport",
+    "lat": 40.631111,
+    "lon": 8.288611,
+    "country": "ITA",
+    "visits": []
+  },
+  {
+    "code": "BGY",
+    "name": "Milan Bergamo Airport",
+    "lat": 45.668889,
+    "lon": 9.700278,
+    "country": "ITA",
+    "visits": []
+  },
+  {
+    "code": "MLA",
+    "name": "Malta International Airport",
+    "lat": 35.8575,
+    "lon": 14.4775,
+    "country": "MLT",
+    "visits": []
+  },
+  {
+    "code": "LTN",
+    "name": "London Luton Airport",
+    "lat": 51.874722,
+    "lon": -0.368333,
+    "country": "GBR",
+    "visits": []
+  },
+  {
+    "code": "STN",
+    "name": "London Stansted Airport",
+    "lat": 51.885,
+    "lon": 0.235,
+    "country": "GBR",
+    "visits": []
+  },
+  {
+    "code": "BOH",
+    "name": "Bournemouth Airport",
+    "lat": 50.78,
+    "lon": -1.8425,
+    "country": "GBR",
+    "visits": []
+  },
+  {
+    "code": "BKK",
+    "name": "Bangkok Suvarnabhumi Airport",
+    "lat": 13.6925,
+    "lon": 100.75,
+    "country": "THA",
+    "visits": []
+  },
+  {
+    "code": "CNX",
+    "name": "Chiang Mai International Airport",
+    "lat": 18.766667,
+    "lon": 98.9625,
+    "country": "THA",
+    "visits": []
+  },
+  {
+    "code": "CGK",
+    "name": "Jakarta Soekarno\u2013Hatta International Airport",
+    "lat": -6.125556,
+    "lon": 106.655833,
+    "country": "IDN",
+    "visits": []
+  },
+  {
+    "code": "BDJ",
+    "name": "Banjarmasin Syamsudin Noor International Airport",
+    "lat": -3.442222,
+    "lon": 114.7625,
+    "country": "IDN",
+    "visits": []
+  },
+  {
+    "code": "PKY",
+    "name": "Palangkaraya Tjilik Riwut Airport",
+    "lat": -2.225,
+    "lon": 113.9425,
+    "country": "IDN",
+    "visits": []
+  },
+  {
+    "code": "GRO",
+    "name": "Girona\u2013Costa Brava Airport",
+    "lat": 41.900833,
+    "lon": 2.760556,
+    "country": "ESP",
     "visits": []
   }
 ]
