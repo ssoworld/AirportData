@@ -189,7 +189,8 @@
     "lon": 12.645,
     "country": "DNK",
     "visits": [
-      "A"
+      "A",
+      "D"
     ]
   },
   {
@@ -530,9 +531,7 @@
     "lat": 59.6519,
     "lon": 17.9186,
     "country": "SWE",
-    "visits": [
-      "D"
-    ]
+    "visits": []
   },
   {
     "code": "IST",
@@ -918,7 +917,9 @@
     "lat": 42.2162,
     "lon": -83.3554,
     "country": "USA",
-    "visits": []
+    "visits": [
+      "L"
+    ]
   },
   {
     "code": "ELP",
@@ -1689,7 +1690,9 @@
     "lat": 37.36395,
     "lon": -121.92894,
     "country": "USA",
-    "visits": []
+    "visits": [
+      "D"
+    ]
   },
   {
     "code": "SLC",
@@ -1854,7 +1857,10 @@
     "lat": 43.6462,
     "lon": -70.3093,
     "country": "USA",
-    "visits": []
+    "visits": [
+      "A",
+      "D"
+    ]
   },
   {
     "code": "YYC",
