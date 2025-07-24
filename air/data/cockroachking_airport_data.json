@@ -104,6 +104,14 @@
     "visits": []
   },
   {
+    "code": "YVR",
+    "name": "Vancouver International Airport",
+    "lat": 49.1933,
+    "lon": -123.1757,
+    "country": "CAN",
+    "visits": []
+  },
+  {
     "code": "YYC",
     "name": "Calgary International Airport",
     "lat": 51.1139,
@@ -173,6 +181,14 @@
     "lat": 55.6136,
     "lon": 12.645,
     "country": "DNK",
+    "visits": []
+  },
+  {
+    "code": "PUJ",
+    "name": "Punta Cana International Airport",
+    "lat": 18.5675,
+    "lon": -68.3633,
+    "country": "DOM",
     "visits": []
   },
   {
@@ -1510,6 +1526,14 @@
     "visits": []
   },
   {
+    "code": "PNS",
+    "name": "Pensacola International Airport",
+    "lat": 30.4733,
+    "lon": -87.1867,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "PVD",
     "name": "Theodore Francis Green Memorial State Airport",
     "lat": 41.7239,
@@ -1662,6 +1686,14 @@
     "visits": []
   },
   {
+    "code": "SRQ",
+    "name": "Sarasota\u2013Bradenton International Airport",
+    "lat": 27.3956,
+    "lon": -82.5544,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "STL",
     "name": "St. Louis Lambert International Airport",
     "lat": 38.7487,
@@ -1676,6 +1708,17 @@
     "lon": -96.3844,
     "country": "USA",
     "visits": []
+  },
+  {
+    "code": "SWF",
+    "name": "Stewart International Airport",
+    "lat": 41.5042,
+    "lon": -74.1047,
+    "country": "USA",
+    "visits": [
+      "A",
+      "D"
+    ]
   },
   {
     "code": "TPA",
