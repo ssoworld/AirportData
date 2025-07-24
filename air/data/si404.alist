@@ -17,11 +17,11 @@ LHR A
 #Trip to Florida '03
 ##OUT##
 LGW D
-DTW A L D
+DTW L
 MCO A
 ##HOME##
 MCO D
-DTW A L D
+DTW L
 LGW A
 
 #Trip to South West USA '03
@@ -72,7 +72,7 @@ BOH A
 #Trip to South East Asia '07
 ##OUT##
 LHR D
-BKK A L D
+BKK L
 CGK A
 CGK D
 BDJ A
@@ -80,11 +80,11 @@ BDJ A
 PKY D
 CGK A
 CGK D
-BKK A L D
+BKK L
 CNX A
 ##HOME##
 CNX D
-BKK A L D
+BKK L
 LHR A
 
 #Trip to Los Angeles & Las Vegas '07-08
