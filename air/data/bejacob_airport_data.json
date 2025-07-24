@@ -96,6 +96,14 @@
     "visits": []
   },
   {
+    "code": "NAS",
+    "name": "Lynden Pindling International Airport",
+    "lat": 25.0389,
+    "lon": -77.4662,
+    "country": "BHS",
+    "visits": []
+  },
+  {
     "code": "BGI",
     "name": "Grantley Adams International Airport",
     "lat": 13.0744,
@@ -120,6 +128,14 @@
     "visits": [
       "L"
     ]
+  },
+  {
+    "code": "YYC",
+    "name": "Calgary International Airport",
+    "lat": 51.1139,
+    "lon": -114.0203,
+    "country": "CAN",
+    "visits": []
   },
   {
     "code": "YYZ",
@@ -183,6 +199,14 @@
     ]
   },
   {
+    "code": "MUC",
+    "name": "Munich Airport",
+    "lat": 48.3538,
+    "lon": 11.7861,
+    "country": "DEU",
+    "visits": []
+  },
+  {
     "code": "CPH",
     "name": "Copenhagen Airport",
     "lat": 55.6136,
@@ -204,6 +228,22 @@
     ]
   },
   {
+    "code": "BCN",
+    "name": "Barcelona\u2013El Prat Airport",
+    "lat": 41.2974,
+    "lon": 2.0833,
+    "country": "ESP",
+    "visits": []
+  },
+  {
+    "code": "GRO",
+    "name": "Girona\u2013Costa Brava Airport",
+    "lat": 41.900833,
+    "lon": 2.760556,
+    "country": "ESP",
+    "visits": []
+  },
+  {
     "code": "HEL",
     "name": "Helsinki-Vantaa Airport",
     "lat": 60.3172,
@@ -223,11 +263,27 @@
     "visits": []
   },
   {
+    "code": "NCE",
+    "name": "Nice C\u00f4te d'Azur Airport",
+    "lat": 43.6597,
+    "lon": 7.2133,
+    "country": "FRA",
+    "visits": []
+  },
+  {
     "code": "ORY",
     "name": "Paris Orly Airport",
     "lat": 48.7262,
     "lon": 2.3652,
     "country": "FRA",
+    "visits": []
+  },
+  {
+    "code": "BOH",
+    "name": "Bournemouth Airport",
+    "lat": 50.78,
+    "lon": -1.8425,
+    "country": "GBR",
     "visits": []
   },
   {
@@ -271,6 +327,14 @@
     ]
   },
   {
+    "code": "LTN",
+    "name": "London Luton Airport",
+    "lat": 51.874722,
+    "lon": -0.368333,
+    "country": "GBR",
+    "visits": []
+  },
+  {
     "code": "MAN",
     "name": "Manchester Airport",
     "lat": 53.3554,
@@ -279,6 +343,14 @@
     "visits": [
       "D"
     ]
+  },
+  {
+    "code": "STN",
+    "name": "London Stansted Airport",
+    "lat": 51.885,
+    "lon": 0.235,
+    "country": "GBR",
+    "visits": []
   },
   {
     "code": "ATH",
@@ -297,6 +369,30 @@
     "lat": 47.437,
     "lon": 19.2572,
     "country": "HUN",
+    "visits": []
+  },
+  {
+    "code": "BDJ",
+    "name": "Banjarmasin Syamsudin Noor International Airport",
+    "lat": -3.442222,
+    "lon": 114.7625,
+    "country": "IDN",
+    "visits": []
+  },
+  {
+    "code": "CGK",
+    "name": "Jakarta Soekarno\u2013Hatta International Airport",
+    "lat": -6.125556,
+    "lon": 106.655833,
+    "country": "IDN",
+    "visits": []
+  },
+  {
+    "code": "PKY",
+    "name": "Palangkaraya Tjilik Riwut Airport",
+    "lat": -2.225,
+    "lon": 113.9425,
+    "country": "IDN",
     "visits": []
   },
   {
@@ -334,13 +430,37 @@
   {
     "code": "DUB",
     "name": "Dublin Airport",
-    "lat": 53.421389,
-    "lon": -6.27,
+    "lat": 53.4286,
+    "lon": -6.2625,
     "country": "IRL",
     "visits": [
       "A",
       "D"
     ]
+  },
+  {
+    "code": "KEF",
+    "name": "Keflav\u00edk International Airport",
+    "lat": 63.985,
+    "lon": -22.6056,
+    "country": "ISL",
+    "visits": []
+  },
+  {
+    "code": "AHO",
+    "name": "Alghero - Riviera del Corallo Airport",
+    "lat": 40.631111,
+    "lon": 8.288611,
+    "country": "ITA",
+    "visits": []
+  },
+  {
+    "code": "BGY",
+    "name": "Milan Bergamo Airport",
+    "lat": 45.668889,
+    "lon": 9.700278,
+    "country": "ITA",
+    "visits": []
   },
   {
     "code": "BLQ",
@@ -432,6 +552,30 @@
     "visits": []
   },
   {
+    "code": "CZA",
+    "name": "Chichen Itza International Airport",
+    "lat": 20.6413,
+    "lon": -88.4462,
+    "country": "MEX",
+    "visits": []
+  },
+  {
+    "code": "MEX",
+    "name": "Benito Juarez International Airport",
+    "lat": 19.4363,
+    "lon": -99.0721,
+    "country": "MEX",
+    "visits": []
+  },
+  {
+    "code": "MLA",
+    "name": "Malta International Airport",
+    "lat": 35.8575,
+    "lon": 14.4775,
+    "country": "MLT",
+    "visits": []
+  },
+  {
     "code": "AMS",
     "name": "Amsterdam Airport Schiphol",
     "lat": 52.3081,
@@ -439,6 +583,16 @@
     "country": "NLD",
     "visits": [
       "L"
+    ]
+  },
+  {
+    "code": "BGO",
+    "name": "Bergen Airport, Flesland",
+    "lat": 60.2936,
+    "lon": 5.2181,
+    "country": "NOR",
+    "visits": [
+      "A"
     ]
   },
   {
@@ -450,6 +604,16 @@
     "visits": [
       "D",
       "L"
+    ]
+  },
+  {
+    "code": "CHC",
+    "name": "Christchurch International Airport",
+    "lat": -43.4878,
+    "lon": 172.5339,
+    "country": "NZL",
+    "visits": [
+      "A"
     ]
   },
   {
@@ -496,6 +660,14 @@
     ]
   },
   {
+    "code": "LIS",
+    "name": "Humberto Delgado Airport",
+    "lat": 38.7742,
+    "lon": -9.1342,
+    "country": "PRT",
+    "visits": []
+  },
+  {
     "code": "PPT",
     "name": "Faa'a International Airport",
     "lat": -17.5567,
@@ -534,6 +706,40 @@
     "visits": []
   },
   {
+    "code": "PLS",
+    "name": "Providenciales International Airport",
+    "lat": 21.7736,
+    "lon": -72.2658,
+    "country": "TCA",
+    "visits": []
+  },
+  {
+    "code": "BKK",
+    "name": "Bangkok Suvarnabhumi Airport",
+    "lat": 13.6925,
+    "lon": 100.75,
+    "country": "THA",
+    "visits": []
+  },
+  {
+    "code": "CNX",
+    "name": "Chiang Mai International Airport",
+    "lat": 18.766667,
+    "lon": 98.9625,
+    "country": "THA",
+    "visits": []
+  },
+  {
+    "code": "NAN",
+    "name": "Nan Nakhon Airport",
+    "lat": 18.8078,
+    "lon": 100.7833,
+    "country": "THA",
+    "visits": [
+      "L"
+    ]
+  },
+  {
     "code": "IST",
     "name": "Istanbul Airport",
     "lat": 41.2753,
@@ -559,6 +765,14 @@
     "name": "Kodiak Airport",
     "lat": 57.75,
     "lon": -152.4939,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "AGO",
+    "name": "Magnolia Municipal Airport",
+    "lat": 33.2275,
+    "lon": -93.2169,
     "country": "USA",
     "visits": []
   },
@@ -613,6 +827,14 @@
     ]
   },
   {
+    "code": "ATW",
+    "name": "Outagamie County Regional Airport",
+    "lat": 44.2581,
+    "lon": -88.5192,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "ATY",
     "name": "Watertown Regional Airport",
     "lat": 44.91389,
@@ -652,6 +874,14 @@
     "visits": [
       "A"
     ]
+  },
+  {
+    "code": "BHM",
+    "name": "Birmingham-Shuttlesworth International Airport",
+    "lat": 33.5629,
+    "lon": -86.7535,
+    "country": "USA",
+    "visits": []
   },
   {
     "code": "BIL",
@@ -975,6 +1205,14 @@
     ]
   },
   {
+    "code": "FNT",
+    "name": "Bishop International Airport",
+    "lat": 42.9656,
+    "lon": -83.7436,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "FSD",
     "name": "Sioux Falls Regional Airport",
     "lat": 43.582,
@@ -1003,6 +1241,14 @@
       "A",
       "D"
     ]
+  },
+  {
+    "code": "GSO",
+    "name": "Piedmont Triad International Airport",
+    "lat": 36.0978,
+    "lon": -79.9372,
+    "country": "USA",
+    "visits": []
   },
   {
     "code": "HNL",
@@ -1504,6 +1750,14 @@
     ]
   },
   {
+    "code": "PGD",
+    "name": "Punta Gorda Airport",
+    "lat": 26.9197,
+    "lon": -81.9906,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "PHL",
     "name": "Philadelphia International Airport",
     "lat": 39.8744,
@@ -1528,6 +1782,14 @@
     ]
   },
   {
+    "code": "PIE",
+    "name": "St. Pete\u2013Clearwater International Airport",
+    "lat": 27.9102,
+    "lon": -82.6874,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "PIT",
     "name": "Pittsburgh International Airport",
     "lat": 40.49152,
@@ -1540,6 +1802,17 @@
     "name": "Theodore Francis Green Memorial State Airport",
     "lat": 41.7239,
     "lon": -71.4283,
+    "country": "USA",
+    "visits": [
+      "A",
+      "D"
+    ]
+  },
+  {
+    "code": "PWM",
+    "name": "Portland International Jetport",
+    "lat": 43.6462,
+    "lon": -70.3093,
     "country": "USA",
     "visits": [
       "A",
@@ -1786,184 +2059,5 @@
     "visits": [
       "L"
     ]
-  },
-  {
-    "code": "BCN",
-    "name": "Barcelona\u2013El Prat Airport",
-    "lat": 41.2974,
-    "lon": 2.0833,
-    "country": "ESP",
-    "visits": []
-  },
-  {
-    "code": "BHM",
-    "name": "Birmingham-Shuttlesworth International Airport",
-    "lat": 33.5629,
-    "lon": -86.7535,
-    "country": "USA",
-    "visits": []
-  },
-  {
-    "code": "KEF",
-    "name": "Keflav\u00edk International Airport",
-    "lat": 63.985,
-    "lon": -22.6056,
-    "country": "ISL",
-    "visits": []
-  },
-  {
-    "code": "LIS",
-    "name": "Humberto Delgado Airport",
-    "lat": 38.7742,
-    "lon": -9.1342,
-    "country": "PRT",
-    "visits": []
-  },
-  {
-    "code": "MUC",
-    "name": "Munich Airport",
-    "lat": 48.3538,
-    "lon": 11.7861,
-    "country": "DEU",
-    "visits": []
-  },
-  {
-    "code": "NAS",
-    "name": "Lynden Pindling International Airport",
-    "lat": 25.0389,
-    "lon": -77.4662,
-    "country": "BHS",
-    "visits": []
-  },
-  {
-    "code": "PGD",
-    "name": "Punta Gorda Airport",
-    "lat": 26.9197,
-    "lon": -81.9906,
-    "country": "USA",
-    "visits": []
-  },
-  {
-    "code": "PIE",
-    "name": "St. Pete\u2013Clearwater International Airport",
-    "lat": 27.9102,
-    "lon": -82.6874,
-    "country": "USA",
-    "visits": []
-  },
-  {
-    "code": "PWM",
-    "name": "Portland International Jetport",
-    "lat": 43.6462,
-    "lon": -70.3093,
-    "country": "USA",
-    "visits": [
-      "A",
-      "D"
-    ]
-  },
-  {
-    "code": "YYC",
-    "name": "Calgary International Airport",
-    "lat": 51.1139,
-    "lon": -114.0203,
-    "country": "CAN",
-    "visits": []
-  },
-  {
-    "code": "AHO",
-    "name": "Alghero - Riviera del Corallo Airport",
-    "lat": 40.631111,
-    "lon": 8.288611,
-    "country": "ITA",
-    "visits": []
-  },
-  {
-    "code": "BGY",
-    "name": "Milan Bergamo Airport",
-    "lat": 45.668889,
-    "lon": 9.700278,
-    "country": "ITA",
-    "visits": []
-  },
-  {
-    "code": "MLA",
-    "name": "Malta International Airport",
-    "lat": 35.8575,
-    "lon": 14.4775,
-    "country": "MLT",
-    "visits": []
-  },
-  {
-    "code": "LTN",
-    "name": "London Luton Airport",
-    "lat": 51.874722,
-    "lon": -0.368333,
-    "country": "GBR",
-    "visits": []
-  },
-  {
-    "code": "STN",
-    "name": "London Stansted Airport",
-    "lat": 51.885,
-    "lon": 0.235,
-    "country": "GBR",
-    "visits": []
-  },
-  {
-    "code": "BOH",
-    "name": "Bournemouth Airport",
-    "lat": 50.78,
-    "lon": -1.8425,
-    "country": "GBR",
-    "visits": []
-  },
-  {
-    "code": "BKK",
-    "name": "Bangkok Suvarnabhumi Airport",
-    "lat": 13.6925,
-    "lon": 100.75,
-    "country": "THA",
-    "visits": []
-  },
-  {
-    "code": "CNX",
-    "name": "Chiang Mai International Airport",
-    "lat": 18.766667,
-    "lon": 98.9625,
-    "country": "THA",
-    "visits": []
-  },
-  {
-    "code": "CGK",
-    "name": "Jakarta Soekarno\u2013Hatta International Airport",
-    "lat": -6.125556,
-    "lon": 106.655833,
-    "country": "IDN",
-    "visits": []
-  },
-  {
-    "code": "BDJ",
-    "name": "Banjarmasin Syamsudin Noor International Airport",
-    "lat": -3.442222,
-    "lon": 114.7625,
-    "country": "IDN",
-    "visits": []
-  },
-  {
-    "code": "PKY",
-    "name": "Palangkaraya Tjilik Riwut Airport",
-    "lat": -2.225,
-    "lon": 113.9425,
-    "country": "IDN",
-    "visits": []
-  },
-  {
-    "code": "GRO",
-    "name": "Girona\u2013Costa Brava Airport",
-    "lat": 41.900833,
-    "lon": 2.760556,
-    "country": "ESP",
-    "visits": []
   }
 ]
