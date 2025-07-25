@@ -22,7 +22,7 @@ N can be any of the following codes: A (for arrival), D (for departure), and L (
 | `LAX A D`  | Traveler arrived at and departed from Los Angeles.                      |
 | `ORD L`    | Traveler had a layover at Chicago O'Hare, but no arrival or departure.  |
 
-Each airport should be on a separate line. The order of the A, D, and L does not matter. The file should be submitted via a GitHub pull request, currently to mapcat/airtest (email submissions will be available soon but are not currently supported). Once the file is merged, their map should update automatically within a few minutes. Users can locate their maps by choosing their username from the drop-down menu.
+Each airport should be on a separate line. The order of the A, D, and L does not matter. The file should be submitted via a GitHub pull request, currently to TravelMapping/AirportData (email submissions will be available soon but are not currently supported). Once the file is merged, their map should update automatically within a few minutes. Users can locate their maps by choosing their username from the drop-down menu.
 
 There is only one option for the map currently (show all airports, or only visited airports). More will be added.
 
