@@ -42,6 +42,7 @@ jobs:
         run: |
           git config user.name "GitHub Action"
           git config user.email "action@github.com"
+          git pull --rebase origin master
           git add air/data/unknown_codes.txt
           git commit -m "Update list of unknown airport codes" || echo "Nothing to commit"
           git push origin master
@@ -50,6 +51,7 @@ jobs:
         run: |
           git config user.name "GitHub Action"
           git config user.email "action@github.com"
+          git pull --rebase origin master
           git add air/data/*.json
           git commit -m "Auto-update JSON from .alist" || echo "Nothing to commit"
           git push origin master
