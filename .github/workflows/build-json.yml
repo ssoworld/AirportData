@@ -38,6 +38,11 @@ jobs:
       - name: Check for unknown airport codes
         run: python air/scripts/check_unknown_codes.py
 
+      - name: Show modified files
+        run: |
+          git status
+          git diff --name-only
+
       - name: Commit unknown_codes.txt
         run: |
           git config user.name "GitHub Action"
