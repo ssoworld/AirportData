@@ -2030,5 +2030,16 @@
       "A",
       "D"
     ]
+  },
+  {
+    "code": "GPS",
+    "name": "Seymour Airport",
+    "lat": -0.4538,
+    "lon": -90.2659,
+    "country": "ECU",
+    "visits": [
+      "A",
+      "D"
+    ]
   }
 ]

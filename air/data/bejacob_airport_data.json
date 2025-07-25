@@ -2251,5 +2251,13 @@
     "lon": -63.0536,
     "country": "AIA",
     "visits": []
+  },
+  {
+    "code": "GPS",
+    "name": "Seymour Airport",
+    "lat": -0.4538,
+    "lon": -90.2659,
+    "country": "ECU",
+    "visits": []
   }
 ]
