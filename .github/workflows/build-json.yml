@@ -42,9 +42,9 @@ jobs:
         run: |
           git config user.name "GitHub Action"
           git config user.email "action@github.com"
+          git pull --rebase origin master
           git add air/data/unknown_codes.txt
           git commit -m "Update list of unknown airport codes" || echo "Nothing to commit"
-          git pull --rebase origin master
           git push
 
       - name: Commit and push updated JSON
