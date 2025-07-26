@@ -24,9 +24,8 @@
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
-      const airportCode = location.hash 
-      ? location.hash.substring(1).toUpperCase() 
-      : "JFK";
+      const hash = typeof location.hash === 'string' ? location.hash : '';
+      const airportCode = hash ? hash.substring(1).toUpperCase() : "JFK";
            
     let airportData, users = [];
 
