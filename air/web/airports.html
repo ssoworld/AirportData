@@ -24,10 +24,11 @@
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
-    const airportCode = location.hash ? location.hash.substring(1).toUpperCase() : "JFK";
-    <script>
-      console.log("Airport code is", airportCode);
-    </script>
+    alert("🎉 Your JavaScript is working!");
+    const airportCode = location.hash 
+      ? location.hash.substring(1).toUpperCase() 
+      : "JFK";
+           
     let airportData, users = [];
 
     async function loadAirportInfo() {
