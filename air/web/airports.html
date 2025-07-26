@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Airport Details</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    #map { height: 400px; margin-bottom: 20px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    th { background-color: #f0f0f0; }
+    .checkmark { color: green; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h2 id="summary">Loading...</h2>
+  <div id="map"></div>
+  <table id="visitTable">
+    <thead>
+      <tr><th>User</th><th>Arrival</th><th>Departure</th><th>Layover</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    alert("🎉 Your JavaScript is working!");
+    const airportCode = location.hash 
+      ? location.hash.substring(1).toUpperCase() 
+      : "JFK";
+           
+    let airportData, users = [];
+
+    async function loadAirportInfo() {
+      const res = await fetch('../data/airports-master.csv'); // updated path
+      const text = await res.text();
+      const codes = text.trim().split('\n').map(code => code.trim().toUpperCase());
+
+      if (!codes.includes(airportCode)) {
+        document.getElementById('summary').textContent = 'Airport not found';
+        return;
+      }
+
+      airportData = { code: airportCode, name: airportCode, lat: 40.6413, lon: -73.7781 }; // ✨ fallback dummy location for JFK
+      document.getElementById('summary').textContent = `Loading data for ${airportData.name}...`;
+      initMap();
+      await loadUserVisits();
+    }
+
+    function initMap() {
+      const map = L.map('map').setView([airportData.lat, airportData.lon], 13);
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(map);
+      L.marker([airportData.lat, airportData.lon]).addTo(map)
+        .bindPopup(airportData.name).openPopup();
+    }
+
+    async function loadUserVisits() {
+      const userListRes = await fetch('../data/users.txt');
+      const userList = (await userListRes.text()).trim().split('\n');
+
+      let visitCount = 0;
+      for (const user of userList) {
+        const alistRes = await fetch(`../data/${user}.alist`);
+        if (!alistRes.ok) continue;
+        const entries = (await alistRes.text()).trim().split('\n');
+        for (const entry of entries) {
+          const parts = entry.split(/\s+/);
+          if (parts[0] === airportCode) {
+            visitCount++;
+            const flags = { A: false, D: false, L: false };
+            parts.slice(1).forEach(x => { if (flags.hasOwnProperty(x)) flags[x] = true });
+            users.push({ name: user, ...flags });
+            break;
+          }
+        }
+      }
+      document.getElementById('summary').textContent = 
+        `${visitCount} user${visitCount !== 1 ? 's' : ''} have visited ${airportData.name}`;
+      renderTable();
+    }
+
+    function renderTable() {
+      const tbody = document.querySelector('#visitTable tbody');
+      for (const user of users) {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${user.name}</td>
+          <td>${user.A ? '✅' : ''}</td>
+          <td>${user.D ? '✅' : ''}</td>
+          <td>${user.L ? '✅' : ''}</td>
+        `;
+        tbody.appendChild(row);
+      }
+    }
+
+    loadAirportInfo();
+  </script>
+</body>
+</html>
