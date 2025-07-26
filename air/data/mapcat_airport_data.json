@@ -2339,5 +2339,29 @@
     "lon": -64.9734,
     "country": "VIR",
     "visits": []
+  },
+  {
+    "code": "AGS",
+    "name": "Augusta Regional Airport",
+    "lat": 33.3699,
+    "lon": -81.9644,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "BTR",
+    "name": "Baton Rouge Metropolitan Airport",
+    "lat": 30.5328,
+    "lon": -91.15,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "YFB",
+    "name": "Iqaluit Airport",
+    "lat": 63.7567,
+    "lon": -68.5561,
+    "country": "CAN",
+    "visits": []
   }
 ]
