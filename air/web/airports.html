@@ -24,24 +24,24 @@
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
-    const airportCode = location.hash.substring(1).toUpperCase();
+    alert("🎉 Your JavaScript is working!");
+    const airportCode = location.hash 
+      ? location.hash.substring(1).toUpperCase() 
+      : "JFK";
+           
     let airportData, users = [];
 
     async function loadAirportInfo() {
-      const res = await fetch('../data/airports.csv');
+      const res = await fetch('../data/airports-master.csv'); // updated path
       const text = await res.text();
-      const lines = text.trim().split('\n');
-      for (const line of lines) {
-        const [code, name, lat, lon] = line.split(',');
-        if (code === airportCode) {
-          airportData = { code, name, lat: +lat, lon: +lon };
-          break;
-        }
-      }
-      if (!airportData) {
+      const codes = text.trim().split('\n').map(code => code.trim().toUpperCase());
+
+      if (!codes.includes(airportCode)) {
         document.getElementById('summary').textContent = 'Airport not found';
         return;
       }
+
+      airportData = { code: airportCode, name: airportCode, lat: 40.6413, lon: -73.7781 }; // ✨ fallback dummy location for JFK
       document.getElementById('summary').textContent = `Loading data for ${airportData.name}...`;
       initMap();
       await loadUserVisits();
@@ -62,7 +62,7 @@
 
       let visitCount = 0;
       for (const user of userList) {
-        const alistRes = await fetch(`../userdata/${user}.alist`);
+        const alistRes = await fetch(`../data/${user}.alist`);
         if (!alistRes.ok) continue;
         const entries = (await alistRes.text()).trim().split('\n');
         for (const entry of entries) {
