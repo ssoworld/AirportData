@@ -40,11 +40,12 @@ BWI A D
 DFW A D L
 STL A D
 MCI A D
-SAN A D
+SAN A D L
 LAX A D L
 SBP A D
 SFO A D L
 OAK A D
+SMF A D
 MCO A D
 MSY A D
 ORD A D L
@@ -63,10 +64,13 @@ PHX L
 TVC A D
 SEA A D L
 MSP A D
-# following are airports in Canada
+AGS A D
+JAN A D
+BTR A D
+# Canada
 YUL A D
 YVP A D
-YFP A D
+YFB A D
 YRT A D
 YZF A D
 YCO L
@@ -81,13 +85,12 @@ YHO A D
 YSO L
 # maybe refueling stop on 1957 trip to/from Italy
 VQX L
-# following are in Europe
+# Europe
 SNN L
 CIA A D
 LHR A D L
 MXP D
 LIN A
-# Port-au-Prince, Haiti
+# Caribbean
 PAP L
-# Pointe-a-Pitre, Guadeloupe
 PTP A D
