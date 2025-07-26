@@ -710,16 +710,6 @@
     ]
   },
   {
-    "code": "KCQ",
-    "name": "Chignik Lake Airport",
-    "lat": 56.2556,
-    "lon": -158.775,
-    "country": "USA",
-    "visits": [
-      "L"
-    ]
-  },
-  {
     "code": "FCO",
     "name": "Leonardo da Vinci\u2013Fiumicino Airport",
     "lat": 41.8003,
@@ -1658,6 +1648,16 @@
     "country": "USA",
     "visits": [
       "D"
+    ]
+  },
+  {
+    "code": "KCQ",
+    "name": "Chignik Lake Airport",
+    "lat": 56.2556,
+    "lon": -158.775,
+    "country": "USA",
+    "visits": [
+      "L"
     ]
   },
   {
