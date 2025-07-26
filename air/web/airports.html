@@ -32,7 +32,7 @@
     let airportData, users = [];
 
     async function loadAirportInfo() {
-      const res = await fetch('../data/air/airports-master.csv'); // updated path
+      const res = await fetch('../data/airports-master.csv'); // updated path
       const text = await res.text();
       const codes = text.trim().split('\n').map(code => code.trim().toUpperCase());
 
