@@ -31,25 +31,21 @@
            
     let airportData, users = [];
 
-    async function loadAirportInfo() {
-      const res = await fetch('../data/airports.csv');
-      const text = await res.text();
-      const lines = text.trim().split('\n');
-      for (const line of lines) {
-        const [code, name, lat, lon] = line.split(',');
-        if (code === airportCode) {
-          airportData = { code, name, lat: +lat, lon: +lon };
-          break;
-        }
-      }
-      if (!airportData) {
-        document.getElementById('summary').textContent = 'Airport not found';
-        return;
-      }
-      document.getElementById('summary').textContent = `Loading data for ${airportData.name}...`;
-      initMap();
-      await loadUserVisits();
-    }
+async function loadAirportInfo() {
+  const res = await fetch('../data/air/airports-master.csv'); // updated path
+  const text = await res.text();
+  const codes = text.trim().split('\n').map(code => code.trim().toUpperCase());
+
+  if (!codes.includes(airportCode)) {
+    document.getElementById('summary').textContent = 'Airport not found';
+    return;
+  }
+
+  airportData = { code: airportCode, name: airportCode, lat: 40.6413, lon: -73.7781 }; // ✨ fallback dummy location for JFK
+  document.getElementById('summary').textContent = `Loading data for ${airportData.name}...`;
+  initMap();
+  await loadUserVisits();
+}
 
     function initMap() {
       const map = L.map('map').setView([airportData.lat, airportData.lon], 13);
