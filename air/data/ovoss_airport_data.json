@@ -151,10 +151,7 @@
     "lat": 61.18,
     "lon": -113.69,
     "country": "CAN",
-    "visits": [
-      "A",
-      "D"
-    ]
+    "visits": []
   },
   {
     "code": "YHO",
@@ -1614,7 +1611,10 @@
     "lat": 32.3111,
     "lon": -90.0758,
     "country": "USA",
-    "visits": []
+    "visits": [
+      "A",
+      "D"
+    ]
   },
   {
     "code": "JAX",
@@ -2216,7 +2216,8 @@
     "country": "USA",
     "visits": [
       "A",
-      "D"
+      "D",
+      "L"
     ]
   },
   {
@@ -2313,7 +2314,10 @@
     "lat": 38.6956,
     "lon": -121.5908,
     "country": "USA",
-    "visits": []
+    "visits": [
+      "A",
+      "D"
+    ]
   },
   {
     "code": "SNA",
