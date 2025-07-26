@@ -25,6 +25,9 @@
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
     const airportCode = location.hash.substring(1).toUpperCase();
+    <script>
+      console.log("Airport code is", airportCode);
+    </script>
     let airportData, users = [];
 
     async function loadAirportInfo() {
