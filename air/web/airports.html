@@ -62,7 +62,7 @@
 
       let visitCount = 0;
       for (const user of userList) {
-        const alistRes = await fetch(`../userdata/${user}.alist`);
+        const alistRes = await fetch(`../data/${user}.alist`);
         if (!alistRes.ok) continue;
         const entries = (await alistRes.text()).trim().split('\n');
         for (const entry of entries) {
