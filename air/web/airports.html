@@ -37,6 +37,12 @@
 
       for (const line of lines) {
         const [country, iata_code, name, latitude, longitude, alt_codes] = line.split(';').map(f => f.trim());
+
+        // ✅ Debug check: make sure iata_code is valid
+        if (!iata_code || typeof iata_code !== "string") {
+          console.warn("Bad or missing iata_code in row:", line);
+        }
+       
         const allCodes = [iata_code.toUpperCase(), ...(alt_codes ? alt_codes.split(',').map(c => c.trim().toUpperCase()) : [])];
 
         if (allCodes.includes(airportCode)) {
