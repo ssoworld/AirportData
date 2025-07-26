@@ -2343,5 +2343,13 @@
     "lon": -68.5561,
     "country": "CAN",
     "visits": []
+  },
+  {
+    "code": "LAN",
+    "name": "Capital Region International Airport",
+    "lat": 42.778639,
+    "lon": -84.586194,
+    "country": "USA",
+    "visits": []
   }
 ]
