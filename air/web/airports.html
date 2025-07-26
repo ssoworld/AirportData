@@ -24,11 +24,10 @@
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
-      const hash = typeof location.hash === 'string' ? location.hash : '';
-      const airportCode = hash ? hash.substring(1).toUpperCase() : "JFK";
            
     let airportData, users = [];
-
+    let airportCode;
+    
     async function loadAirportInfo() {
       const res = await fetch('../data/airports-master.csv');
       const text = await res.text();
@@ -116,7 +115,11 @@
       }
     }
 
-    loadAirportInfo();
+    document.addEventListener('DOMContentLoaded', () => {
+      const hash = typeof location.hash === 'string' ? location.hash : '';
+      airportCode = hash ? hash.substring(1).toUpperCase() : "JFK";
+      loadAirportInfo();
+    });
   </script>
 </body>
 </html>
