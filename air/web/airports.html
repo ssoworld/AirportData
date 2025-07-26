@@ -30,21 +30,21 @@
            
     let airportData, users = [];
 
-async function loadAirportInfo() {
-  const res = await fetch('../data/airports-master.csv');
-  const text = await res.text();
-  const codes = text.trim().split('\n').map(code => code.trim().toUpperCase());
+    async function loadAirportInfo() {
+      const res = await fetch('../data/airports-master.csv');
+      const text = await res.text();
+      const codes = text.trim().split('\n').map(code => code.trim().toUpperCase());
 
-  if (!codes.includes(airportCode)) {
-    document.getElementById('summary').textContent = 'Airport not found';
-    return;
-  }
+      if (!codes.includes(airportCode)) {
+        document.getElementById('summary').textContent = 'Airport not found';
+        return;
+      }
 
-  airportData = { code: airportCode, name: airportCode, lat: 40.6413, lon: -73.7781 };
-  document.getElementById('summary').textContent = `Loading data for ${airportData.name}...`;
-  initMap();
-  await loadUserVisits();
-}
+      airportData = { code: airportCode, name: airportCode, lat: 40.6413, lon: -73.7781 };
+      document.getElementById('summary').textContent = `Loading data for ${airportData.name}...`;
+      initMap();
+      await loadUserVisits();
+    }
 
     function initMap() {
       const map = L.map('map').setView([airportData.lat, airportData.lon], 13);
