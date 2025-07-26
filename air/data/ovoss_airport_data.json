@@ -181,7 +181,9 @@
     "lat": 48.9369,
     "lon": -54.5681,
     "country": "CAN",
-    "visits": []
+    "visits": [
+      "L"
+    ]
   },
   {
     "code": "YRT",
@@ -911,7 +913,10 @@
     "lat": 18.439,
     "lon": -66.0021,
     "country": "PRI",
-    "visits": []
+    "visits": [
+      "A",
+      "D"
+    ]
   },
   {
     "code": "VQX",
@@ -919,9 +924,7 @@
     "lat": 18.1158,
     "lon": -65.4227,
     "country": "PRI",
-    "visits": [
-      "L"
-    ]
+    "visits": []
   },
   {
     "code": "LIS",
@@ -1508,7 +1511,10 @@
     "lat": 36.0978,
     "lon": -79.9372,
     "country": "USA",
-    "visits": []
+    "visits": [
+      "A",
+      "D"
+    ]
   },
   {
     "code": "GST",
@@ -2206,7 +2212,10 @@
     "lat": 26.5361,
     "lon": -81.7553,
     "country": "USA",
-    "visits": []
+    "visits": [
+      "A",
+      "D"
+    ]
   },
   {
     "code": "SAN",
@@ -2298,7 +2307,9 @@
     "lat": 37.36395,
     "lon": -121.92894,
     "country": "USA",
-    "visits": []
+    "visits": [
+      "D"
+    ]
   },
   {
     "code": "SLC",
@@ -2393,7 +2404,10 @@
     "lat": 27.9755,
     "lon": -82.5332,
     "country": "USA",
-    "visits": []
+    "visits": [
+      "A",
+      "D"
+    ]
   },
   {
     "code": "TRI",
