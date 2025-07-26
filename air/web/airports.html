@@ -33,14 +33,37 @@
     async function loadAirportInfo() {
       const res = await fetch('../data/airports-master.csv');
       const text = await res.text();
-      const codes = text.trim().split('\n').map(code => code.trim().toUpperCase());
+      const lines = text.trim().split('\n');
 
-      if (!codes.includes(airportCode)) {
+      let found = false;
+
+      for (const line of lines) {
+        const [country, iata_code, name, latitude, longitude, alt_codes] = line.split(';').map(f => f.trim());
+        const allCodes = [iata_code.toUpperCase(), ...(alt_codes ? alt_codes.split(',').map(c => c.trim().toUpperCase()) : [])];
+
+        if (allCodes.includes(airportCode)) {
+          airportData = {
+            code: iata_code,
+            name,
+            lat: parseFloat(latitude),
+            lon: parseFloat(longitude)
+          };
+          found = true;
+          break;
+        }
+      }
+
+      if (!found) {
+        airportData = {
+          code: airportCode,
+          name: 'Unknown Airport',
+          lat: 0,
+          lon: 0
+        };
         document.getElementById('summary').textContent = 'Airport not found';
         return;
       }
 
-      airportData = { code: airportCode, name: airportCode, lat: 40.6413, lon: -73.7781 };
       document.getElementById('summary').textContent = `Loading data for ${airportData.name}...`;
       initMap();
       await loadUserVisits();
