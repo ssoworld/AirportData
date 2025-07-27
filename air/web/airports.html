@@ -21,7 +21,7 @@
 
   <section id="map-section">
     <h2>Location</h2>
-    <div id="airport-map">Map placeholder will go here</div>
+    <div id="airport-map">Map placeholder for selected airport</div>
   </section>
 
   <section id="visitors">
@@ -44,13 +44,19 @@
     async function loadAirports() {
       const response = await fetch("../data/airports.csv");
       const text = await response.text();
-      const rows = text.trim().split("\n").map(line => line.split(","));
-      const headers = rows.shift();
-      const data = rows.map(row => Object.fromEntries(row.map((val, i) => [headers[i], val])));
-      for (const airport of data) {
+      const rows = text.trim().split("\n").map(line => line.split(";"));
+      const headers = rows[0];
+      const nameIndex = headers.indexOf("name");
+      const codeIndex = headers.indexOf("iata_code");
+
+      for (let i = 1; i < rows.length; i++) {
+        const row = rows[i];
+        if (row.length <= Math.max(nameIndex, codeIndex)) continue;
+        const name = row[nameIndex];
+        const code = row[codeIndex];
         const option = document.createElement("option");
-        option.value = airport.iata;
-        option.textContent = `${airport.name} (${airport.iata})`;
+        option.value = code;
+        option.textContent = `${name} (${code})`;
         airportSelect.appendChild(option);
       }
     }
@@ -75,10 +81,7 @@
             const trimmed = line.trim();
             if (!trimmed || trimmed.startsWith("#")) continue;
 
-            const parts = trimmed.split(/\s+/);
-            const code = parts[0];
-            const roles = parts.slice(1);
-
+            const [code, ...roles] = trimmed.split(/\s+/);
             if (code === iataCode) {
               const hasA = roles.includes("A");
               const hasD = roles.includes("D");
@@ -95,7 +98,7 @@
             }
           }
         } catch (err) {
-          console.error(`Failed to load ${entry.username}.alist:`, err);
+          console.error(`Error loading ${entry.username}.alist:`, err);
         }
       }
     }
