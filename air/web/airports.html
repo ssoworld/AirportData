@@ -29,22 +29,13 @@
     let airportCode;
     
     async function loadAirportInfo() {
-      const res = await fetch('../data/airports.csv');
+      const res = await fetch('../data/airports-master.csv');
       const text = await res.text();
       const lines = text.trim().split('\n');
-
       let found = false;
-
       for (const line of lines) {
         const [country, iata_code, name, latitude, longitude, alt_codes] = line.split(';').map(f => f.trim());
-
-        // ✅ Debug check: make sure iata_code is valid
-        if (!iata_code || typeof iata_code !== "string") {
-          console.warn("Bad or missing iata_code in row:", line);
-        }
-       
         const allCodes = [iata_code.toUpperCase(), ...(alt_codes ? alt_codes.split(',').map(c => c.trim().toUpperCase()) : [])];
-
         if (allCodes.includes(airportCode)) {
           airportData = {
             code: iata_code,
@@ -58,12 +49,7 @@
       }
 
       if (!found) {
-        airportData = {
-          code: airportCode,
-          name: 'Unknown Airport',
-          lat: 0,
-          lon: 0
-        };
+        airportData = { code: airportCode, name: 'Unknown Airport', lat: 0, lon: 0 };
         document.getElementById('summary').textContent = 'Airport not found';
         return;
       }
@@ -167,7 +153,13 @@
     }
 
     document.addEventListener('DOMContentLoaded', handleHashChange);
-    window.addEventListener('hashchange', handleHashChange);
+    window.addEventListener('hashchange', () => {
+      airportCode = location.hash.substring(1).toUpperCase();
+      users = [];
+      document.querySelector('#visitTable tbody').innerHTML = '';
+      document.getElementById('map').innerHTML = '';
+      loadAirportInfo();
+    });
   </script>
 </body>
 </html>
