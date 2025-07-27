@@ -1,111 +1,118 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Airport Viewer</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <style>
-      body {
-        font-family: sans-serif;
-      }
-      #map {
-        height: 800px;
-        width: 100%;
-        margin-top: 1em;
-      }
-      #airportSelect {
-        margin: 1em 0;
-        font-size: 1em;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Airport Viewer</h1>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Airport Viewer</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    body { font-family: sans-serif; max-width: 1000px; margin: auto; padding: 1em; }
+    #map { height: 600px; width: 100%; margin-bottom: 1em; }
+    #visitContainer { margin-top: 2em; }
+    #visitTable { border-collapse: collapse; width: 100%; }
+    #visitTable th, #visitTable td {
+      border: 1px solid #ccc;
+      padding: 0.4em 0.6em;
+      text-align: center;
+    }
+    #visitTable th { background-color: #eee; }
+  </style>
+</head>
+<body>
 
-    <label for="airportSelect">Choose an airport:</label>
-    <select id="airportSelect"></select>
+<h1>Airport Viewer</h1>
+<div id="map"></div>
 
-    <div id="map"></div>
-    <div id="infoBox"></div>
+<div id="visitContainer">
+  <h2>Visitors to <span id="airportCodeDisplay">[Select Airport]</span></h2>
+  <p>Total Visitors: <span id="visitorCount">0</span></p>
+  <table id="visitTable"></table>
+</div>
 
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script>
-      "use strict";
-      let map;
-      let marker;
-      let airportCode = "JFK";
-      let airportData = {};
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const contributors = [
+  "Hoss6884",
+  "bejacob",
+  "bickendan",
+  "cockroachking",
+  "griffith",
+  "mapcat",
+  "mollybollybee",
+  "ovoss",
+  "shiggins",
+  "si404",
+  "terescoj",
+  "the_spui_ninja"
+];
 
-      async function loadAirportList() {
-        try {
-          const res = await fetch("../data/airports.csv");
-          const text = await res.text();
-          const lines = text.trim().split("\n").slice(1);  // Skip header
-          const select = document.getElementById("airportSelect");
+const userVisits = {};
 
-          for (const line of lines) {
-            const fields = line.split(";").map(f => f.trim());
-            const iata = fields[1];
-            const name = fields[2];
-            const lat = parseFloat(fields[3]);
-            const lon = parseFloat(fields[4]);
+function parseAlist(username, text) {
+  const lines = text.trim().split("\n");
+  for (const line of lines) {
+    const [iata, ...flags] = line.trim().split(/\s+/);
+    if (!iata.match(/^[A-Z]{3}$/)) continue;
+    if (!userVisits[iata]) userVisits[iata] = {};
+    userVisits[iata][username] = flags;
+  }
+}
 
-            if (!iata || !name || isNaN(lat) || isNaN(lon)) continue;
+// Fetch all .alist files from GitHub
+contributors.forEach(user => {
+  fetch(`https://raw.githubusercontent.com/TravelMapping/AirportData/master/air/data/${user}.alist`)
+    .then(res => res.ok ? res.text() : Promise.reject(`${user}.alist missing`))
+    .then(text => parseAlist(user, text))
+    .catch(err => console.warn("Skipping", err));
+});
 
-            airportData[iata.toUpperCase()] = { name, lat, lon };
+// Display visit info for given airport
+function renderVisitTable(airportCode) {
+  document.getElementById("airportCodeDisplay").textContent = airportCode;
+  const table = document.getElementById("visitTable");
+  table.innerHTML = "";
 
-            const option = document.createElement("option");
-            option.value = iata.toUpperCase();
-            option.textContent = `${iata.toUpperCase()} – ${name}`;
-            select.appendChild(option);
-          }
+  const visits = userVisits[airportCode] || {};
+  const headers = ["User", "Arrived", "Departed", "Layover"];
 
-          select.value = airportCode;
-          select.addEventListener("change", (e) => {
-            airportCode = e.target.value;
-            loadAirportInfo();
-          });
+  const thead = document.createElement("thead");
+  const headerRow = document.createElement("tr");
+  headers.forEach(h => {
+    const th = document.createElement("th");
+    th.textContent = h;
+    headerRow.appendChild(th);
+  });
+  thead.appendChild(headerRow);
+  table.appendChild(thead);
 
-          loadAirportInfo();
-        } catch (err) {
-          console.error("Airport list fetch failed:", err);
-        }
-      }
-      
-      function loadAirportInfo() {
-        const infoBox = document.getElementById("infoBox");
-        const data = airportData[airportCode];
-        if (!data) {
-          infoBox.innerHTML = `<p>No data available for ${airportCode}</p>`;
-          return;
-        }
+  const tbody = document.createElement("tbody");
+  let count = 0;
+  for (const [user, types] of Object.entries(visits)) {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${user}</td>
+      <td>${types.includes("A") ? "✅" : ""}</td>
+      <td>${types.includes("D") ? "✅" : ""}</td>
+      <td>${types.includes("L") ? "✅" : ""}</td>
+    `;
+    tbody.appendChild(row);
+    count++;
+  }
+  table.appendChild(tbody);
 
-        infoBox.innerHTML = `
-          <h2>${airportCode} – ${data.name}</h2>
-          <p>Coordinates: ${data.lat}, ${data.lon}</p>
-        `;
+  document.getElementById("visitorCount").textContent = count;
+}
 
-        const coords = [data.lat, data.lon];
-        map.setView(coords, 10);
+// Initialize map
+const map = L.map('map').setView([41.9742, -87.9073], 11);  // ORD
 
-        if (marker) {
-          marker.setLatLng(coords);
-        } else {
-          marker = L.marker(coords).addTo(map);
-        }
-      }
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
 
-      function initMap() {
-        map = L.map("map").setView([40.6413, -73.7781], 10); // JFK default
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-          attribution: "&copy; OpenStreetMap contributors"
-        }).addTo(map);
-      }
-
-      window.onload = () => {
-        initMap();
-        loadAirportList();
-      };
-    </script>
-  </body>
+// Example airport marker — add more as needed
+L.marker([41.9742, -87.9073]).addTo(map)
+  .bindPopup("O'Hare International (ORD)")
+  .on("click", () => renderVisitTable("ORD"));
+</script>
+</body>
 </html>
