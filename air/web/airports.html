@@ -3,157 +3,78 @@
 <head>
   <meta charset="UTF-8">
   <title>Airport Viewer</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <style>
-    body { font-family: sans-serif; max-width: 1000px; margin: auto; padding: 1em; }
-    #map { height: 600px; width: 100%; margin-bottom: 1em; }
-    #visitContainer { margin-top: 2em; }
-    #visitTable { border-collapse: collapse; width: 100%; }
-    #visitTable th, #visitTable td {
-      border: 1px solid #ccc;
-      padding: 0.4em 0.6em;
-      text-align: center;
-    }
-    #visitTable th { background-color: #eee; }
-  </style>
+  <link rel="stylesheet" href="air/view/view.css">
+  <script src="air/view/view.js" defer></script>
+  <script type="module" src="air/view/selector.js"></script>
 </head>
 <body>
+  <h1>Airport Viewer</h1>
 
-<h1>Airport Viewer</h1>
+  <label for="airport-select">Choose an airport:</label>
+  <select id="airport-select"></select>
 
-<label for="airportSelect"><strong>Select Airport:</strong></label>
-<select id="airportSelect"></select>
+  <section id="map-section">
+    <h2>Location</h2>
+    <div id="airport-map">Loading map…</div>
+  </section>
 
-<div id="map"></div>
+  <section id="visitors">
+    <h2>Visitors</h2>
+    <table id="visitor-table">
+      <thead>
+        <tr><th>Name</th><th>Visited</th><th>Notes</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </section>
 
-<div id="visitContainer">
-  <h2>Visitors to <span id="airportCodeDisplay">[Select Airport]</span></h2>
-  <p>Total Visitors: <span id="visitorCount">0</span></p>
-  <table id="visitTable"></table>
-</div>
+  <script>
+    const airportSelect = document.getElementById("airport-select");
+    const visitorTableBody = document.querySelector("#visitor-table tbody");
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script>
-const userVisits = {};
-const airportCoords = {};
-const airportNames = {};
-const visitedAirports = new Set();
-
-// Load airport data from airports.csv
-fetch("https://raw.githubusercontent.com/TravelMapping/AirportData/master/air/data/airports.csv")
-  .then(res => res.ok ? res.text() : Promise.reject("airports.csv missing"))
-  .then(csv => {
-    csv.trim().split("\n").forEach(line => {
-      const [iata, name, lat, lon] = line.split(";");
-      if (iata && name && lat && lon) {
-        airportCoords[iata] = [parseFloat(lat), parseFloat(lon)];
-        airportNames[iata] = name;
+    async function loadAirports() {
+      const csvUrl = "air/data/airports.csv";
+      const response = await fetch(csvUrl);
+      const text = await response.text();
+      const rows = text.trim().split("\n").map(line => line.split(","));
+      const headers = rows.shift();
+      const data = rows.map(row => Object.fromEntries(row.map((val, i) => [headers[i], val])));
+      for (const airport of data) {
+        const option = document.createElement("option");
+        option.value = airport.iata;
+        option.textContent = `${airport.name} (${airport.iata})`;
+        airportSelect.appendChild(option);
       }
-    });
-    loadContributors();  // Start loading .alist files
-  })
-  .catch(err => console.error("Error loading airports.csv:", err));
-
-// Load contributor usernames from manifest.json
-function loadContributors() {
-  fetch("https://raw.githubusercontent.com/TravelMapping/AirportData/master/air/data/manifest.json")
-    .then(res => res.ok ? res.json() : Promise.reject("manifest.json missing"))
-    .then(manifest => {
-      const usernames = Object.keys(manifest);
-      const fetches = usernames.map(user =>
-        fetch(`https://raw.githubusercontent.com/TravelMapping/AirportData/master/air/data/${user}.alist`)
-          .then(res => res.ok ? res.text() : Promise.reject(`${user}.alist missing`))
-          .then(text => parseAlist(user, text))
-          .catch(err => console.warn("Skipping", err))
-      );
-      Promise.all(fetches).then(() => populateDropdown());
-    })
-    .catch(err => console.error("Error loading manifest.json:", err));
-}
-
-// Parse each .alist file
-function parseAlist(username, text) {
-  const lines = text.trim().split("\n");
-  for (const line of lines) {
-    const [iata, ...flags] = line.trim().split(/\s+/);
-    if (!iata.match(/^[A-Z]{3}$/)) continue;
-    if (!userVisits[iata]) userVisits[iata] = {};
-    userVisits[iata][username] = flags;
-    visitedAirports.add(iata);
-  }
-}
-
-// Build dropdown menu of visited airports
-function populateDropdown() {
-  const select = document.getElementById("airportSelect");
-  Array.from(visitedAirports).sort().forEach(code => {
-    const opt = document.createElement("option");
-    const name = airportNames[code] || "Unknown";
-    opt.value = code;
-    opt.textContent = `${code} – ${name}`;
-    select.appendChild(opt);
-  });
-
-  select.addEventListener("change", () => {
-    const code = select.value;
-    const name = airportNames[code] || "Unknown";
-    renderVisitTable(code, name);
-    if (airportCoords[code]) {
-      map.setView(airportCoords[code], 11);
-      marker.setLatLng(airportCoords[code]).setPopupContent(`${code} – ${name}`).openPopup();
     }
-  });
 
-  // Trigger initial selection (ORD if available)
-  if (select.options.length > 0) {
-    const defaultCode = visitedAirports.has("ORD") ? "ORD" : select.options[0].value;
-    select.value = defaultCode;
-    select.dispatchEvent(new Event("change"));
-  }
-}
+    async function loadVisitors(iataCode) {
+      const jsonUrl = "air/data/manifest.json";
+      const response = await fetch(jsonUrl);
+      const manifest = await response.json();
+      const entry = manifest.find(item => item.iata === iataCode);
+      if (!entry) return;
 
-// Display visit table
-function renderVisitTable(iata, name) {
-  document.getElementById("airportCodeDisplay").textContent = `${iata} – ${name}`;
-  const table = document.getElementById("visitTable");
-  table.innerHTML = "";
+      const alistUrl = `air/data/${entry.username}.alist`;
+      const alistResp = await fetch(alistUrl);
+      const alistText = await alistResp.text();
+      const rows = alistText.trim().split("\n").map(line => line.split(","));
+      const headers = rows.shift();
+      const visitorData = rows.map(row => Object.fromEntries(row.map((val, i) => [headers[i], val])));
 
-  const visits = userVisits[iata] || {};
-  const headers = ["User", "Arrived", "Departed", "Layover"];
+      visitorTableBody.innerHTML = "";
+      for (const visitor of visitorData) {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${visitor.name}</td><td>${visitor.date}</td><td>${visitor.notes}</td>`;
+        visitorTableBody.appendChild(tr);
+      }
+    }
 
-  const thead = document.createElement("thead");
-  const headerRow = document.createElement("tr");
-  headers.forEach(h => {
-    const th = document.createElement("th");
-    th.textContent = h;
-    headerRow.appendChild(th);
-  });
-  thead.appendChild(headerRow);
-  table.appendChild(thead);
+    airportSelect.addEventListener("change", (e) => {
+      const selected = e.target.value;
+      loadVisitors(selected);
+    });
 
-  const tbody = document.createElement("tbody");
-  let count = 0;
-  for (const [user, types] of Object.entries(visits)) {
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td>${user}</td>
-      <td>${types.includes("A") ? "✅" : ""}</td>
-      <td>${types.includes("D") ? "✅" : ""}</td>
-      <td>${types.includes("L") ? "✅" : ""}</td>
-    `;
-    tbody.appendChild(row);
-    count++;
-  }
-  table.appendChild(tbody);
-  document.getElementById("visitorCount").textContent = count;
-}
-
-// Initialize map and default marker
-const map = L.map('map').setView([41.9742, -87.9073], 11);  // Start at ORD
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; OpenStreetMap contributors'
-}).addTo(map);
-const marker = L.marker([41.9742, -87.9073]).addTo(map).bindPopup("ORD – O'Hare International Airport");
-</script>
+    loadAirports();
+  </script>
 </body>
 </html>
