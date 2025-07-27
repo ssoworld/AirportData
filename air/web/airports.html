@@ -40,18 +40,23 @@
         try {
           const res = await fetch("../data/airports.csv");
           const text = await res.text();
-          const lines = text.trim().split("\n");
+          const lines = text.trim().split("\n").slice(1);  // Skip header
           const select = document.getElementById("airportSelect");
 
-          for (const line of lines.slice(1)) {  // Skip header row
+          for (const line of lines) {
             const fields = line.split(";").map(f => f.trim());
             const iata = fields[1];
             const name = fields[2];
-            if (!iata || !name) continue;
+            const lat = parseFloat(fields[3]);
+            const lon = parseFloat(fields[4]);
+
+            if (!iata || !name || isNaN(lat) || isNaN(lon)) continue;
+
+            airportData[iata.toUpperCase()] = { name, lat, lon };
 
             const option = document.createElement("option");
             option.value = iata.toUpperCase();
-            option.textContent = `${name} (${iata.toUpperCase()})`;
+            option.textContent = `${iata.toUpperCase()} – ${name}`;
             select.appendChild(option);
           }
 
@@ -76,8 +81,7 @@
         }
 
         infoBox.innerHTML = `
-          <h2>${data.name} (${airportCode})</h2>
-          <p>Country: ${data.country}</p>
+          <h2>${airportCode} – ${data.name}</h2>
           <p>Coordinates: ${data.lat}, ${data.lon}</p>
         `;
 
