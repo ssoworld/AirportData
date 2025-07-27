@@ -59,8 +59,9 @@
         airportList.push({ code: code.toUpperCase(), name });
       }
       populateDropdown();
+      placeAllMarkers();
 
-      // After dropdown is populated, check for query param:
+      // Check for query parameter
       const params = new URLSearchParams(window.location.search);
       const airportParam = params.get('airport');
       if (airportParam && airports[airportParam.toUpperCase()]) {
@@ -72,7 +73,7 @@
 
     function populateDropdown() {
       const sel = document.getElementById('airportSelect');
-      for (const airport of airportList.sort((a,b) => a.code.localeCompare(b.code))) {
+      for (const airport of airportList.sort((a, b) => a.code.localeCompare(b.code))) {
         const opt = document.createElement('option');
         opt.value = airport.code;
         opt.textContent = `${airport.code} - ${airport.name}`;
@@ -82,7 +83,7 @@
 
     async function fetchManifest() {
       const res = await fetch(manifestUrl);
-      return await res.json(); // returns an array of usernames
+      return await res.json();
     }
 
     async function fetchAlist(username) {
@@ -111,7 +112,9 @@
       if (!airport) return;
 
       map.setView([airport.lat, airport.lon], 13);
-      marker.setLatLng([airport.lat, airport.lon]).bindPopup(`${airport.code} - ${airport.name}`).openPopup();
+      marker.setLatLng([airport.lat, airport.lon])
+        .bindPopup(`${airport.code} - ${airport.name}`)
+        .openPopup();
 
       const manifest = await fetchManifest();
       const visitData = {};
@@ -157,6 +160,16 @@
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
     const marker = L.marker([0, 0]).addTo(map);
+
+    function placeAllMarkers() {
+      for (const code in airports) {
+        const a = airports[code];
+        const m = L.marker([a.lat, a.lon])
+          .addTo(map)
+          .bindPopup(`<b>${a.code}</b><br>${a.name}<br><a href="?airport=${a.code}">View visits</a>`);
+        m.on('click', () => handleAirportSelect(code));
+      }
+    }
 
     document.getElementById('airportSelect').addEventListener('change', (e) => {
       handleAirportSelect(e.target.value.toUpperCase());
