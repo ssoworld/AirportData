@@ -1,8 +1,9 @@
-const map = L.map('map').setView([20, 0], 5);
+console.log("At user.js start, global L:", window.L);
+const mapInstance = window.L.map('map').setView([20, 0], 5);
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; OpenStreetMap contributors',
-}).addTo(map);
+}).addTo(mapInstance);
 
 let airportsData = [];
 let manifest = [];
@@ -13,7 +14,7 @@ function createSVGIcon(hasA, hasD, hasL) {
   svgParts.push(`<polygon points="12,5 5,12 19,12" fill="${hasD ? 'green' : 'white'}" stroke="black" />`);
   svgParts.push(`<polygon points="12,19 5,12 19,12" fill="${hasA ? 'red' : 'white'}" stroke="black" />`);
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">${svgParts.join('')}</svg>`;
-  return L.divIcon({
+  return window.L.divIcon({
     html: svg,
     className: 'svg-icon',
     iconSize: [24, 24],
@@ -42,7 +43,7 @@ function parseALIST(text) {
 async function loadData() {
   const airportsRes = await fetch('../data/airports.csv');
   const airportsText = await airportsRes.text();
-  airportsData = airportsText.trim().split('\n').slice(1).map(line => {
+  airportsData = airportsText.trim().split('\n').slice(1).mapInstance(line => {
     const [country, iata, name, lat, lon] = line.split(';');
     return {
       country, iata, name,
@@ -87,8 +88,8 @@ async function loadUser(username) {
   const tableBody = document.querySelector('#airportTable tbody');
   tableBody.innerHTML = '';
 
-  if (window.markersLayer) map.removeLayer(window.markersLayer);
-  window.markersLayer = L.layerGroup();
+  if (window.markersLayer) mapInstance.removeLayer(window.markersLayer);
+  window.markersLayer = window.layerGroup();
 
   const visitedAirports = airportsData.filter(apt => visits[apt.iata]);
   visitedAirports.forEach(apt => {
@@ -96,9 +97,10 @@ async function loadUser(username) {
     const icon = createSVGIcon(A, D, L);
     console.log("lat:", apt.lat, "lon:", apt.lon);
     console.log("icon:", icon);
-    console.log("L.marker:", L.marker);
-    console.log("map:", map);
-    const marker = L.marker([apt.lat, apt.lon], { icon })
+    console.log("window.marker:", window.L.marker);
+    console.log("mapInstance:", mapInstance);
+    console.log("Before marker creation, window.L.marker:", window.L.marker);
+    const marker = window.L.marker([apt.lat, apt.lon], { icon })
       .bindPopup(`<b>${apt.iata} - ${apt.name}</b><br><a href="airports.html?airport=${apt.iata}">View details</a>`)
       .on('mouseover', function () { this.openPopup(); })
       .on('mouseout', function () { this.closePopup(); });
@@ -116,12 +118,12 @@ async function loadUser(username) {
     tableBody.appendChild(row);
   });
 
-  window.markersLayer.addTo(map);
+  window.markersLayer.addTo(mapInstance);
 
   if (visitedAirports.length > 0) {
     const avgLat = visitedAirports.reduce((sum, a) => sum + a.lat, 0) / visitedAirports.length;
     const avgLon = visitedAirports.reduce((sum, a) => sum + a.lon, 0) / visitedAirports.length;
-    map.setView([avgLat, avgLon], 5);
+    mapInstance.setView([avgLat, avgLon], 5);
   }
 }
 
