@@ -34,7 +34,10 @@
   </table>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="user.js"></script>
+<script>
+  console.log("Leaflet loaded?", typeof L, "L.marker?", typeof L.marker);
+</script>
+<script src="user.js" defer></script>
 
 </body>
 </html>
