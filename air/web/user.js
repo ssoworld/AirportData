@@ -94,8 +94,6 @@ function parseALIST(text) {
 }
 
 async function loadData() {
-  await loadCountryMap();
-
   const airportsRes = await fetch('../data/airports.csv');
   const airportsText = await airportsRes.text();
   airportsData = airportsText.trim().split('\n').slice(1).map(line => {
