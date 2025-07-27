@@ -165,8 +165,8 @@
       document.getElementById('visitTable').innerHTML = '';
       document.getElementById('summary').textContent = '';
 
-      // Reload fresh data
-      loadAirportInfo();
+      // Force full reload to mimic Ctrl+F5
+      window.location.replace(window.location.href);
     });
 
   </script>
