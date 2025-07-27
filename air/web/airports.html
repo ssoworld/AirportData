@@ -154,12 +154,21 @@
 
     document.addEventListener('DOMContentLoaded', handleHashChange);
     window.addEventListener('hashchange', () => {
-      airportCode = location.hash.substring(1).toUpperCase();
+      airportCode = window.location.hash.replace('#', '').toUpperCase();
+
+      // Clean up old state
+      if (window.map && window.map.remove) {
+        window.map.remove();
+        window.map = null;
+      }
       users = [];
-      document.querySelector('#visitTable tbody').innerHTML = '';
-      document.getElementById('map').innerHTML = '';
+      document.getElementById('visitTable').innerHTML = '';
+      document.getElementById('summary').textContent = '';
+
+      // Reload fresh data
       loadAirportInfo();
     });
+
   </script>
 </body>
 </html>
