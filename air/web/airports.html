@@ -116,6 +116,9 @@ async function handleAirportSelect(code) {
   const airport = airports[code];
   if (!airport) return;
 
+  // Update URL param without page reload
+  history.replaceState(null, '', `?airport=${code}`);
+
   map.setView([airport.lat, airport.lon], 13);
   marker.setLatLng([airport.lat, airport.lon])
     .bindPopup(`${airport.code} - ${airport.name}`)
