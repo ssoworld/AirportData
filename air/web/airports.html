@@ -14,7 +14,7 @@
 </head>
 <body>
   <h1>Airport Visit Tracker</h1>
-  <p><a href="airports.html" style="font-size: 1em;">← Airports home</a></p>
+  <p id="homeLink"><a href="airports.html" style="font-size: 1em;">← Airports home</a></p>
   <label for="airportSelect">Select an airport:</label>
   <select id="airportSelect">
     <option value="">-- Choose --</option>
@@ -65,6 +65,9 @@
       // Check for query parameter
       const params = new URLSearchParams(window.location.search);
       const airportParam = params.get('airport');
+      if (!airportParam) {
+        document.getElementById('homeLink').style.display = 'none';
+      }
       if (airportParam && airports[airportParam.toUpperCase()]) {
         const select = document.getElementById('airportSelect');
         select.value = airportParam.toUpperCase();
