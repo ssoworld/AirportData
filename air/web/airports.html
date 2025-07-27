@@ -29,7 +29,7 @@
     let airportCode;
     
     async function loadAirportInfo() {
-      const res = await fetch('../data/airports-master.csv');
+      const res = await fetch('../data/airports.csv');
       const text = await res.text();
       const lines = text.trim().split('\n');
 
