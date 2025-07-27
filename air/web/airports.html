@@ -38,21 +38,16 @@
 
       async function loadAirportList() {
         try {
-          const res = await fetch("../data/airports-master.csv");
+          const res = await fetch("../data/airports.csv");
           const text = await res.text();
           const lines = text.trim().split("\n");
           const select = document.getElementById("airportSelect");
 
-          for (const line of lines) {
-            const [country, iata, name, lat, lon] = line.split(";").map(f => f.trim());
-            if (!iata || !lat || !lon) continue;
-
-            airportData[iata.toUpperCase()] = {
-              name,
-              country,
-              lat: parseFloat(lat),
-              lon: parseFloat(lon)
-            };
+          for (const line of lines.slice(1)) {  // Skip header row
+            const fields = line.split(";").map(f => f.trim());
+            const iata = fields[1];
+            const name = fields[2];
+            if (!iata || !name) continue;
 
             const option = document.createElement("option");
             option.value = iata.toUpperCase();
@@ -71,7 +66,7 @@
           console.error("Airport list fetch failed:", err);
         }
       }
-
+      
       function loadAirportInfo() {
         const infoBox = document.getElementById("infoBox");
         const data = airportData[airportCode];
