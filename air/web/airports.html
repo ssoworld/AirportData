@@ -35,7 +35,7 @@
       let found = false;
       for (const line of lines) {
         const [country, iata_code, name, latitude, longitude, alt_codes] = line.split(';').map(f => f.trim());
-        const allCodes = [iata_code.toUpperCase(), ...(alt_codes ? alt_codes.split(',').map(c => c.trim().toUpperCase()) : [])];
+        const allCodes = [iata_code, ...(alt_codes ? alt_codes.split(',').map(c => c.trim()) : [])];
         if (allCodes.includes(airportCode)) {
           airportData = {
             code: iata_code,
@@ -109,7 +109,7 @@
 
     function handleHashChange() {
       const hash = typeof location.hash === 'string' ? location.hash : '';
-      airportCode = hash ? hash.substring(1).toUpperCase() : "JFK";
+      airportCode = hash ? hash.substring(1) : "JFK";
 
       users = [];
       airportData = null;
@@ -152,10 +152,7 @@
       loadAirportInfo();
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      airportCode = location.hash.substring(1).toUpperCase();
-      loadAirportInfo();
-    });
+    document.addEventListener('DOMContentLoaded', handleHashChange);
     window.addEventListener('hashchange', () => {
       airportCode = location.hash.substring(1).toUpperCase();
       users = [];
