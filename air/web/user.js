@@ -139,6 +139,15 @@ async function loadUser(username) {
   const res = await fetch(`../data/${username}.alist`);
   const text = await res.text();
   const visits = parseALIST(text);
+  let totalA = 0, totalD = 0, totalL = 0;
+  Object.values(visits).forEach(v => {
+    if (v.A) totalA++;
+    if (v.D) totalD++;
+    if (v.L) totalL++;
+  });
+  const totalAirports = Object.keys(visits).length;
+  document.getElementById('totals').textContent =
+  `Visited: ${totalAirports} | Arrivals: ${totalA} | Departures: ${totalD} | Layovers: ${totalL}`;
 
   const tableBody = document.querySelector('#airportTable tbody');
   tableBody.innerHTML = '';
