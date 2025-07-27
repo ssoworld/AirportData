@@ -428,6 +428,7 @@
     "lon": 2.5479,
     "country": "FRA",
     "visits": [
+      "A",
       "D"
     ]
   },
@@ -1612,7 +1613,6 @@
     "lon": -115.1537,
     "country": "USA",
     "visits": [
-      "A",
       "D",
       "L"
     ]
@@ -1990,8 +1990,7 @@
     "country": "USA",
     "visits": [
       "A",
-      "D",
-      "L"
+      "D"
     ]
   },
   {
