@@ -3,9 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <title>Airport Viewer</title>
-  <link rel="stylesheet" href="air/view/view.css">
-  <script src="air/view/view.js" defer></script>
-  <script type="module" src="air/view/selector.js"></script>
+  <style>
+    body { font-family: sans-serif; max-width: 800px; margin: auto; padding: 1em; }
+    h1 { text-align: center; }
+    select { font-size: 1em; padding: 0.3em; }
+    #airport-map { width: 100%; height: 300px; background: #f0f0f0; border: 1px solid #ccc; margin-top: 1em; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1em; }
+    th, td { border: 1px solid #ccc; padding: 0.5em; text-align: center; }
+    th { background-color: #eee; }
+  </style>
 </head>
 <body>
   <h1>Airport Viewer</h1>
@@ -15,14 +21,16 @@
 
   <section id="map-section">
     <h2>Location</h2>
-    <div id="airport-map">Loading map…</div>
+    <div id="airport-map">Map placeholder will go here</div>
   </section>
 
   <section id="visitors">
     <h2>Visitors</h2>
     <table id="visitor-table">
       <thead>
-        <tr><th>Name</th><th>Visited</th><th>Notes</th></tr>
+        <tr>
+          <th>Username</th><th>Arrival</th><th>Departure</th><th>Layover</th>
+        </tr>
       </thead>
       <tbody></tbody>
     </table>
@@ -31,10 +39,10 @@
   <script>
     const airportSelect = document.getElementById("airport-select");
     const visitorTableBody = document.querySelector("#visitor-table tbody");
+    const mapDiv = document.getElementById("airport-map");
 
     async function loadAirports() {
-      const csvUrl = "air/data/airports.csv";
-      const response = await fetch(csvUrl);
+      const response = await fetch("../data/airports.csv");
       const text = await response.text();
       const rows = text.trim().split("\n").map(line => line.split(","));
       const headers = rows.shift();
@@ -47,30 +55,54 @@
       }
     }
 
+    function updateMap(iataCode) {
+      mapDiv.textContent = `Map placeholder for ${iataCode}`;
+    }
+
     async function loadVisitors(iataCode) {
-      const jsonUrl = "air/data/manifest.json";
-      const response = await fetch(jsonUrl);
-      const manifest = await response.json();
-      const entry = manifest.find(item => item.iata === iataCode);
-      if (!entry) return;
-
-      const alistUrl = `air/data/${entry.username}.alist`;
-      const alistResp = await fetch(alistUrl);
-      const alistText = await alistResp.text();
-      const rows = alistText.trim().split("\n").map(line => line.split(","));
-      const headers = rows.shift();
-      const visitorData = rows.map(row => Object.fromEntries(row.map((val, i) => [headers[i], val])));
-
       visitorTableBody.innerHTML = "";
-      for (const visitor of visitorData) {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `<td>${visitor.name}</td><td>${visitor.date}</td><td>${visitor.notes}</td>`;
-        visitorTableBody.appendChild(tr);
+      const manifestResp = await fetch("../data/manifest.json");
+      const manifest = await manifestResp.json();
+
+      for (const entry of manifest) {
+        const alistUrl = `../data/${entry.username}.alist`;
+        try {
+          const alistResp = await fetch(alistUrl);
+          const alistText = await alistResp.text();
+          const lines = alistText.trim().split("\n");
+
+          for (const line of lines) {
+            const trimmed = line.trim();
+            if (!trimmed || trimmed.startsWith("#")) continue;
+
+            const parts = trimmed.split(/\s+/);
+            const code = parts[0];
+            const roles = parts.slice(1);
+
+            if (code === iataCode) {
+              const hasA = roles.includes("A");
+              const hasD = roles.includes("D");
+              const hasL = roles.includes("L");
+
+              const tr = document.createElement("tr");
+              tr.innerHTML = `
+                <td>${entry.username}</td>
+                <td>${hasA ? "✅" : ""}</td>
+                <td>${hasD ? "✅" : ""}</td>
+                <td>${hasL ? "✅" : ""}</td>
+              `;
+              visitorTableBody.appendChild(tr);
+            }
+          }
+        } catch (err) {
+          console.error(`Failed to load ${entry.username}.alist:`, err);
+        }
       }
     }
 
     airportSelect.addEventListener("change", (e) => {
       const selected = e.target.value;
+      updateMap(selected);
       loadVisitors(selected);
     });
 
