@@ -152,22 +152,20 @@
       loadAirportInfo();
     }
 
-    document.addEventListener('DOMContentLoaded', handleHashChange);
+    document.addEventListener('DOMContentLoaded', () => {
+      const hash = typeof location.hash === 'string' ? location.hash : '';
+      airportCode = hash ? hash.substring(1).toUpperCase() : "JFK";
+      loadAirportInfo();
+    });
+
     window.addEventListener('hashchange', () => {
       const hash = window.location.hash;
       const base = window.location.pathname;
 
-      // If already reloaded with ?reload, strip it and continue
-      if (window.location.search === '?reload') {
-        history.replaceState(null, '', base + hash);
-        airportCode = hash.replace('#', '').toUpperCase();
-        loadAirportInfo();
-        return;
-      }
-
-      // Trigger reload with dummy query param to bust cache
-      window.location.href = base + '?reload' + hash;
+      // Force full reload with new hash
+      window.location.href = base + hash;
     });
+
 
   </script>
 </body>
