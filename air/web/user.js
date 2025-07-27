@@ -102,8 +102,10 @@ async function loadUser(username) {
     console.log("Before marker creation, window.L.marker:", window.L.marker);
     const marker = window.L.marker([apt.lat, apt.lon], { icon })
       .bindPopup(`<b>${apt.iata} - ${apt.name}</b><br><a href="airports.html?airport=${apt.iata}">View details</a>`)
-      .on('mouseover', function () { this.openPopup(); })
-      .on('mouseout', function () { this.closePopup(); });
+      .on('click', function () {
+        this.openPopup();
+      });
+
     marker.addTo(window.markersLayer);
 
     const row = document.createElement('tr');
