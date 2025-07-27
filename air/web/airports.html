@@ -121,11 +121,17 @@
       }
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
+    function handleHashChange() {
       const hash = typeof location.hash === 'string' ? location.hash : '';
       airportCode = hash ? hash.substring(1).toUpperCase() : "JFK";
+      users = [];  // Clear previous user data
+      document.querySelector('#visitTable tbody').innerHTML = '';  // Clear table
+      document.getElementById('summary').textContent = 'Loading...';  // Reset summary
       loadAirportInfo();
-    });
+    }
+
+    document.addEventListener('DOMContentLoaded', handleHashChange);
+    window.addEventListener('hashchange', handleHashChange);
   </script>
 </body>
 </html>
