@@ -94,6 +94,10 @@ async function loadUser(username) {
   visitedAirports.forEach(apt => {
     const { A, D, L } = visits[apt.iata];
     const icon = createSVGIcon(A, D, L);
+    console.log("lat:", lat, "lon:", lon);
+    console.log("icon:", icon);
+    console.log("L.marker:", L.marker);
+    console.log("map:", map);
     const marker = L.marker([apt.lat, apt.lon], { icon })
       .bindPopup(`<b>${apt.iata} - ${apt.name}</b><br><a href="airports.html?airport=${apt.iata}">View details</a>`)
       .on('mouseover', function () { this.openPopup(); })
