@@ -178,11 +178,24 @@ async function loadUser(username) {
 
   window.markersLayer.addTo(mapInstance);
 
-  if (visitedAirports.length > 0) {
-    const avgLat = visitedAirports.reduce((sum, a) => sum + a.lat, 0) / visitedAirports.length;
-    const avgLon = visitedAirports.reduce((sum, a) => sum + a.lon, 0) / visitedAirports.length;
-    mapInstance.setView([avgLat, avgLon], 5);
+  const currentCenter = mapInstance.getCenter();
+  const currentZoom = mapInstance.getZoom();
+
+  // If it's the first load, or navigating to a new user, recenter on visited airports
+  if (!loadUser.hasRunBefore || username !== loadUser.lastUser) {
+    if (visitedAirports.length > 0) {
+      const avgLat = visitedAirports.reduce((sum, a) => sum + a.lat, 0) / visitedAirports.length;
+      const avgLon = visitedAirports.reduce((sum, a) => sum + a.lon, 0) / visitedAirports.length;
+      mapInstance.setView([avgLat, avgLon], 5);
+    }
+  } else {
+    // Restore previous view when toggling checkbox
+    mapInstance.setView(currentCenter, currentZoom);
   }
+
+  loadUser.hasRunBefore = true;
+  loadUser.lastUser = username;
+
 
   // Update totals in <span id="totals">
   const totalVisited = visitedAirports.length;
