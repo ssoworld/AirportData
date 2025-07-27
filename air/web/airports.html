@@ -59,6 +59,15 @@
         airportList.push({ code: code.toUpperCase(), name });
       }
       populateDropdown();
+
+      // After dropdown is populated, check for query param:
+      const params = new URLSearchParams(window.location.search);
+      const airportParam = params.get('airport');
+      if (airportParam && airports[airportParam.toUpperCase()]) {
+        const select = document.getElementById('airportSelect');
+        select.value = airportParam.toUpperCase();
+        handleAirportSelect(airportParam.toUpperCase());
+      }
     }
 
     function populateDropdown() {
