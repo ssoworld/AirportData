@@ -2,30 +2,29 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>User Airport Visits</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <title>User's Visited Airports</title>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
   <style>
-    body { font-family: sans-serif; padding: 1em; }
-    #map { height: 500px; margin-top: 1em; }
-    table { border-collapse: collapse; width: 100%; margin-top: 1em; }
-    th, td { border: 1px solid #ccc; padding: 0.5em; text-align: center; }
-    th { background: #eee; }
+    #map { height: 500px; margin: 1em 0; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { padding: 0.4em; border: 1px solid #ccc; text-align: center; }
+    .svg-icon { text-align: center; }
   </style>
 </head>
 <body>
-  <h1 id="userTitle">User's Visited Airports</h1>
+  <h1 id="title">Visited Airports</h1>
   <label for="userSelect">Select user:</label>
   <select id="userSelect"></select>
-
   <div id="map"></div>
-
-  <table id="visitTable">
+  <table id="airportTable">
     <thead>
       <tr>
         <th>Country</th>
         <th>IATA</th>
-        <th>Airport Name</th>
+        <th>Airport</th>
         <th>Arrival</th>
         <th>Departure</th>
         <th>Layover</th>
@@ -34,131 +33,132 @@
     <tbody></tbody>
   </table>
 
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
-    const csvUrl = '../data/airports.csv';
-    const manifestUrl = '../data/manifest.json';
-    const dataPath = '../data/';
+    const map = L.map('map').setView([20, 0], 5);
 
-    const map = L.map('map').setView([20, 0], 2);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors'
+      attribution: '&copy; OpenStreetMap contributors',
     }).addTo(map);
-    let markers = [];
 
-    let airports = {};
+    let airportsData = [];
+    let manifest = [];
 
-    async function loadAirports() {
-      const res = await fetch(csvUrl);
-      const text = await res.text();
-      const lines = text.trim().split('\n');
-      lines.shift(); // remove header
-      for (const line of lines) {
-        const [country, code, name, lat, lon] = line.split(';');
-        if (!code) continue;
-        airports[code.toUpperCase()] = {
-          code: code.toUpperCase(),
-          name,
-          lat: parseFloat(lat),
-          lon: parseFloat(lon),
-          country
-        };
-      }
+    function createSVGIcon(hasA, hasD, hasL) {
+      const svgParts = [];
+      svgParts.push(`<circle cx="12" cy="12" r="10" stroke="black" fill="${hasL ? 'blue' : 'white'}" />`);
+      svgParts.push(`<polygon points="12,5 5,12 19,12" fill="${hasD ? 'green' : 'white'}" stroke="black" />`);
+      svgParts.push(`<polygon points="12,19 5,12 19,12" fill="${hasA ? 'red' : 'white'}" stroke="black" />`);
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">${svgParts.join('')}</svg>`;
+      return L.divIcon({
+        html: svg,
+        className: 'svg-icon',
+        iconSize: [24, 24],
+      });
     }
 
-    function getUserParam() {
-      const urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get('user') || '';
-    }
-
-    async function loadManifest() {
-      const res = await fetch(manifestUrl);
-      return await res.json();
-    }
-
-    function parseAlist(lines) {
+    function parseALIST(text) {
       const visits = {};
-      for (const line of lines) {
-        if (line.startsWith('#')) continue;
-        const [code, ...flags] = line.trim().split(/\s+/);
-        const iata = code.toUpperCase();
-        if (!airports[iata]) continue;
-        const types = flags.join('').toUpperCase();
-        visits[iata] = {
-          A: types.includes('A'),
-          D: types.includes('D'),
-          L: types.includes('L')
-        };
-      }
+      text.split('\n').forEach(line => {
+        line = line.trim();
+        if (line.startsWith('#') || line === '') return;
+        const parts = line.split(/\s+/);
+        if (parts.length >= 2) {
+          const code = parts[0].toUpperCase();
+          const types = parts.slice(1).join('');
+          visits[code] = {
+            A: types.includes('A'),
+            D: types.includes('D'),
+            L: types.includes('L'),
+          };
+        }
+      });
       return visits;
     }
 
-    function renderTable(visitData) {
-      const tbody = document.querySelector('#visitTable tbody');
-      tbody.innerHTML = '';
-      for (const iata of Object.keys(visitData).sort()) {
-        const airport = airports[iata];
-        const row = document.createElement('tr');
-        ['country', 'code', 'name'].forEach(key => {
-          const td = document.createElement('td');
-          td.textContent = airport[key];
-          row.appendChild(td);
-        });
-        ['A', 'D', 'L'].forEach(type => {
-          const td = document.createElement('td');
-          td.textContent = visitData[iata][type] ? '✔' : '';
-          row.appendChild(td);
-        });
-        tbody.appendChild(row);
-      }
-    }
-
-    function updateMap(visitData) {
-      markers.forEach(m => map.removeLayer(m));
-      markers = [];
-
-      const bounds = [];
-      for (const iata in visitData) {
-        const { lat, lon, name } = airports[iata];
-        const marker = L.marker([lat, lon])
-          .addTo(map)
-          .bindPopup(`<b>${iata} - ${name}</b><br><a href="airports.html?airport=${iata}">View details</a>`);
-        markers.push(marker);
-        bounds.push([lat, lon]);
-      }
-      if (bounds.length > 0) map.fitBounds(bounds, { padding: [30, 30] });
-    }
-
-    async function handleUserChange(user) {
-      document.getElementById('userTitle').textContent = `${user}'s Visited Airports`;
-      history.replaceState(null, '', `?user=${user}`);
-
-      const res = await fetch(`${dataPath}${user}.alist`);
-      const lines = (await res.text()).split('\n');
-      const visitData = parseAlist(lines);
-      renderTable(visitData);
-      updateMap(visitData);
-    }
-
-    async function init() {
-      await loadAirports();
-      const users = await loadManifest();
-      const sel = document.getElementById('userSelect');
-      users.forEach(u => {
-        const opt = document.createElement('option');
-        opt.value = u;
-        opt.textContent = u;
-        sel.appendChild(opt);
+    async function loadData() {
+      const airportsRes = await fetch('../data/airports.csv');
+      const airportsText = await airportsRes.text();
+      airportsData = airportsText.trim().split('\n').slice(1).map(line => {
+        const [country, iata, name, lat, lon] = line.split(';');
+        return {
+          country, iata, name,
+          lat: parseFloat(lat),
+          lon: parseFloat(lon)
+        };
       });
 
-      const paramUser = getUserParam() || users[0];
-      sel.value = paramUser;
-      handleUserChange(paramUser);
+      const manifestRes = await fetch('../data/manifest.json');
+      manifest = await manifestRes.json();
 
-      sel.addEventListener('change', e => handleUserChange(e.target.value));
+      populateUserDropdown();
     }
 
-    console.log("L.marker is:", L.marker);
-    init();
+    function populateUserDropdown() {
+      const select = document.getElementById('userSelect');
+      manifest.forEach(user => {
+        const opt = document.createElement('option');
+        opt.value = user;
+        opt.textContent = user;
+        select.appendChild(opt);
+      });
+
+      const params = new URLSearchParams(window.location.search);
+      const selectedUser = params.get('user') || manifest[0];
+      select.value = selectedUser;
+      loadUser(selectedUser);
+
+      select.addEventListener('change', () => {
+        const newUser = select.value;
+        window.location.search = `?user=${newUser}`;
+      });
+    }
+
+    async function loadUser(username) {
+      document.getElementById('title').textContent = `${username}'s Visited Airports`;
+
+      const res = await fetch(`../data/${username}.alist`);
+      const text = await res.text();
+      const visits = parseALIST(text);
+
+      const tableBody = document.querySelector('#airportTable tbody');
+      tableBody.innerHTML = '';
+
+      if (window.markersLayer) map.removeLayer(window.markersLayer);
+      window.markersLayer = L.layerGroup();
+
+      const visitedAirports = airportsData.filter(apt => visits[apt.iata]);
+      visitedAirports.forEach(apt => {
+        const { A, D, L } = visits[apt.iata];
+        const icon = createSVGIcon(A, D, L);
+        const marker = L.marker([apt.lat, apt.lon], { icon })
+          .bindPopup(`<b>${apt.iata} - ${apt.name}</b><br><a href="airports.html?airport=${apt.iata}">View details</a>`)
+          .on('mouseover', function () { this.openPopup(); })
+          .on('mouseout', function () { this.closePopup(); });
+        marker.addTo(window.markersLayer);
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${apt.country}</td>
+          <td>${apt.iata}</td>
+          <td>${apt.name}</td>
+          <td>${A ? '✔️' : ''}</td>
+          <td>${D ? '✔️' : ''}</td>
+          <td>${L ? '✔️' : ''}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+
+      window.markersLayer.addTo(map);
+
+      if (visitedAirports.length > 0) {
+        const avgLat = visitedAirports.reduce((sum, a) => sum + a.lat, 0) / visitedAirports.length;
+        const avgLon = visitedAirports.reduce((sum, a) => sum + a.lon, 0) / visitedAirports.length;
+        map.setView([avgLat, avgLon], 5);
+      }
+    }
+
+    loadData();
   </script>
 </body>
 </html>
