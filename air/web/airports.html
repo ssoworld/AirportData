@@ -29,7 +29,7 @@
     let airportCode;
     
     async function loadAirportInfo() {
-      const res = await fetch('../data/airports.csv');
+      const res = await fetch('../data/airports-master.csv?' + Date.now());
       const text = await res.text();
       const lines = text.trim().split('\n');
       let found = false;
@@ -154,19 +154,19 @@
 
     document.addEventListener('DOMContentLoaded', handleHashChange);
     window.addEventListener('hashchange', () => {
-      airportCode = window.location.hash.replace('#', '').toUpperCase();
+      const hash = window.location.hash;
+      const base = window.location.pathname;
 
-      // Clean up old state
-      if (window.map && window.map.remove) {
-        window.map.remove();
-        window.map = null;
+      // If already reloaded with ?reload, strip it and continue
+      if (window.location.search === '?reload') {
+        history.replaceState(null, '', base + hash);
+        airportCode = hash.replace('#', '').toUpperCase();
+        loadAirportInfo();
+        return;
       }
-      users = [];
-      document.getElementById('visitTable').innerHTML = '';
-      document.getElementById('summary').textContent = '';
 
-      // Force full reload to mimic Ctrl+F5
-      window.location.replace(window.location.href);
+      // Trigger reload with dummy query param to bust cache
+      window.location.href = base + '?reload' + hash;
     });
 
   </script>
