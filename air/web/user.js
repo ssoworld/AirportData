@@ -155,9 +155,11 @@ async function loadUser(username) {
   if (window.markersLayer) mapInstance.removeLayer(window.markersLayer);
   window.markersLayer = window.L.layerGroup();
 
-  const visitedAirports = airportsData.filter(apt => visits[apt.iata]);
+  const showAll = document.getElementById('showAllCheckbox').checked;
+  const displayedAirports = showAll ? airportsData : airportsData.filter(apt => visits[apt.iata]);
   visitedAirports.forEach(apt => {
-    const { A, D, L } = visits[apt.iata];
+    const visit = visits[apt.iata] || { A: false, D: false, L: false };
+    const { A, D, L } = visit;
     const icon = createSVGIcon(A, D, L);
     console.log("lat:", apt.lat, "lon:", apt.lon);
     console.log("icon:", icon);
@@ -194,3 +196,7 @@ async function loadUser(username) {
 }
 
 loadData();
+document.getElementById('showAllCheckbox').addEventListener('change', () => {
+  const user = document.getElementById('userSelect').value;
+  loadUser(user);
+});
