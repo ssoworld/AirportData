@@ -152,7 +152,10 @@
       loadAirportInfo();
     }
 
-    document.addEventListener('DOMContentLoaded', handleHashChange);
+    document.addEventListener('DOMContentLoaded', () => {
+      airportCode = location.hash.substring(1).toUpperCase();
+      loadAirportInfo();
+    });
     window.addEventListener('hashchange', () => {
       airportCode = location.hash.substring(1).toUpperCase();
       users = [];
