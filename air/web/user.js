@@ -139,33 +139,27 @@ async function loadUser(username) {
   const res = await fetch(`../data/${username}.alist`);
   const text = await res.text();
   const visits = parseALIST(text);
-  let totalA = 0, totalD = 0, totalL = 0;
-  Object.values(visits).forEach(v => {
-    if (v.A) totalA++;
-    if (v.D) totalD++;
-    if (v.L) totalL++;
-  });
-  const totalAirports = Object.keys(visits).length;
-  document.getElementById('totals').textContent =
-  `Visited: ${totalAirports} | Arrivals: ${totalA} | Departures: ${totalD} | Layovers: ${totalL}`;
 
+  // For stats
+  const visitedAirports = airportsData.filter(apt => visits[apt.iata]);
+
+  // For display toggle
+  const showAll = document.getElementById('showAllCheckbox')?.checked;
+  const displayedAirports = showAll ? airportsData : visitedAirports;
+
+  // Update table
   const tableBody = document.querySelector('#airportTable tbody');
   tableBody.innerHTML = '';
 
+  // Clear old markers
   if (window.markersLayer) mapInstance.removeLayer(window.markersLayer);
   window.markersLayer = window.L.layerGroup();
 
-  const showAll = document.getElementById('showAllCheckbox').checked;
-  const displayedAirports = showAll ? airportsData : airportsData.filter(apt => visits[apt.iata]);
-  visitedAirports.forEach(apt => {
+  // Add markers and table rows
+  displayedAirports.forEach(apt => {
     const visit = visits[apt.iata] || { A: false, D: false, L: false };
-    const { A, D, L } = visit;
-    const icon = createSVGIcon(A, D, L);
-    console.log("lat:", apt.lat, "lon:", apt.lon);
-    console.log("icon:", icon);
-    console.log("window.marker:", window.L.marker);
-    console.log("mapInstance:", mapInstance);
-    console.log("Before marker creation, window.L.marker:", window.L.marker);
+    const icon = createSVGIcon(visit.A, visit.D, visit.L);
+
     const marker = window.L.marker([apt.lat, apt.lon], { icon })
       .bindPopup(`<b>${apt.iata} - ${apt.name}</b><br><a href="airports.html?airport=${apt.iata}">View details</a>`)
       .on('click', function () {
@@ -174,26 +168,39 @@ async function loadUser(username) {
 
     marker.addTo(window.markersLayer);
 
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${countryMap[apt.country] || apt.country}</td>
-      <td><a href="airports.html?airport=${apt.iata}">${apt.iata}</a></td>
-      <td>${apt.name}</td>
-      <td>${A ? '✔️' : ''}</td>
-      <td>${D ? '✔️' : ''}</td>
-      <td>${L ? '✔️' : ''}</td>
-    `;
-    tableBody.appendChild(row);
+    if (visits[apt.iata]) {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${countryMap[apt.country] || apt.country}</td>
+        <td><a href="airports.html?airport=${apt.iata}">${apt.iata}</a></td>
+        <td>${apt.name}</td>
+        <td>${visit.A ? '✔️' : ''}</td>
+        <td>${visit.D ? '✔️' : ''}</td>
+        <td>${visit.L ? '✔️' : ''}</td>
+      `;
+      tableBody.appendChild(row);
+    }
   });
 
   window.markersLayer.addTo(mapInstance);
 
+  // Recenter map
   if (visitedAirports.length > 0) {
     const avgLat = visitedAirports.reduce((sum, a) => sum + a.lat, 0) / visitedAirports.length;
     const avgLon = visitedAirports.reduce((sum, a) => sum + a.lon, 0) / visitedAirports.length;
     mapInstance.setView([avgLat, avgLon], 5);
   }
+
+  // Update stats at top
+  const totalVisited = visitedAirports.length;
+  const totalA = visitedAirports.filter(a => visits[a.iata].A).length;
+  const totalD = visitedAirports.filter(a => visits[a.iata].D).length;
+  const totalL = visitedAirports.filter(a => visits[a.iata].L).length;
+
+  document.getElementById('statsDisplay').textContent =
+    `Total visited: ${totalVisited} | Arrivals: ${totalA} | Departures: ${totalD} | Layovers: ${totalL}`;
 }
+
 
 loadData();
 document.getElementById('showAllCheckbox').addEventListener('change', () => {
