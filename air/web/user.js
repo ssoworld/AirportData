@@ -7,6 +7,15 @@ window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 let airportsData = [];
 let manifest = [];
+let countryMap = {};
+
+async function loadCountryMap() {
+  const res = await fetch('https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with-Regional-Codes/master/all/iso3166-1.json');
+  const countries = await res.json();
+  for (const country of countries) {
+    countryMap[country['alpha-3']] = country.name;
+  }
+}
 
 function createSVGIcon(hasA, hasD, hasL) {
   const svgParts = [];
@@ -41,12 +50,16 @@ function parseALIST(text) {
 }
 
 async function loadData() {
+  await loadCountryMap();
+
   const airportsRes = await fetch('../data/airports.csv');
   const airportsText = await airportsRes.text();
   airportsData = airportsText.trim().split('\n').slice(1).map(line => {
     const [country, iata, name, lat, lon] = line.split(';');
     return {
-      country, iata, name,
+      country,
+      iata,
+      name,
       lat: parseFloat(lat),
       lon: parseFloat(lon)
     };
@@ -110,8 +123,8 @@ async function loadUser(username) {
 
     const row = document.createElement('tr');
     row.innerHTML = `
-      <td>${apt.country}</td>
-      <td>${apt.iata}</td>
+      <td>${countryMap[apt.country] || apt.country}</td>
+      <td><a href="airports.html?airport=${apt.iata}">${apt.iata}</a></td>
       <td>${apt.name}</td>
       <td>${A ? '✔️' : ''}</td>
       <td>${D ? '✔️' : ''}</td>
