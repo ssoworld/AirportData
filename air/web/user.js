@@ -94,7 +94,7 @@ async function loadUser(username) {
   visitedAirports.forEach(apt => {
     const { A, D, L } = visits[apt.iata];
     const icon = createSVGIcon(A, D, L);
-    console.log("lat:", lat, "lon:", lon);
+    console.log("lat:", apt.lat, "lon:", apt.lon);
     console.log("icon:", icon);
     console.log("L.marker:", L.marker);
     console.log("map:", map);
