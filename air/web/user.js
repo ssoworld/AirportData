@@ -43,7 +43,7 @@ function parseALIST(text) {
 async function loadData() {
   const airportsRes = await fetch('../data/airports.csv');
   const airportsText = await airportsRes.text();
-  airportsData = airportsText.trim().split('\n').slice(1).mapInstance(line => {
+  airportsData = airportsText.trim().split('\n').slice(1).map(line => {
     const [country, iata, name, lat, lon] = line.split(';');
     return {
       country, iata, name,
@@ -89,7 +89,7 @@ async function loadUser(username) {
   tableBody.innerHTML = '';
 
   if (window.markersLayer) mapInstance.removeLayer(window.markersLayer);
-  window.markersLayer = window.layerGroup();
+  window.markersLayer = window.L.layerGroup();
 
   const visitedAirports = airportsData.filter(apt => visits[apt.iata]);
   visitedAirports.forEach(apt => {
