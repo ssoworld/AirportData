@@ -124,9 +124,25 @@
     function handleHashChange() {
       const hash = typeof location.hash === 'string' ? location.hash : '';
       airportCode = hash ? hash.substring(1).toUpperCase() : "JFK";
-      users = [];  // Clear previous user data
-      document.querySelector('#visitTable tbody').innerHTML = '';  // Clear table
-      document.getElementById('summary').textContent = 'Loading...';  // Reset summary
+
+      users = [];
+
+      // Remove existing map image
+      const mapDiv = document.getElementById("map");
+      mapDiv.innerHTML = `<img id="airportMap" src="" alt="Airport Map" />`;
+
+      // Clear user table
+      document.querySelector('#visitTable tbody').innerHTML = '';
+
+      // Reset summary and airport image
+      document.getElementById('summary').textContent = 'Loading...';
+      document.getElementById('airportMap').src = '';
+      document.getElementById('airportMap').alt = '';
+
+      // Clear any old airport image or links
+      const imageDiv = document.getElementById("image");
+      if (imageDiv) imageDiv.innerHTML = '';
+
       loadAirportInfo();
     }
 
