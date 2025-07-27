@@ -65,14 +65,15 @@
     // Check for query parameter
     const params = new URLSearchParams(window.location.search);
     const airportParam = params.get('airport');
+    const homeLink = document.getElementById('homeLink');
+    homeLink.style.display = 'block';
 
-    if (airportParam && airports[airportParam.toUpperCase()]) {
+    if (!airportParam || !airports[airportParam.toUpperCase()]) {
+      homeLink.style.display = 'none';
+    } else {
       document.getElementById('airportSelect').value = airportParam.toUpperCase();
       handleAirportSelect(airportParam.toUpperCase());
-    } else {
-      document.getElementById('homeLink').style.display = 'none';
     }
-  }
 
   function populateDropdown() {
     const sel = document.getElementById('airportSelect');
