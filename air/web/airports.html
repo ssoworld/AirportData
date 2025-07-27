@@ -162,7 +162,13 @@ function updateTable(data) {
   for (const user of users) {
     const row = document.createElement('tr');
     const tdUser = document.createElement('td');
-    tdUser.textContent = user;
+
+    // Make user name clickable linking to user.html?user=username
+    const link = document.createElement('a');
+    link.href = `user.html?user=${encodeURIComponent(user)}`;
+    link.textContent = user;
+    tdUser.appendChild(link);
+
     row.appendChild(tdUser);
     for (const type of ['A', 'D', 'L']) {
       const td = document.createElement('td');
