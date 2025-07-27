@@ -140,22 +140,16 @@ async function loadUser(username) {
   const text = await res.text();
   const visits = parseALIST(text);
 
-  // For stats
   const visitedAirports = airportsData.filter(apt => visits[apt.iata]);
-
-  // For display toggle
   const showAll = document.getElementById('showAllCheckbox')?.checked;
   const displayedAirports = showAll ? airportsData : visitedAirports;
 
-  // Update table
   const tableBody = document.querySelector('#airportTable tbody');
   tableBody.innerHTML = '';
 
-  // Clear old markers
   if (window.markersLayer) mapInstance.removeLayer(window.markersLayer);
   window.markersLayer = window.L.layerGroup();
 
-  // Add markers and table rows
   displayedAirports.forEach(apt => {
     const visit = visits[apt.iata] || { A: false, D: false, L: false };
     const icon = createSVGIcon(visit.A, visit.D, visit.L);
@@ -184,23 +178,21 @@ async function loadUser(username) {
 
   window.markersLayer.addTo(mapInstance);
 
-  // Recenter map
   if (visitedAirports.length > 0) {
     const avgLat = visitedAirports.reduce((sum, a) => sum + a.lat, 0) / visitedAirports.length;
     const avgLon = visitedAirports.reduce((sum, a) => sum + a.lon, 0) / visitedAirports.length;
     mapInstance.setView([avgLat, avgLon], 5);
   }
 
-  // Update stats at top
+  // Update totals in <span id="totals">
   const totalVisited = visitedAirports.length;
   const totalA = visitedAirports.filter(a => visits[a.iata].A).length;
   const totalD = visitedAirports.filter(a => visits[a.iata].D).length;
   const totalL = visitedAirports.filter(a => visits[a.iata].L).length;
 
-  document.getElementById('statsDisplay').textContent =
+  document.getElementById('totals').textContent =
     `Total visited: ${totalVisited} | Arrivals: ${totalA} | Departures: ${totalD} | Layovers: ${totalL}`;
 }
-
 
 loadData();
 document.getElementById('showAllCheckbox').addEventListener('change', () => {
