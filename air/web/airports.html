@@ -43,6 +43,17 @@ const dataPath = '../data/';
 let airports = {};
 let airportList = [];
 
+function updateHomeLinkVisibility() {
+  const params = new URLSearchParams(window.location.search);
+  const airportParam = params.get('airport');
+  const homeLink = document.getElementById('homeLink');
+  if (airportParam && airports[airportParam.toUpperCase()]) {
+    homeLink.style.display = 'block';
+  } else {
+    homeLink.style.display = 'none';
+  }
+}
+
 async function fetchAirports() {
   const res = await fetch(csvUrl);
   const text = await res.text();
@@ -62,15 +73,12 @@ async function fetchAirports() {
   populateDropdown();
   placeAllMarkers();
 
-  // Check for query parameter and show/hide home link
+  // Set Home link visibility on initial load
+  updateHomeLinkVisibility();
+
   const params = new URLSearchParams(window.location.search);
   const airportParam = params.get('airport');
-  const homeLink = document.getElementById('homeLink');
-  homeLink.style.display = 'block';
-
-  if (!airportParam || !airports[airportParam.toUpperCase()]) {
-    homeLink.style.display = 'none';
-  } else {
+  if (airportParam && airports[airportParam.toUpperCase()]) {
     document.getElementById('airportSelect').value = airportParam.toUpperCase();
     handleAirportSelect(airportParam.toUpperCase());
   }
@@ -118,6 +126,9 @@ async function handleAirportSelect(code) {
 
   // Update URL param without page reload
   history.replaceState(null, '', `?airport=${code}`);
+
+  // Update Home link visibility after URL change
+  updateHomeLinkVisibility();
 
   map.setView([airport.lat, airport.lon], 13);
   marker.setLatLng([airport.lat, airport.lon])
@@ -186,6 +197,6 @@ document.getElementById('airportSelect').addEventListener('change', (e) => {
 // Init
 fetchAirports();
 
-</script>
+  </script>
 </body>
 </html>
