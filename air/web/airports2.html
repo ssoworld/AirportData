@@ -332,7 +332,7 @@ function createAirportSummaryTable() {
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${row.country}</td>
-      <td>${row.code}</td>
+      <td><a href="?airport=${row.code}">${row.code}</a></td>
       <td>${row.name}</td>
       <td>${row.visitors}</td>
     `;
