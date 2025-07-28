@@ -40,7 +40,18 @@
 
   <div id="map"></div>
   <h2 id="visitCount"></h2>
-  <table id="visitTable" style="display:none;">
+  <table id="airportSummaryTable" style="margin-top: 1em; width: 100%; display: none; border-collapse: collapse;">
+    <thead>
+        <tr>
+          <th data-sort="string">Country</th>
+          <th data-sort="string">IATA</th>
+          <th data-sort="string">Airport Name</th>
+          <th data-sort="number">Visitors</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <table id="visitTable" style="display:none;">
     <thead>
       <tr>
         <th>User</th>
@@ -66,7 +77,7 @@ const map = L.map('map').setView([20, 0], 2);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
-const marker = L.marker([0, 0]);
+const selectedMarker = L.marker([0, 0]);
 
 function updateHomeLinkVisibility() {
   const params = new URLSearchParams(window.location.search);
@@ -88,6 +99,7 @@ async function fetchAirports() {
     const [country, code, name, lat, lon] = line.split(';');
     if (!code) continue;
     airports[code.toUpperCase()] = {
+      country: country,    // store the 3-letter ISO code as-is
       code: code.toUpperCase(),
       name,
       lat: parseFloat(lat),
@@ -97,16 +109,20 @@ async function fetchAirports() {
   }
   populateDropdown();
 
-  await computeAirportVisitCounts(); // <-- count users per airport
-  placeAllMarkers();
+await computeAirportVisitCounts();
+placeAllMarkers();
+createAirportSummaryTable();  // Add this line to show the summary table if no airport selected
 
-  updateHomeLinkVisibility();
-  const params = new URLSearchParams(window.location.search);
-  const airportParam = params.get('airport');
-  if (airportParam && airports[airportParam.toUpperCase()]) {
-    document.getElementById('airportSelect').value = airportParam.toUpperCase();
-    handleAirportSelect(airportParam.toUpperCase());
-  }
+updateHomeLinkVisibility();
+const params = new URLSearchParams(window.location.search);
+const airportParam = params.get('airport');
+if (airportParam && airports[airportParam.toUpperCase()]) {
+  document.getElementById('airportSelect').value = airportParam.toUpperCase();
+  handleAirportSelect(airportParam.toUpperCase());
+} else {
+  // If no airport param, make sure the summary table is visible
+  document.getElementById('airportSummaryTable').style.display = 'table';
+}
 }
 
 function populateDropdown() {
@@ -231,15 +247,18 @@ async function handleAirportSelect(code) {
   const airport = airports[code];
   if (!airport) return;
 
+    // ✅ HIDE the summary table if an airport is selected
+  document.getElementById('airportSummaryTable').style.display = 'none';
+
   history.replaceState(null, '', `?airport=${code}`);
   updateHomeLinkVisibility();
 
   map.setView([airport.lat, airport.lon], 13);
 
-  if (!map.hasLayer(marker)) {
-    marker.addTo(map);
+  if (!map.hasLayer(selectedMarker)) {
+    selectedMarker.addTo(map);
   }
-  marker.setLatLng([airport.lat, airport.lon])
+  selectedMarker.setLatLng([airport.lat, airport.lon])
     .bindPopup(`${airport.code} - ${airport.name}`)
     .openPopup();
 
@@ -287,6 +306,74 @@ function updateTable(data) {
 document.getElementById('airportSelect').addEventListener('change', (e) => {
   handleAirportSelect(e.target.value.toUpperCase());
 });
+function createAirportSummaryTable() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('airport')) {
+    // Hide summary table if specific airport selected
+    document.getElementById('airportSummaryTable').style.display = 'none';
+    return;
+  }
+
+  const tbody = document.querySelector('#airportSummaryTable tbody');
+  tbody.innerHTML = '';
+
+  // Build an array of airport info + visitor count (default 0)
+  const rows = Object.values(airports).map(a => ({
+    country: a.country || '',  // ISO 3-letter code from CSV
+    code: a.code,
+    name: a.name,
+    visitors: airportVisitCounts[a.code] || 0,
+  }));
+
+  // Sort by visitor count descending by default (optional)
+  rows.sort((a, b) => b.visitors - a.visitors);
+
+  for (const row of rows) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${row.country}</td>
+      <td>${row.code}</td>
+      <td>${row.name}</td>
+      <td>${row.visitors}</td>
+    `;
+    tbody.appendChild(tr);
+  }
+
+  document.getElementById('airportSummaryTable').style.display = 'table';
+  makeTableSortable(document.getElementById('airportSummaryTable'));
+}
+
+// Simple sort on click handler
+function makeTableSortable(table) {
+  const headers = table.querySelectorAll('th');
+  headers.forEach((header, i) => {
+    header.style.cursor = 'pointer';
+    header.addEventListener('click', () => {
+      const sortType = header.dataset.sort || 'string';
+      const tbody = table.tBodies[0];
+      const rows = Array.from(tbody.rows);
+      const ascending = !header.classList.contains('asc');
+
+      rows.sort((a, b) => {
+        const cellA = a.cells[i].textContent.trim();
+        const cellB = b.cells[i].textContent.trim();
+
+        if (sortType === 'number') {
+          return ascending ? (parseInt(cellA) - parseInt(cellB)) : (parseInt(cellB) - parseInt(cellA));
+        } else {
+          return ascending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+        }
+      });
+
+      // Remove asc/desc classes from all headers
+      headers.forEach(h => h.classList.remove('asc', 'desc'));
+      header.classList.add(ascending ? 'asc' : 'desc');
+
+      // Re-attach rows in sorted order
+      rows.forEach(row => tbody.appendChild(row));
+    });
+  });
+}
 
 fetchAirports();
 </script>
