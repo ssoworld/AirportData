@@ -66,7 +66,7 @@ const map = L.map('map').setView([20, 0], 2);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
-const marker = L.marker([0, 0]).addTo(map);
+const marker = L.marker([0, 0]);
 
 function updateHomeLinkVisibility() {
   const params = new URLSearchParams(window.location.search);
@@ -141,7 +141,9 @@ async function computeAirportVisitCounts() {
         const [code] = line.trim().split(/\s+/);
         if (!code) continue;
         const iata = code.toUpperCase();
-        counts[iata] = (counts[iata] || 0) + 1;
+        if (iata in airports) {
+          counts[iata] = (counts[iata] || 0) + 1;
+        }
       }
     } catch (e) {
       console.warn(`Error loading ALIST for ${user}`);
@@ -160,26 +162,31 @@ function getColorForCount(count, maxCount) {
 }
 
 function createLegend(maxVisits) {
-  const oldLegend = document.querySelector('.legend');
-  if (oldLegend) oldLegend.remove(); // prevent duplicates
-
-  const legend = document.createElement('div');
-  legend.className = 'legend';
-
-  legend.innerHTML = '<strong>Users per airport</strong><br>';
-
-  const stops = [
-    { label: '1', count: 1 },
-    { label: `${Math.floor(maxVisits / 2)}`, count: Math.floor(maxVisits / 2) },
-    { label: `${maxVisits}`, count: maxVisits }
-  ];
-
-  for (const stop of stops) {
-    const color = getColorForCount(stop.count, maxVisits);
-    legend.innerHTML += `<i style="background:${color}"></i> ${stop.label}<br>`;
+  if (map.legendControl) {
+    map.removeControl(map.legendControl);
   }
 
-  document.body.appendChild(legend);
+  const legend = L.control({ position: 'bottomleft' });
+  legend.onAdd = function () {
+    const div = L.DomUtil.create('div', 'legend');
+    div.innerHTML = '<strong>Users per airport</strong><br>';
+
+    const stops = [
+      { label: '1', count: 1 },
+      { label: `${Math.floor(maxVisits / 2)}`, count: Math.floor(maxVisits / 2) },
+      { label: `${maxVisits}`, count: maxVisits }
+    ];
+
+    for (const stop of stops) {
+      const color = getColorForCount(stop.count, maxVisits);
+      div.innerHTML += `<i style="background:${color}"></i> ${stop.label}<br>`;
+    }
+
+    return div;
+  };
+
+  legend.addTo(map);
+  map.legendControl = legend; // so we can remove it later if needed
 }
 
 function placeAllMarkers() {
@@ -228,6 +235,10 @@ async function handleAirportSelect(code) {
   updateHomeLinkVisibility();
 
   map.setView([airport.lat, airport.lon], 13);
+
+  if (!map.hasLayer(marker)) {
+    marker.addTo(map);
+  }
   marker.setLatLng([airport.lat, airport.lon])
     .bindPopup(`${airport.code} - ${airport.name}`)
     .openPopup();
