@@ -30,50 +30,16 @@
 </head>
 <body>
   <h1 id="title">Visited Airports</h1>
-
-  <!-- Navigation back to main summary -->
-  <p id="userHomeLink" style="display:none;">
-    <a href="user.html" style="font-size: 1em;">← All travelers</a>
-  </p>
-
-  <!-- Summary table for all users -->
-  <div id="travelerSummaryContainer" style="display:none;">
-    <h2>Traveler Summary</h2>
-    <p>A snapshot of each traveler’s total airport visits.</p>
-    <table id="travelerSummaryTable">
-      <thead>
-        <tr>
-          <th>User</th>
-          <th>Total</th>
-          <th>Arrivals</th>
-          <th>Departures</th>
-          <th>Layovers</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </div>
-<div id="travelerSummaryContainer" style="display: none;">
-  <h2>Traveler Summary</h2>
-  <table id="travelerSummaryTable">
-    <thead>
-      <tr>
-        <th>User</th>
-        <th>Arrivals</th>
-        <th>Departures</th>
-        <th>Layovers</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-</div>
-  <!-- Per-user content -->
   <label for="userSelect">Select user:</label>
   <select id="userSelect"></select>
   <span id="totals" style="margin-left: 1em; font-weight: bold;"></span>
   <label style="margin-left: 1em;">
     <input type="checkbox" id="showAllCheckbox"> Show all airports
   </label>
+
+  <a href="user.html" id="userHomeLink" style="display: none;">&larr; Back to summary</a>
+  <span id="totalsDisplay" style="margin-left: 1em; font-weight: bold;"></span>
+
   <div id="map"></div>
   <table id="airportTable">
     <thead>
@@ -88,6 +54,23 @@
     </thead>
     <tbody></tbody>
   </table>
+
+  <!-- 👇 INSERT THIS BELOW THE TABLE -->
+  <div id="travelerSummaryContainer" style="display: none;">
+    <h2>Traveler Summary</h2>
+    <table id="travelerSummaryTable">
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>Arrivals</th>
+          <th>Departures</th>
+          <th>Layovers</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
