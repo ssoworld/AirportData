@@ -498,6 +498,14 @@
     "visits": []
   },
   {
+    "code": "UIO",
+    "name": "Mariscal Sucre Quito International Airport",
+    "lat": -0.1133,
+    "lon": -78.3586,
+    "country": "ECO",
+    "visits": []
+  },
+  {
     "code": "CAI",
     "name": "Cairo International Airport",
     "lat": 30.1198,
