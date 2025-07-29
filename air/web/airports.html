@@ -153,13 +153,19 @@ async function computeAirportVisitCounts() {
   for (const user of manifest) {
     try {
       const lines = await fetchAlist(user);
+      const visitedAirports = new Set();
+
       for (const line of lines) {
         const [code] = line.trim().split(/\s+/);
         if (!code) continue;
         const iata = code.toUpperCase();
         if (iata in airports) {
-          counts[iata] = (counts[iata] || 0) + 1;
+          visitedAirports.add(iata);
         }
+      }
+
+      for (const iata of visitedAirports) {
+        counts[iata] = (counts[iata] || 0) + 1;
       }
     } catch (e) {
       console.warn(`Error loading ALIST for ${user}`);
