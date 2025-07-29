@@ -741,8 +741,8 @@
   {
     "code": "DUB",
     "name": "Dublin Airport",
-    "lat": 53.4286,
-    "lon": -6.2625,
+    "lat": 53.421389,
+    "lon": -6.27,
     "country": "IRL",
     "visits": []
   },
