@@ -96,6 +96,14 @@
     "visits": []
   },
   {
+    "code": "SAQ",
+    "name": "San Andros Airport",
+    "lat": 25.0539,
+    "lon": -78.0489,
+    "country": "BHS",
+    "visits": []
+  },
+  {
     "code": "BDA",
     "name": "L.F. Wade International Airport",
     "lat": 32.36417,
@@ -480,6 +488,17 @@
     "visits": []
   },
   {
+    "code": "ACE",
+    "name": "Lanzarote Airport",
+    "lat": 28.9455,
+    "lon": -13.6052,
+    "country": "ESP",
+    "visits": [
+      "A",
+      "D"
+    ]
+  },
+  {
     "code": "AGP",
     "name": "M\u00e1laga-Costa del Sol Airport",
     "lat": 36.675,
@@ -508,6 +527,28 @@
     "lon": 2.760556,
     "country": "ESP",
     "visits": []
+  },
+  {
+    "code": "LPA",
+    "name": "Gran Canaria Airport",
+    "lat": 27.9319,
+    "lon": -15.3866,
+    "country": "ESP",
+    "visits": [
+      "A",
+      "D"
+    ]
+  },
+  {
+    "code": "TFS",
+    "name": "Tenerife South Airport",
+    "lat": 28.0445,
+    "lon": -16.5725,
+    "country": "ESP",
+    "visits": [
+      "A",
+      "D"
+    ]
   },
   {
     "code": "TLL",
@@ -567,6 +608,17 @@
     "lon": 151.843,
     "country": "FSM",
     "visits": []
+  },
+  {
+    "code": "BFS",
+    "name": "Belfast International Airport",
+    "lat": 54.6575,
+    "lon": -6.2158,
+    "country": "GBR",
+    "visits": [
+      "A",
+      "D"
+    ]
   },
   {
     "code": "BOH",
@@ -1660,6 +1712,14 @@
     "visits": []
   },
   {
+    "code": "FXE",
+    "name": "Fort Lauderdale Executive Airport",
+    "lat": 26.1973,
+    "lon": -80.1707,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "GCC",
     "name": "Gillette-Campbell County Airport",
     "lat": 44.34889,
@@ -2530,49 +2590,5 @@
     "lon": 105.8031,
     "country": "VNM",
     "visits": []
-  },
-  {
-    "code": "ACE",
-    "name": "Lanzarote Airport",
-    "lat": 28.9455,
-    "lon": -13.6052,
-    "country": "ESP",
-    "visits": [
-      "A",
-      "D"
-    ]
-  },
-  {
-    "code": "BFS",
-    "name": "Belfast International Airport",
-    "lat": 54.6575,
-    "lon": -6.2158,
-    "country": "GBR",
-    "visits": [
-      "A",
-      "D"
-    ]
-  },
-  {
-    "code": "LPA",
-    "name": "Gran Canaria Airport",
-    "lat": 27.9319,
-    "lon": -15.3866,
-    "country": "ESP",
-    "visits": [
-      "A",
-      "D"
-    ]
-  },
-  {
-    "code": "TFS",
-    "name": "Tenerife South Airport",
-    "lat": 28.0445,
-    "lon": -16.5725,
-    "country": "ESP",
-    "visits": [
-      "A",
-      "D"
-    ]
   }
 ]
