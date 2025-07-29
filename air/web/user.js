@@ -1,5 +1,4 @@
 console.log("At user.js start, global L:", window.L);
-
 const mapInstance = window.L.map('map').setView([20, 0], 5);
 
 window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -8,8 +7,6 @@ window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 let airportsData = [];
 let manifest = [];
-let markers = [];
-
 const countryMap = {
   AFG: "Afghanistan", ALB: "Albania", DZA: "Algeria", AND: "Andorra",
   AGO: "Angola", AIA: "Anguilla", ATA: "Antarctica", ARG: "Argentina",
@@ -63,6 +60,7 @@ const countryMap = {
   ZWE: "Zimbabwe"
 };
 
+
 function createSVGIcon(hasA, hasD, hasL) {
   const svgParts = [];
   svgParts.push(`<circle cx="12" cy="12" r="10" stroke="black" fill="${hasL ? 'blue' : 'white'}" />`);
@@ -112,160 +110,87 @@ async function loadData() {
   const manifestRes = await fetch('../data/manifest.json');
   manifest = await manifestRes.json();
 
-  const params = new URLSearchParams(window.location.search);
-  const selectedUser = params.get('user');
-
-  if (selectedUser) {
-    populateUserDropdown();
-    document.getElementById('userHomeLink').style.display = '';
-    document.getElementById('travelerSummaryContainer').style.display = 'none';
-    document.getElementById('map').style.display = '';
-    document.getElementById('airportTable').style.display = '';
-    document.getElementById('userSelect').style.display = '';
-    document.getElementById('showAllCheckbox').style.display = '';
-  } else {
-    showTravelerSummary();
-    document.getElementById('userHomeLink').style.display = 'none';
-    document.getElementById('map').style.display = 'none';
-    document.getElementById('airportTable').style.display = 'none';
-    document.getElementById('userSelect').style.display = 'none';
-    document.getElementById('showAllCheckbox').style.display = 'none';
-  }
+  populateUserDropdown();
 }
 
 function populateUserDropdown() {
   const select = document.getElementById('userSelect');
-  select.innerHTML = '';
   manifest.forEach(user => {
-    const option = document.createElement('option');
-    option.value = user;
-    option.textContent = user;
-    select.appendChild(option);
+    const opt = document.createElement('option');
+    opt.value = user;
+    opt.textContent = user;
+    select.appendChild(opt);
   });
-  select.addEventListener('change', () => loadUser(select.value));
 
   const params = new URLSearchParams(window.location.search);
-  const selectedUser = params.get('user');
-  if (selectedUser) select.value = selectedUser;
+  const selectedUser = params.get('user') || manifest[0];
+  select.value = selectedUser;
+  loadUser(selectedUser);
 
-  loadUser(select.value);
+  select.addEventListener('change', () => {
+    const newUser = select.value;
+    window.location.search = `?user=${newUser}`;
+  });
 }
 
-async function loadUser(user) {
-  if (!user) return;
+async function loadUser(username) {
+  document.getElementById('title').textContent = `${username}'s Visited Airports`;
 
-  // Clear existing markers
-  markers.forEach(m => mapInstance.removeLayer(m));
-  markers = [];
-
-  const res = await fetch(`../data/${user}.alist`);
+  const res = await fetch(`../data/${username}.alist`);
   const text = await res.text();
   const visits = parseALIST(text);
-
-  const showAll = document.getElementById('showAllCheckbox').checked;
-  const filteredAirports = airportsData.filter(ap => showAll || visits[ap.iata]);
-
-  // Update table body
-  const tbody = document.querySelector('#airportTable tbody');
-  tbody.innerHTML = '';
-
-  filteredAirports.forEach(ap => {
-    const visit = visits[ap.iata] || { A: false, D: false, L: false };
-
-    // Add marker to map
-    const icon = createSVGIcon(visit.A, visit.D, visit.L);
-    const marker = window.L.marker([ap.lat, ap.lon], { icon });
-    marker.bindPopup(`<strong>${ap.name}</strong><br>${countryMap[ap.country] || ap.country}<br>IATA: ${ap.iata}<br>Arrival: ${visit.A ? '✔️' : ''} Departure: ${visit.D ? '✔️' : ''} Layover: ${visit.L ? '✔️' : ''}`);
-    marker.addTo(mapInstance);
-    markers.push(marker);
-
-    // Add row to table
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${countryMap[ap.country] || ap.country}</td>
-      <td>${ap.iata}</td>
-      <td>${ap.name}</td>
-      <td>${visit.A ? '✔️' : ''}</td>
-      <td>${visit.D ? '✔️' : ''}</td>
-      <td>${visit.L ? '✔️' : ''}</td>
-    `;
-    tbody.appendChild(tr);
-  });
-
-  // Fit map to markers if any
-  if (markers.length) {
-    const group = window.L.featureGroup(markers);
-    mapInstance.fitBounds(group.getBounds().pad(0.2));
-  }
-
-  // Update totals
-  const totals = { A: 0, D: 0, L: 0 };
+  let totalA = 0, totalD = 0, totalL = 0;
   Object.values(visits).forEach(v => {
-    if (v.A) totals.A++;
-    if (v.D) totals.D++;
-    if (v.L) totals.L++;
+    if (v.A) totalA++;
+    if (v.D) totalD++;
+    if (v.L) totalL++;
   });
-  document.getElementById('totalsDisplay').textContent = `Totals - Arrivals: ${totals.A}, Departures: ${totals.D}, Layovers: ${totals.L}`;
-}
+  const totalAirports = Object.keys(visits).length;
+  document.getElementById('totals').textContent =
+  `Visited: ${totalAirports} | Arrivals: ${totalA} | Departures: ${totalD} | Layovers: ${totalL}`;
 
-function showTravelerSummary() {
-  // Build summary table for all users
-  const tbody = document.querySelector('#travelerSummaryContainer tbody');
-  tbody.innerHTML = '';
+  const tableBody = document.querySelector('#airportTable tbody');
+  tableBody.innerHTML = '';
 
-  manifest.forEach(user => {
-    // For summary, we need to fetch user's .alist and count visits.
-    // But for performance, let's assume you already have a cached summary in manifest.json
-    // If not, you'd fetch and parse each .alist, but that is costly client side.
-    // Here we'll just make a simplified placeholder:
+  if (window.markersLayer) mapInstance.removeLayer(window.markersLayer);
+  window.markersLayer = window.L.layerGroup();
 
-    // This example skips fetching each .alist for speed:
-    // We'll just show user with placeholders for counts
-    // (You can implement server-side to provide summary if you want.)
-
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td><a href="?user=${encodeURIComponent(user)}">${user}</a></td>
-      <td>–</td>
-      <td>–</td>
-      <td>–</td>
-    `;
-    tbody.appendChild(tr);
-  });
-
-  addSummarySorting();
-}
-
-function addSummarySorting() {
-  const table = document.getElementById('travelerSummaryContainer');
-  if (!table) return;
-  const headers = table.querySelectorAll('th');
-  headers.forEach((header, i) => {
-    header.style.cursor = 'pointer';
-    header.onclick = () => {
-      const tbody = table.querySelector('tbody');
-      const rows = Array.from(tbody.rows);
-      const asc = !header.classList.contains('asc');
-      headers.forEach(h => h.classList.remove('asc', 'desc'));
-      header.classList.add(asc ? 'asc' : 'desc');
-      rows.sort((a, b) => {
-        let aText = a.cells[i].textContent.trim();
-        let bText = b.cells[i].textContent.trim();
-        const aNum = Number(aText);
-        const bNum = Number(bText);
-        if (!isNaN(aNum) && !isNaN(bNum)) {
-          return asc ? aNum - bNum : bNum - aNum;
-        }
-        return asc ? aText.localeCompare(bText) : bText.localeCompare(aText);
+  const visitedAirports = airportsData.filter(apt => visits[apt.iata]);
+  visitedAirports.forEach(apt => {
+    const { A, D, L } = visits[apt.iata];
+    const icon = createSVGIcon(A, D, L);
+    console.log("lat:", apt.lat, "lon:", apt.lon);
+    console.log("icon:", icon);
+    console.log("window.marker:", window.L.marker);
+    console.log("mapInstance:", mapInstance);
+    console.log("Before marker creation, window.L.marker:", window.L.marker);
+    const marker = window.L.marker([apt.lat, apt.lon], { icon })
+      .bindPopup(`<b>${apt.iata} - ${apt.name}</b><br><a href="airports.html?airport=${apt.iata}">View details</a>`)
+      .on('click', function () {
+        this.openPopup();
       });
-      rows.forEach(row => tbody.appendChild(row));
-    };
-  });
-}
 
-document.getElementById('showAllCheckbox').addEventListener('change', () => {
-  const select = document.getElementById('userSelect');
-  loadUser(select.value);
-});
+    marker.addTo(window.markersLayer);
+
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${countryMap[apt.country] || apt.country}</td>
+      <td><a href="airports.html?airport=${apt.iata}">${apt.iata}</a></td>
+      <td>${apt.name}</td>
+      <td>${A ? '✔️' : ''}</td>
+      <td>${D ? '✔️' : ''}</td>
+      <td>${L ? '✔️' : ''}</td>
+    `;
+    tableBody.appendChild(row);
+  });
+
+  window.markersLayer.addTo(mapInstance);
+
+  if (visitedAirports.length > 0) {
+    const avgLat = visitedAirports.reduce((sum, a) => sum + a.lat, 0) / visitedAirports.length;
+    const avgLon = visitedAirports.reduce((sum, a) => sum + a.lon, 0) / visitedAirports.length;
+    mapInstance.setView([avgLat, avgLon], 5);
+  }
+}
 
 loadData();
