@@ -2138,7 +2138,10 @@
     "lat": 34.0561,
     "lon": -117.6011,
     "country": "USA",
-    "visits": []
+    "visits": [
+      "A",
+      "D"
+    ]
   },
   {
     "code": "ORD",
