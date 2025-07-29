@@ -2559,5 +2559,37 @@
     "lon": 105.8031,
     "country": "VNM",
     "visits": []
+  },
+  {
+    "code": "ACE",
+    "name": "Lanzarote Airport",
+    "lat": 28.9455,
+    "lon": -13.6052,
+    "country": "ESP",
+    "visits": []
+  },
+  {
+    "code": "BFS",
+    "name": "Belfast International Airport",
+    "lat": 54.6575,
+    "lon": -6.2158,
+    "country": "GBR",
+    "visits": []
+  },
+  {
+    "code": "LPA",
+    "name": "Gran Canaria Airport",
+    "lat": 27.9319,
+    "lon": -15.3866,
+    "country": "ESP",
+    "visits": []
+  },
+  {
+    "code": "TFS",
+    "name": "Tenerife South Airport",
+    "lat": 28.0445,
+    "lon": -16.5725,
+    "country": "ESP",
+    "visits": []
   }
 ]
