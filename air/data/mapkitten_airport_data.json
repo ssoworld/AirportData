@@ -1514,7 +1514,10 @@
     "lat": 39.995,
     "lon": -82.8892,
     "country": "USA",
-    "visits": []
+    "visits": [
+      "A",
+      "D"
+    ]
   },
   {
     "code": "CVG",
