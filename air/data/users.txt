@@ -4,6 +4,7 @@ bickendan
 cockroachking
 griffith
 mapcat
+mapkitten
 mollybollybee
 nagamasa
 ovoss
