@@ -1970,7 +1970,10 @@
     "lat": 30.4908,
     "lon": -81.6833,
     "country": "USA",
-    "visits": []
+    "visits": [
+      "A",
+      "D"
+    ]
   },
   {
     "code": "JFK",
