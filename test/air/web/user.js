@@ -126,7 +126,13 @@ function displayUserAirports(airportList) {
 
     const row = [
       ap.country || "",
-      ap.code || ap.iata || "",  // support both "code" and "iata"
+      (() => {
+        const link = document.createElement("a");
+        const code = ap.code || ap.iata || "";
+        link.href = `airports.html?airport=${code}`;
+        link.textContent = code;
+        return link;
+      })(),
       ap.name || "",
       ap.visits.includes("A") ? "✔" : "",
       ap.visits.includes("D") ? "✔" : "",
