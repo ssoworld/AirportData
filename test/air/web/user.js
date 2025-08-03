@@ -145,7 +145,7 @@ function displayUserAirports(airportList) {
       const icon = createSVGIcon(hasA, hasD, hasL);
 
       const marker = L.marker([ap.lat, ap.lon], { icon })
-        .bindPopup(`${ap.name} (${ap.iata})`);
+        .bindPopup(`<b>${ap.iata} - ${ap.name}</b><br><a href="airports.html?airport=${ap.iata}">View details</a>`);
       marker.addTo(map);
       markers.push(marker);
     }
