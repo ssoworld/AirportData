@@ -52,6 +52,19 @@ function addRow(tableBody, values) {
   tableBody.appendChild(tr);
 }
 
+function createSVGIcon(hasA, hasD, hasL) {
+  const svgParts = [];
+  svgParts.push(`<circle cx="12" cy="12" r="10" stroke="black" fill="${hasL ? 'blue' : 'white'}" />`);
+  svgParts.push(`<polygon points="12,5 5,12 19,12" fill="${hasD ? 'green' : 'white'}" stroke="black" />`);
+  svgParts.push(`<polygon points="12,19 5,12 19,12" fill="${hasA ? 'red' : 'white'}" stroke="black" />`);
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">${svgParts.join('')}</svg>`;
+  return window.L.divIcon({
+    html: svg,
+    className: 'svg-icon',
+    iconSize: [24, 24],
+  });
+}
+
 function createMapIfNeeded() {
   if (!map) {
     map = L.map("map").setView([20, 0], 2);
@@ -126,8 +139,14 @@ function displayUserAirports(airportList) {
     if (ap.visits.includes("L")) stats.layovers++;
 
     if (ap.lat && ap.lon) {
-      const marker = L.marker([ap.lat, ap.lon]).addTo(map)
-        .bindPopup(`${ap.name || "Unknown"} (${ap.code || ap.iata || "???"})`);
+      const hasA = ap.visits.includes("A");
+      const hasD = ap.visits.includes("D");
+      const hasL = ap.visits.includes("L");
+      const icon = createSVGIcon(hasA, hasD, hasL);
+
+      const marker = L.marker([ap.lat, ap.lon], { icon })
+        .bindPopup(`${ap.name} (${ap.iata})`);
+      marker.addTo(map);
       markers.push(marker);
     }
   });
