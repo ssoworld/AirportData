@@ -14,22 +14,11 @@ const userSummaryTableBody = document.querySelector("#userSummaryTable tbody");
 const airportTable = document.getElementById("airportTable");
 const airportTableBody = airportTable.querySelector("tbody");
 const title = document.getElementById("title");
-
-// Show the "Back to summary" link only if a specific user is selected
 const backToSummaryLink = document.getElementById("backToSummary");
-
-if (selectedUser) {
-  // User mode: show back to summary link
-  backToSummaryLink.style.display = "block";
-
-  // Your existing user-specific code can continue here...
-  
-} else {
-  // Generic mode: hide back to summary link
-  backToSummaryLink.style.display = "none";
 
 let map;
 let markers = [];
+
 const countryMap = {
   AFG: "Afghanistan", ALB: "Albania", DZA: "Algeria", AND: "Andorra",
   AGO: "Angola", AIA: "Anguilla", ATA: "Antarctica", ARG: "Argentina",
@@ -142,31 +131,6 @@ function createMapIfNeeded() {
 function clearMarkers() {
   markers.forEach(m => m.remove());
   markers = [];
-}
-
-function loadData() {
-  fetch("../data/manifest.json")
-    .then(res => res.json())
-    .then(async manifest => {
-      const users = manifest;
-      users.sort();
-      users.forEach(user => {
-        const option = document.createElement("option");
-        option.value = user;
-        option.textContent = user;
-        if (user === selectedUser) option.selected = true;
-        userSelect.appendChild(option);
-      });
-
-      setTitleAndVisibility(selectedUser);
-
-      if (selectedUser) {
-        const airports = await fetchUserData(selectedUser);
-        displayUserAirports(airports);
-      } else {
-        displayUserSummary(users);
-      }
-    });
 }
 
 function addMapLegend() {
@@ -336,6 +300,37 @@ showAllCheckbox.addEventListener("change", () => {
   }
 });
 
-// Initialize
+// Initialize userSelect options before deciding which mode:
+function loadData() {
+  fetch("../data/manifest.json")
+    .then(res => res.json())
+    .then(async users => {
+      users.sort();
+      users.forEach(user => {
+        const option = document.createElement("option");
+        option.value = user;
+        option.textContent = user;
+        if (user === selectedUser) option.selected = true;
+        userSelect.appendChild(option);
+      });
+
+      setTitleAndVisibility(selectedUser);
+
+      if (selectedUser) {
+        // User mode
+        backToSummaryLink.style.display = "block";
+
+        const airports = await fetchUserData(selectedUser);
+        displayUserAirports(airports);
+      } else {
+        // Summary mode
+        backToSummaryLink.style.display = "none";
+
+        displayUserSummary(users);
+      }
+    });
+}
+
+// Run initial loading
 loadData();
 enableTableSorting();
