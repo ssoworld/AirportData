@@ -15,6 +15,19 @@ const airportTable = document.getElementById("airportTable");
 const airportTableBody = airportTable.querySelector("tbody");
 const title = document.getElementById("title");
 
+// Show the "Back to summary" link only if a specific user is selected
+const backToSummaryLink = document.getElementById("backToSummary");
+
+if (selectedUser) {
+  // User mode: show back to summary link
+  backToSummaryLink.style.display = "block";
+
+  // Your existing user-specific code can continue here...
+  
+} else {
+  // Generic mode: hide back to summary link
+  backToSummaryLink.style.display = "none";
+
 let map;
 let markers = [];
 const countryMap = {
