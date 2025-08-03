@@ -177,7 +177,7 @@ function displayUserAirports(airportList) {
     if (!showAllCheckbox.checked && !visited) return;
 
     const row = [
-      ap.country || "",
+      countryMap[ap.country] || ap.country || "",
       (() => {
         const link = document.createElement("a");
         const code = ap.code || ap.iata || "";
