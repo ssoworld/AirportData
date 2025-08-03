@@ -1,12 +1,24 @@
-console.log("At user.js start, global L:", window.L);
-const mapInstance = window.L.map('map').setView([20, 0], 5);
+console.log("✅ Loaded user.js from test directory");
+console.log("user.js loaded");
 
-window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; OpenStreetMap contributors',
-}).addTo(mapInstance);
+const urlParams = new URLSearchParams(window.location.search);
+const selectedUser = urlParams.get("user");
 
-let airportsData = [];
-let manifest = [];
+const userSelect = document.getElementById("userSelect");
+const totalsSpan = document.getElementById("totals");
+const showAllCheckbox = document.getElementById("showAllCheckbox");
+const showAllLabel = document.getElementById("showAllLabel");
+const mapDiv = document.getElementById("map");
+const userSummaryDiv = document.getElementById("userSummary");
+const userSummaryTableBody = document.querySelector("#userSummaryTable tbody");
+const airportTable = document.getElementById("airportTable");
+const airportTableBody = airportTable.querySelector("tbody");
+const title = document.getElementById("title");
+const backToSummaryLink = document.getElementById("backToSummary");
+
+let map;
+let markers = [];
+
 const countryMap = {
   AFG: "Afghanistan", ALB: "Albania", DZA: "Algeria", AND: "Andorra",
   AGO: "Angola", AIA: "Anguilla", ATA: "Antarctica", ARG: "Argentina",
@@ -60,6 +72,39 @@ const countryMap = {
   ZWE: "Zimbabwe"
 };
 
+function setTitleAndVisibility(user) {
+  if (user) {
+    title.textContent = `${user}'s Visited Airports`;
+    document.title = `${user}'s Visited Airports`;
+    totalsSpan.style.display = "inline";
+    mapDiv.style.display = "block";
+    airportTable.style.display = "table";
+    userSummaryDiv.style.display = "none";
+    showAllLabel.style.display = "inline";
+  } else {
+    title.textContent = "Visited Airports";
+    document.title = "Traveler Summary";
+    totalsSpan.style.display = "none";
+    mapDiv.style.display = "none";
+    airportTable.style.display = "none";
+    userSummaryDiv.style.display = "block";
+    showAllLabel.style.display = "none";
+  }
+}
+
+function addRow(tableBody, values) {
+  const tr = document.createElement("tr");
+  values.forEach(val => {
+    const td = document.createElement("td");
+    if (val instanceof HTMLElement) {
+      td.appendChild(val);
+    } else {
+      td.textContent = val;
+    }
+    tr.appendChild(td);
+  });
+  tableBody.appendChild(tr);
+}
 
 function createSVGIcon(hasA, hasD, hasL) {
   const svgParts = [];
@@ -74,123 +119,218 @@ function createSVGIcon(hasA, hasD, hasL) {
   });
 }
 
-function parseALIST(text) {
-  const visits = {};
-  text.split('\n').forEach(line => {
-    line = line.trim();
-    if (line.startsWith('#') || line === '') return;
-    const parts = line.split(/\s+/);
-    if (parts.length >= 2) {
-      const code = parts[0].toUpperCase();
-      const types = parts.slice(1).join('');
-      visits[code] = {
-        A: types.includes('A'),
-        D: types.includes('D'),
-        L: types.includes('L'),
-      };
-    }
-  });
-  return visits;
-}
-
-async function loadData() {
-  const airportsRes = await fetch('../data/airports.csv');
-  const airportsText = await airportsRes.text();
-  airportsData = airportsText.trim().split('\n').slice(1).map(line => {
-    const [country, iata, name, lat, lon] = line.split(';');
-    return {
-      country,
-      iata,
-      name,
-      lat: parseFloat(lat),
-      lon: parseFloat(lon)
-    };
-  });
-
-  const manifestRes = await fetch('../data/manifest.json');
-  manifest = await manifestRes.json();
-
-  populateUserDropdown();
-}
-
-function populateUserDropdown() {
-  const select = document.getElementById('userSelect');
-  manifest.forEach(user => {
-    const opt = document.createElement('option');
-    opt.value = user;
-    opt.textContent = user;
-    select.appendChild(opt);
-  });
-
-  const params = new URLSearchParams(window.location.search);
-  const selectedUser = params.get('user') || manifest[0];
-  select.value = selectedUser;
-  loadUser(selectedUser);
-
-  select.addEventListener('change', () => {
-    const newUser = select.value;
-    window.location.search = `?user=${newUser}`;
-  });
-}
-
-async function loadUser(username) {
-  document.getElementById('title').textContent = `${username}'s Visited Airports`;
-
-  const res = await fetch(`../data/${username}.alist`);
-  const text = await res.text();
-  const visits = parseALIST(text);
-  let totalA = 0, totalD = 0, totalL = 0;
-  Object.values(visits).forEach(v => {
-    if (v.A) totalA++;
-    if (v.D) totalD++;
-    if (v.L) totalL++;
-  });
-  const totalAirports = Object.keys(visits).length;
-  document.getElementById('totals').textContent =
-  `Visited: ${totalAirports} | Arrivals: ${totalA} | Departures: ${totalD} | Layovers: ${totalL}`;
-
-  const tableBody = document.querySelector('#airportTable tbody');
-  tableBody.innerHTML = '';
-
-  if (window.markersLayer) mapInstance.removeLayer(window.markersLayer);
-  window.markersLayer = window.L.layerGroup();
-
-  const visitedAirports = airportsData.filter(apt => visits[apt.iata]);
-  visitedAirports.forEach(apt => {
-    const { A, D, L } = visits[apt.iata];
-    const icon = createSVGIcon(A, D, L);
-    console.log("lat:", apt.lat, "lon:", apt.lon);
-    console.log("icon:", icon);
-    console.log("window.marker:", window.L.marker);
-    console.log("mapInstance:", mapInstance);
-    console.log("Before marker creation, window.L.marker:", window.L.marker);
-    const marker = window.L.marker([apt.lat, apt.lon], { icon })
-      .bindPopup(`<b>${apt.iata} - ${apt.name}</b><br><a href="airports.html?airport=${apt.iata}">View details</a>`)
-      .on('click', function () {
-        this.openPopup();
-      });
-
-    marker.addTo(window.markersLayer);
-
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${countryMap[apt.country] || apt.country}</td>
-      <td><a href="airports.html?airport=${apt.iata}">${apt.iata}</a></td>
-      <td>${apt.name}</td>
-      <td>${A ? '✔️' : ''}</td>
-      <td>${D ? '✔️' : ''}</td>
-      <td>${L ? '✔️' : ''}</td>
-    `;
-    tableBody.appendChild(row);
-  });
-
-  window.markersLayer.addTo(mapInstance);
-
-  if (visitedAirports.length > 0) {
-    const avgLat = visitedAirports.reduce((sum, a) => sum + a.lat, 0) / visitedAirports.length;
-    const avgLon = visitedAirports.reduce((sum, a) => sum + a.lon, 0) / visitedAirports.length;
-    mapInstance.setView([avgLat, avgLon], 5);
+function createMapIfNeeded() {
+  if (!map) {
+    map = L.map("map").setView([20, 0], 2);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: '&copy; OpenStreetMap contributors',
+    }).addTo(map);
   }
 }
 
+function clearMarkers() {
+  markers.forEach(m => m.remove());
+  markers = [];
+}
+
+function addMapLegend() {
+  const legend = document.createElement("div");
+  legend.className = "map-legend";
+  legend.innerHTML = `
+    <svg width="20" height="20"><polygon points="10,3 3,10 17,10" fill="green" stroke="black"/></svg> Departure
+    <svg width="20" height="20"><polygon points="10,17 3,10 17,10" fill="red" stroke="black"/></svg> Arrival
+    <svg width="20" height="20"><circle cx="10" cy="10" r="8" stroke="black" fill="blue"/></svg> Layover
+  `;
+  document.getElementById("map").appendChild(legend);
+}
+
+function fetchUserData(user) {
+  return fetch(`../data/${user}_airport_data.json`).then(res => res.json());
+}
+
+function displayUserAirports(airportList) {
+  clearMarkers();
+  airportTableBody.innerHTML = "";
+
+  const stats = { arrivals: 0, departures: 0, layovers: 0 };
+
+  createMapIfNeeded();
+  if (!document.querySelector(".map-legend")) addMapLegend();
+
+  airportList.forEach(ap => {
+    const visited =
+      ap.visits.includes("A") ||
+      ap.visits.includes("D") ||
+      ap.visits.includes("L");
+
+    if (!showAllCheckbox.checked && !visited) return;
+
+    const row = [
+      countryMap[ap.country] || ap.country || "",
+      (() => {
+        const link = document.createElement("a");
+        const code = ap.code || ap.iata || "";
+        link.href = `airports.html?airport=${code}`;
+        link.textContent = code;
+        return link;
+      })(),
+      ap.name || "",
+      ap.visits.includes("A") ? "✔" : "",
+      ap.visits.includes("D") ? "✔" : "",
+      ap.visits.includes("L") ? "✔" : "",
+    ];
+    addRow(airportTableBody, row);
+
+    if (ap.visits.includes("A")) stats.arrivals++;
+    if (ap.visits.includes("D")) stats.departures++;
+    if (ap.visits.includes("L")) stats.layovers++;
+
+    if (ap.lat && ap.lon) {
+      const hasA = ap.visits.includes("A");
+      const hasD = ap.visits.includes("D");
+      const hasL = ap.visits.includes("L");
+      const icon = createSVGIcon(hasA, hasD, hasL);
+
+      const marker = L.marker([ap.lat, ap.lon], { icon })
+        .bindPopup(`<b>${ap.code} - ${ap.name}</b><br><a href="airports.html?airport=${ap.code}">View details</a>`);
+      marker.addTo(map);
+      markers.push(marker);
+    }
+  });
+
+  const totalVisited = airportList.filter(ap =>
+    ap.visits.includes("A") ||
+    ap.visits.includes("D") ||
+    ap.visits.includes("L")
+  ).length;
+
+  totalsSpan.textContent = `Total: ${totalVisited} | Arrivals: ${stats.arrivals} | Departures: ${stats.departures} | Layovers: ${stats.layovers}`;
+}
+
+function displayUserSummary(userList) {
+  userSummaryTableBody.innerHTML = "";
+
+  userList.forEach(async user => {
+    const userLink = document.createElement("a");
+    userLink.href = `user.html?user=${encodeURIComponent(user)}`;
+    userLink.textContent = user;
+    userLink.className = "user-link";
+
+    try {
+      const airportList = await fetchUserData(user);
+      let arrivals = 0, departures = 0, layovers = 0;
+      let visitedCount = 0;
+
+      airportList.forEach(ap => {
+        const hasA = ap.visits.includes("A");
+        const hasD = ap.visits.includes("D");
+        const hasL = ap.visits.includes("L");
+
+        if (hasA || hasD || hasL) visitedCount++;
+        if (hasA) arrivals++;
+        if (hasD) departures++;
+        if (hasL) layovers++;
+      });
+
+      const total = visitedCount;
+
+      const row = [
+        userLink,
+        total.toString(),
+        arrivals.toString(),
+        departures.toString(),
+        layovers.toString(),
+      ];
+
+      addRow(userSummaryTableBody, row);
+    } catch (err) {
+      console.error(`Error loading data for user ${user}:`, err);
+      const row = [userLink, "", "", "", ""];
+      addRow(userSummaryTableBody, row);
+    }
+  });
+}
+
+// Simple table sorter
+function enableTableSorting() {
+  document.querySelectorAll("th.sortable").forEach(header => {
+    header.addEventListener("click", () => {
+      const table = header.closest("table");
+      const tbody = table.querySelector("tbody");
+      const rows = Array.from(tbody.rows);
+      const index = Array.from(header.parentNode.children).indexOf(header);
+      const ascending = !header.classList.contains("asc");
+
+      rows.sort((a, b) => {
+        const valA = a.cells[index].textContent.trim();
+        const valB = b.cells[index].textContent.trim();
+
+        const numA = parseFloat(valA);
+        const numB = parseFloat(valB);
+
+        if (!isNaN(numA) && !isNaN(numB)) {
+          return ascending ? numA - numB : numB - numA;
+        } else {
+          return ascending
+            ? valA.localeCompare(valB)
+            : valB.localeCompare(valA);
+        }
+      });
+
+      // Update direction classes
+      header.parentNode.querySelectorAll("th").forEach(th => {
+        th.classList.remove("asc", "desc");
+      });
+      header.classList.add(ascending ? "asc" : "desc");
+
+      rows.forEach(row => tbody.appendChild(row));
+    });
+  });
+}
+
+// Event listeners
+userSelect.addEventListener("change", () => {
+  const selected = userSelect.value;
+  window.location.href = `user.html?user=${encodeURIComponent(selected)}`;
+});
+
+showAllCheckbox.addEventListener("change", () => {
+  if (selectedUser) {
+    fetchUserData(selectedUser).then(displayUserAirports);
+  }
+});
+
+// Initialize userSelect options before deciding which mode:
+function loadData() {
+  fetch("../data/manifest.json")
+    .then(res => res.json())
+    .then(async users => {
+      users.sort();
+      users.forEach(user => {
+        const option = document.createElement("option");
+        option.value = user;
+        option.textContent = user;
+        if (user === selectedUser) option.selected = true;
+        userSelect.appendChild(option);
+      });
+
+      setTitleAndVisibility(selectedUser);
+
+      if (selectedUser) {
+        // User mode
+        backToSummaryLink.style.display = "block";
+
+        const airports = await fetchUserData(selectedUser);
+        displayUserAirports(airports);
+      } else {
+        // Summary mode
+        backToSummaryLink.style.display = "none";
+
+        displayUserSummary(users);
+      }
+    });
+}
+
+// Run initial loading
 loadData();
+enableTableSorting();
