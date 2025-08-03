@@ -230,14 +230,20 @@ function displayUserSummary(userList) {
     try {
       const airportList = await fetchUserData(user);
       let arrivals = 0, departures = 0, layovers = 0;
+      let visitedCount = 0;
 
       airportList.forEach(ap => {
-        if (ap.visits.includes("A")) arrivals++;
-        if (ap.visits.includes("D")) departures++;
-        if (ap.visits.includes("L")) layovers++;
+        const hasA = ap.visits.includes("A");
+        const hasD = ap.visits.includes("D");
+        const hasL = ap.visits.includes("L");
+
+        if (hasA || hasD || hasL) visitedCount++;
+        if (hasA) arrivals++;
+        if (hasD) departures++;
+        if (hasL) layovers++;
       });
 
-      const total = arrivals + departures + layovers;
+      const total = visitedCount;
 
       const row = [
         userLink,
