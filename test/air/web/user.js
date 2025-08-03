@@ -132,8 +132,13 @@ function displayUserAirports(airportList) {
     }
   });
 
-  const total = stats.arrivals + stats.departures + stats.layovers;
-  totalsSpan.textContent = `Total: ${total} | Arrivals: ${stats.arrivals} | Departures: ${stats.departures} | Layovers: ${stats.layovers}`;
+  const totalVisited = airportList.filter(ap =>
+    ap.visits.includes("A") ||
+    ap.visits.includes("D") ||
+    ap.visits.includes("L")
+  ).length;
+
+  totalsSpan.textContent = `Total: ${totalVisited} | Arrivals: ${stats.arrivals} | Departures: ${stats.departures} | Layovers: ${stats.layovers}`;
 }
 
 function displayUserSummary(userList) {
