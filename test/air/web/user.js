@@ -101,11 +101,20 @@ function displayUserAirports(airportList) {
 
   const stats = { arrivals: 0, departures: 0, layovers: 0 };
 
+  createMapIfNeeded();
+
   airportList.forEach(ap => {
+    const visited =
+      ap.visits.includes("A") ||
+      ap.visits.includes("D") ||
+      ap.visits.includes("L");
+
+    if (!showAllCheckbox.checked && !visited) return;
+
     const row = [
       ap.country || "",
-      ap.iata,
-      ap.name,
+      ap.code || ap.iata || "",  // support both "code" and "iata"
+      ap.name || "",
       ap.visits.includes("A") ? "✔" : "",
       ap.visits.includes("D") ? "✔" : "",
       ap.visits.includes("L") ? "✔" : "",
@@ -116,21 +125,15 @@ function displayUserAirports(airportList) {
     if (ap.visits.includes("D")) stats.departures++;
     if (ap.visits.includes("L")) stats.layovers++;
 
-    if (!showAllCheckbox.checked &&
-        !ap.visits.includes("A") &&
-        !ap.visits.includes("D") &&
-        !ap.visits.includes("L")) return;
-
     if (ap.lat && ap.lon) {
       const marker = L.marker([ap.lat, ap.lon]).addTo(map)
-        .bindPopup(`${ap.name} (${ap.iata})`);
+        .bindPopup(`${ap.name || "Unknown"} (${ap.code || ap.iata || "???"})`);
       markers.push(marker);
     }
   });
 
   const total = stats.arrivals + stats.departures + stats.layovers;
   totalsSpan.textContent = `Total: ${total} | Arrivals: ${stats.arrivals} | Departures: ${stats.departures} | Layovers: ${stats.layovers}`;
-  createMapIfNeeded();
 }
 
 function displayUserSummary(userList) {
