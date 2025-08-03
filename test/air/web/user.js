@@ -112,20 +112,22 @@ function displayUserAirports(airportList) {
   clearMarkers();
   airportTableBody.innerHTML = "";
 
-  createMapIfNeeded();  // Ensure map is initialized before adding markers
-
   const stats = { arrivals: 0, departures: 0, layovers: 0 };
 
+  createMapIfNeeded();
+
   airportList.forEach(ap => {
-    // Create a clickable link for the IATA code
-    const iataLink = document.createElement("a");
-    iataLink.href = `airports.html?airport=${ap.code}`;
-    iataLink.textContent = ap.iata;
+    const visited =
+      ap.visits.includes("A") ||
+      ap.visits.includes("D") ||
+      ap.visits.includes("L");
+
+    if (!showAllCheckbox.checked && !visited) return;
 
     const row = [
       ap.country || "",
-      iataLink,
-      ap.name,
+      ap.code || ap.iata || "",  // support both "code" and "iata"
+      ap.name || "",
       ap.visits.includes("A") ? "✔" : "",
       ap.visits.includes("D") ? "✔" : "",
       ap.visits.includes("L") ? "✔" : "",
@@ -136,21 +138,23 @@ function displayUserAirports(airportList) {
     if (ap.visits.includes("D")) stats.departures++;
     if (ap.visits.includes("L")) stats.layovers++;
 
-    if (!showAllCheckbox.checked &&
-        !ap.visits.includes("A") &&
-        !ap.visits.includes("D") &&
-        !ap.visits.includes("L")) return;
-
     if (ap.lat && ap.lon) {
-      const marker = L.marker([ap.lat, ap.lon])
-        .bindPopup(`<b>${ap.name} (${ap.code})</b><br><a href="airports.html?airport=${ap.code}">View details</a>`)
-        .addTo(map);
+      const hasA = ap.visits.includes("A");
+      const hasD = ap.visits.includes("D");
+      const hasL = ap.visits.includes("L");
+      const icon = createSVGIcon(hasA, hasD, hasL);
+
+      const marker = L.marker([ap.lat, ap.lon], { icon })
+        .bindPopup(`<b>${ap.code} - ${ap.name}</b><br><a href="airports.html?airport=${ap.code}">View details</a>`);
+      marker.addTo(map);
       markers.push(marker);
     }
   });
 
-  const totalVisited = airportList.filter(ap => 
-    ap.visits.includes("A") || ap.visits.includes("D") || ap.visits.includes("L")
+  const totalVisited = airportList.filter(ap =>
+    ap.visits.includes("A") ||
+    ap.visits.includes("D") ||
+    ap.visits.includes("L")
   ).length;
 
   totalsSpan.textContent = `Total: ${totalVisited} | Arrivals: ${stats.arrivals} | Departures: ${stats.departures} | Layovers: ${stats.layovers}`;
