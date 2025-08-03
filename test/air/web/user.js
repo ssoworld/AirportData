@@ -221,14 +221,38 @@ function displayUserAirports(airportList) {
 function displayUserSummary(userList) {
   userSummaryTableBody.innerHTML = "";
 
-  userList.forEach(user => {
+  userList.forEach(async user => {
     const userLink = document.createElement("a");
     userLink.href = `user.html?user=${encodeURIComponent(user)}`;
     userLink.textContent = user;
     userLink.className = "user-link";
 
-    const row = [userLink, "-", "-", "-", "-"];
-    addRow(userSummaryTableBody, row);
+    try {
+      const airportList = await fetchUserData(user);
+      let arrivals = 0, departures = 0, layovers = 0;
+
+      airportList.forEach(ap => {
+        if (ap.visits.includes("A")) arrivals++;
+        if (ap.visits.includes("D")) departures++;
+        if (ap.visits.includes("L")) layovers++;
+      });
+
+      const total = arrivals + departures + layovers;
+
+      const row = [
+        userLink,
+        total.toString(),
+        arrivals.toString(),
+        departures.toString(),
+        layovers.toString(),
+      ];
+
+      addRow(userSummaryTableBody, row);
+    } catch (err) {
+      console.error(`Error loading data for user ${user}:`, err);
+      const row = [userLink, "?", "?", "?", "?"];
+      addRow(userSummaryTableBody, row);
+    }
   });
 }
 
