@@ -67,10 +67,10 @@ function clearMarkers() {
 }
 
 function loadData() {
-  fetch("manifest.json")
+  fetch("../data/manifest.json")
     .then(res => res.json())
     .then(async manifest => {
-      const users = Object.keys(manifest);
+      const users = manifest;
       users.sort();
       users.forEach(user => {
         const option = document.createElement("option");
@@ -86,13 +86,13 @@ function loadData() {
         const airports = await fetchUserData(selectedUser);
         displayUserAirports(airports);
       } else {
-        displayUserSummary(manifest);
+        displayUserSummary(users);
       }
     });
 }
 
 function fetchUserData(user) {
-  return fetch(`../users/${user}.json`).then(res => res.json());
+  return fetch(`../data/${user}_airport_data.json`).then(res => res.json());
 }
 
 function displayUserAirports(airportList) {
@@ -106,17 +106,20 @@ function displayUserAirports(airportList) {
       ap.country || "",
       ap.iata,
       ap.name,
-      ap.arrival ? "✔" : "",
-      ap.departure ? "✔" : "",
-      ap.layover ? "✔" : ""
+      ap.visits.includes("A") ? "✔" : "",
+      ap.visits.includes("D") ? "✔" : "",
+      ap.visits.includes("L") ? "✔" : "",
     ];
     addRow(airportTableBody, row);
 
-    if (ap.arrival) stats.arrivals++;
-    if (ap.departure) stats.departures++;
-    if (ap.layover) stats.layovers++;
+    if (ap.visits.includes("A")) stats.arrivals++;
+    if (ap.visits.includes("D")) stats.departures++;
+    if (ap.visits.includes("L")) stats.layovers++;
 
-    if (!showAllCheckbox.checked && !ap.arrival && !ap.departure && !ap.layover) return;
+    if (!showAllCheckbox.checked &&
+        !ap.visits.includes("A") &&
+        !ap.visits.includes("D") &&
+        !ap.visits.includes("L")) return;
 
     if (ap.lat && ap.lon) {
       const marker = L.marker([ap.lat, ap.lon]).addTo(map)
@@ -130,23 +133,16 @@ function displayUserAirports(airportList) {
   createMapIfNeeded();
 }
 
-function displayUserSummary(manifest) {
+function displayUserSummary(userList) {
   userSummaryTableBody.innerHTML = "";
 
-  Object.entries(manifest).forEach(([user, counts]) => {
+  userList.forEach(user => {
     const userLink = document.createElement("a");
     userLink.href = `user.html?user=${encodeURIComponent(user)}`;
     userLink.textContent = user;
     userLink.className = "user-link";
 
-    const total = counts.arrivals + counts.departures + counts.layovers;
-    const row = [
-      userLink,
-      total,
-      counts.arrivals,
-      counts.departures,
-      counts.layovers
-    ];
+    const row = [userLink, "-", "-", "-", "-"];
     addRow(userSummaryTableBody, row);
   });
 }
