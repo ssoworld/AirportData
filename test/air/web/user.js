@@ -156,6 +156,17 @@ function loadData() {
     });
 }
 
+function addMapLegend() {
+  const legend = document.createElement("div");
+  legend.className = "map-legend";
+  legend.innerHTML = `
+    <svg width="20" height="20"><polygon points="10,3 3,10 17,10" fill="green" stroke="black"/></svg> Departure
+    <svg width="20" height="20"><polygon points="10,17 3,10 17,10" fill="red" stroke="black"/></svg> Arrival
+    <svg width="20" height="20"><circle cx="10" cy="10" r="8" stroke="black" fill="blue"/></svg> Layover
+  `;
+  document.getElementById("map").appendChild(legend);
+}
+
 function fetchUserData(user) {
   return fetch(`../data/${user}_airport_data.json`).then(res => res.json());
 }
@@ -167,6 +178,7 @@ function displayUserAirports(airportList) {
   const stats = { arrivals: 0, departures: 0, layovers: 0 };
 
   createMapIfNeeded();
+  if (!document.querySelector(".map-legend")) addMapLegend();
 
   airportList.forEach(ap => {
     const visited =
