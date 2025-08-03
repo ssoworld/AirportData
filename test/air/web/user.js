@@ -256,7 +256,7 @@ function displayUserSummary(userList) {
       addRow(userSummaryTableBody, row);
     } catch (err) {
       console.error(`Error loading data for user ${user}:`, err);
-      const row = [userLink, "?", "?", "?", "?"];
+      const row = [userLink, "", "", "", ""];
       addRow(userSummaryTableBody, row);
     }
   });
