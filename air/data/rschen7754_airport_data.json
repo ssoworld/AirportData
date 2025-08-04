@@ -80,6 +80,14 @@
     "visits": []
   },
   {
+    "code": "VIE",
+    "name": "Vienna International Airport",
+    "lat": 48.1108,
+    "lon": 16.5708,
+    "country": "AUT",
+    "visits": []
+  },
+  {
     "code": "BRU",
     "name": "Brussels Airport",
     "lat": 50.9008,
@@ -382,6 +390,17 @@
     "lon": -85.5444,
     "country": "CRI",
     "visits": []
+  },
+  {
+    "code": "SJO",
+    "name": "Juan Santamar\u00eda International Airport",
+    "lat": 9.9939,
+    "lon": -84.2089,
+    "country": "CRI",
+    "visits": [
+      "A",
+      "D"
+    ]
   },
   {
     "code": "CUR",
@@ -1156,6 +1175,24 @@
     "visits": []
   },
   {
+    "code": "SAL",
+    "name": "El Salvador International Airport",
+    "lat": 13.4408,
+    "lon": -89.0556,
+    "country": "SLV",
+    "visits": [
+      "L"
+    ]
+  },
+  {
+    "code": "KSC",
+    "name": "Ko\u0161ice International Airport",
+    "lat": 48.6631,
+    "lon": 21.2411,
+    "country": "SVK",
+    "visits": []
+  },
+  {
     "code": "ARN",
     "name": "Stockholm Arlanda Airport",
     "lat": 59.6519,
@@ -1344,6 +1381,14 @@
     "name": "Austin\u2013Bergstrom International Airport",
     "lat": 30.1944,
     "lon": -97.67,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "AZA",
+    "name": "Phoenix\u2013Mesa Gateway Airport",
+    "lat": 33.3078,
+    "lon": -111.6556,
     "country": "USA",
     "visits": []
   },
@@ -1811,6 +1856,14 @@
     "visits": []
   },
   {
+    "code": "IND",
+    "name": "Indianapolis International Airport",
+    "lat": 39.7172,
+    "lon": -86.2944,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "INL",
     "name": "Falls International Airport",
     "lat": 48.5661,
@@ -2114,6 +2167,17 @@
     "visits": []
   },
   {
+    "code": "MSN",
+    "name": "Dane County Regional Airport",
+    "lat": 43.14,
+    "lon": -89.3375,
+    "country": "USA",
+    "visits": [
+      "A",
+      "D"
+    ]
+  },
+  {
     "code": "MSO",
     "name": "Missoula Montana Airport",
     "lat": 46.9164,
@@ -2347,6 +2411,16 @@
     "visits": []
   },
   {
+    "code": "RIC",
+    "name": "Richmond International Airport",
+    "lat": 37.505,
+    "lon": -77.3194,
+    "country": "USA",
+    "visits": [
+      "A"
+    ]
+  },
+  {
     "code": "RNO",
     "name": "Reno\u2013Tahoe International Airport",
     "lat": 39.4992,
@@ -2509,6 +2583,16 @@
     "visits": []
   },
   {
+    "code": "SUS",
+    "name": "Spirit of St. Louis Airport",
+    "lat": 38.6622,
+    "lon": -90.6519,
+    "country": "USA",
+    "visits": [
+      "L"
+    ]
+  },
+  {
     "code": "SUX",
     "name": "Sioux Gateway Airport",
     "lat": 42.4025,
@@ -2589,6 +2673,17 @@
     "visits": []
   },
   {
+    "code": "XNA",
+    "name": "Northwest Arkansas National Airport",
+    "lat": 36.2817,
+    "lon": -94.3078,
+    "country": "USA",
+    "visits": [
+      "A",
+      "D"
+    ]
+  },
+  {
     "code": "YAK",
     "name": "Yakutat Airport",
     "lat": 59.5033,
@@ -2610,101 +2705,6 @@
     "lat": 21.2139,
     "lon": 105.8031,
     "country": "VNM",
-    "visits": []
-  },
-  {
-    "code": "MSN",
-    "name": "Dane County Regional Airport",
-    "lat": 43.14,
-    "lon": -89.3375,
-    "country": "USA",
-    "visits": [
-      "A",
-      "D"
-    ]
-  },
-  {
-    "code": "RIC",
-    "name": "Richmond International Airport",
-    "lat": 37.505,
-    "lon": -77.3194,
-    "country": "USA",
-    "visits": [
-      "A"
-    ]
-  },
-  {
-    "code": "SAL",
-    "name": "El Salvador International Airport",
-    "lat": 13.4408,
-    "lon": -89.0556,
-    "country": "SLV",
-    "visits": [
-      "L"
-    ]
-  },
-  {
-    "code": "SJO",
-    "name": "Juan Santamar\u00eda International Airport",
-    "lat": 9.9939,
-    "lon": -84.2089,
-    "country": "CRI",
-    "visits": [
-      "A",
-      "D"
-    ]
-  },
-  {
-    "code": "SUS",
-    "name": "Spirit of St. Louis Airport",
-    "lat": 38.6622,
-    "lon": -90.6519,
-    "country": "USA",
-    "visits": [
-      "L"
-    ]
-  },
-  {
-    "code": "XNA",
-    "name": "Northwest Arkansas National Airport",
-    "lat": 36.2817,
-    "lon": -94.3078,
-    "country": "USA",
-    "visits": [
-      "A",
-      "D"
-    ]
-  },
-  {
-    "code": "AZA",
-    "name": "Phoenix\u2013Mesa Gateway Airport",
-    "lat": 33.3078,
-    "lon": -111.6556,
-    "country": "USA",
-    "visits": []
-  },
-  {
-    "code": "KSC",
-    "name": "Ko\u0161ice International Airport",
-    "lat": 48.6631,
-    "lon": 21.2411,
-    "country": "SVK",
-    "visits": []
-  },
-  {
-    "code": "VIE",
-    "name": "Vienna International Airport",
-    "lat": 48.1108,
-    "lon": 16.5708,
-    "country": "AUT",
-    "visits": []
-  },
-  {
-    "code": "IND",
-    "name": "Indianapolis International Airport",
-    "lat": 39.7172,
-    "lon": -86.2944,
-    "country": "USA",
     "visits": []
   }
 ]
