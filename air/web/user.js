@@ -108,9 +108,9 @@ function addRow(tableBody, values) {
 
 function createSVGIcon(hasA, hasD, hasL, hasX) {
   if (hasX && !hasA && !hasD && !hasL) {
-    // Only 'X': draw a plain black square
+    // Only 'X': draw a smaller black circle instead of square
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
-      <rect x="4" y="4" width="16" height="16" fill="black" stroke="black" />
+      <circle cx="12" cy="12" r="5" fill="black" />
     </svg>`;
     return window.L.divIcon({
       html: svg,
