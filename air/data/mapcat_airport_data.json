@@ -306,7 +306,9 @@
     "lat": 43.6777,
     "lon": -79.6248,
     "country": "CAN",
-    "visits": []
+    "visits": [
+      "X"
+    ]
   },
   {
     "code": "YZF",
@@ -1547,7 +1549,9 @@
     "lat": 39.1754,
     "lon": -76.6684,
     "country": "USA",
-    "visits": []
+    "visits": [
+      "X"
+    ]
   },
   {
     "code": "BZN",
