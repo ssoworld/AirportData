@@ -2726,5 +2726,29 @@
     "lon": -94.3078,
     "country": "USA",
     "visits": []
+  },
+  {
+    "code": "AZA",
+    "name": "Phoenix\u2013Mesa Gateway Airport",
+    "lat": 33.3078,
+    "lon": -111.6556,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "KSC",
+    "name": "Ko\u0161ice International Airport",
+    "lat": 48.6631,
+    "lon": 21.2411,
+    "country": "SVK",
+    "visits": []
+  },
+  {
+    "code": "VIE",
+    "name": "Vienna International Airport",
+    "lat": 48.1108,
+    "lon": 16.5708,
+    "country": "AUT",
+    "visits": []
   }
 ]
