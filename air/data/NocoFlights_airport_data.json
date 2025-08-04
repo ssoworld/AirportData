@@ -232,6 +232,14 @@
     "visits": []
   },
   {
+    "code": "YUB",
+    "name": "Tuktoyaktuk/James Gruben Airport",
+    "lat": 69.4333,
+    "lon": -133.0264,
+    "country": "CAN",
+    "visits": []
+  },
+  {
     "code": "YUL",
     "name": "Montr\u00e9al\u2013Trudeau International Airport",
     "lat": 45.4657,
@@ -2187,6 +2195,14 @@
     "visits": []
   },
   {
+    "code": "MVY",
+    "name": "Martha's Vineyard Airport",
+    "lat": 41.3931,
+    "lon": -70.6144,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "OAK",
     "name": "Oakland International Airport",
     "lat": 37.7214,
@@ -2305,6 +2321,14 @@
     ]
   },
   {
+    "code": "PIA",
+    "name": "General Wayne A. Downing Peoria International Airport",
+    "lat": 40.6642,
+    "lon": -89.6933,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "PIE",
     "name": "St. Pete\u2013Clearwater International Airport",
     "lat": 27.9102,
@@ -2325,6 +2349,14 @@
     "name": "Pensacola International Airport",
     "lat": 30.4733,
     "lon": -87.1867,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "PSC",
+    "name": "Tri-Cities Airport",
+    "lat": 46.2647,
+    "lon": -119.119,
     "country": "USA",
     "visits": []
   },
@@ -2538,6 +2570,14 @@
     ]
   },
   {
+    "code": "SPF",
+    "name": "Black Hills Airport\u2013Clyde Ice Field",
+    "lat": 44.4803,
+    "lon": -103.7833,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "SRQ",
     "name": "Sarasota\u2013Bradenton International Airport",
     "lat": 27.3956,
@@ -2550,6 +2590,14 @@
     "name": "St. Louis Lambert International Airport",
     "lat": 38.7487,
     "lon": -90.37,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "STS",
+    "name": "Charles M. Schulz\u2013Sonoma County Airport",
+    "lat": 38.5089,
+    "lon": -122.8128,
     "country": "USA",
     "visits": []
   },
