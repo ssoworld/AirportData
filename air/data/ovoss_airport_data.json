@@ -2921,5 +2921,13 @@
     "lon": 16.5708,
     "country": "AUT",
     "visits": []
+  },
+  {
+    "code": "IND",
+    "name": "Indianapolis International Airport",
+    "lat": 39.7172,
+    "lon": -86.2944,
+    "country": "USA",
+    "visits": []
   }
 ]
