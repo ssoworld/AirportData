@@ -3083,5 +3083,21 @@
     "lon": 105.8031,
     "country": "VNM",
     "visits": []
+  },
+  {
+    "code": "PBI",
+    "name": "Palm Beach International Airport",
+    "lat": 26.6831,
+    "lon": -80.0956,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "FNL",
+    "name": "Northern Colorado Regional Airport",
+    "lat": 40.4519,
+    "lon": -105.0114,
+    "country": "USA",
+    "visits": []
   }
 ]
