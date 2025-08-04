@@ -106,7 +106,20 @@ function addRow(tableBody, values) {
   tableBody.appendChild(tr);
 }
 
-function createSVGIcon(hasA, hasD, hasL) {
+function createSVGIcon(hasA, hasD, hasL, hasX) {
+  if (hasX && !hasA && !hasD && !hasL) {
+    // Only 'X': draw a plain black square
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+      <rect x="4" y="4" width="16" height="16" fill="black" stroke="black" />
+    </svg>`;
+    return window.L.divIcon({
+      html: svg,
+      className: 'svg-icon',
+      iconSize: [24, 24],
+    });
+  }
+
+  // Normal logic for A/D/L icons
   const svgParts = [];
   svgParts.push(`<circle cx="12" cy="12" r="10" stroke="black" fill="${hasL ? 'blue' : 'white'}" />`);
   svgParts.push(`<polygon points="12,5 5,12 19,12" fill="${hasD ? 'green' : 'white'}" stroke="black" />`);
@@ -185,11 +198,12 @@ function displayUserAirports(airportList) {
     if (ap.visits.includes("D")) stats.departures++;
     if (ap.visits.includes("L")) stats.layovers++;
 
-    if (ap.lat && ap.lon) {
+        if (ap.lat && ap.lon) {
       const hasA = ap.visits.includes("A");
       const hasD = ap.visits.includes("D");
       const hasL = ap.visits.includes("L");
-      const icon = createSVGIcon(hasA, hasD, hasL);
+      const hasX = ap.visits.includes("X");
+      const icon = createSVGIcon(hasA, hasD, hasL, hasX);
 
       const marker = L.marker([ap.lat, ap.lon], { icon })
         .bindPopup(`<b>${ap.code} - ${ap.name}</b><br><a href="airports.html?airport=${ap.code}">View details</a>`);
