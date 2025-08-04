@@ -1837,7 +1837,9 @@
     "lat": 41.067,
     "lon": -73.7076,
     "country": "USA",
-    "visits": []
+    "visits": [
+      "X"
+    ]
   },
   {
     "code": "IAD",
@@ -1845,7 +1847,9 @@
     "lat": 38.9519,
     "lon": -77.4481,
     "country": "USA",
-    "visits": []
+    "visits": [
+      "X"
+    ]
   },
   {
     "code": "IAH",
@@ -2011,7 +2015,9 @@
     "lat": 40.7769,
     "lon": -73.874,
     "country": "USA",
-    "visits": []
+    "visits": [
+      "X"
+    ]
   },
   {
     "code": "LGB",
