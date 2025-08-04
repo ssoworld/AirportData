@@ -2,7 +2,7 @@
 
 This is a very early form of a TravelMapping-adjacent idea for mapping airports visited. The current site is found here: https://tmairports.teresco.org/AirportData/air/web/index.html
 
-The current output is simple: symbols at airports worldwide that show a user's visits to that airport. Users who have departed an airport will see a green upward-pointing triangle, and users who have arrived at an airport will see one in red pointing downward. Airports where users experienced a layover (with or without a plane change) appear as a blue circle surrounding the triangles.
+(https://travelmapping.github.io/AirportData/LAX.png)The current output is simple: symbols at airports worldwide that show a user's visits to that airport. Users who have departed an airport will see a green upward-pointing triangle, and users who have arrived at an airport will see one in red pointing downward. Airports where users experienced a layover (with or without a plane change) appear as a blue circle surrounding the triangles.
 
 ## How to create a map
 
