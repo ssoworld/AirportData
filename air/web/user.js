@@ -174,7 +174,8 @@ function displayUserAirports(airportList) {
     const visited =
       ap.visits.includes("A") ||
       ap.visits.includes("D") ||
-      ap.visits.includes("L");
+      ap.visits.includes("L") ||
+      ap.visits.includes("X");
 
     if (!showAllCheckbox.checked && !visited) return;
 
@@ -191,6 +192,7 @@ function displayUserAirports(airportList) {
       ap.visits.includes("A") ? "✔" : "",
       ap.visits.includes("D") ? "✔" : "",
       ap.visits.includes("L") ? "✔" : "",
+      ap.visits.includes("X") ? "✔" : "",
     ];
     addRow(airportTableBody, row);
 
