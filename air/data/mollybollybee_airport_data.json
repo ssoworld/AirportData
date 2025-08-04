@@ -2668,5 +2668,53 @@
     "lon": 105.8031,
     "country": "VNM",
     "visits": []
+  },
+  {
+    "code": "MSN",
+    "name": "Dane County Regional Airport",
+    "lat": 43.14,
+    "lon": -89.3375,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "RIC",
+    "name": "Richmond International Airport",
+    "lat": 37.505,
+    "lon": -77.3194,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "SAL",
+    "name": "El Salvador International Airport",
+    "lat": 13.4408,
+    "lon": -89.0556,
+    "country": "SLV",
+    "visits": []
+  },
+  {
+    "code": "SJO",
+    "name": "Juan Santamar\u00eda International Airport",
+    "lat": 9.9939,
+    "lon": -84.2089,
+    "country": "CRI",
+    "visits": []
+  },
+  {
+    "code": "SUS",
+    "name": "Spirit of St. Louis Airport",
+    "lat": 38.6622,
+    "lon": -90.6519,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "XNA",
+    "name": "Northwest Arkansas National Airport",
+    "lat": 36.2817,
+    "lon": -94.3078,
+    "country": "USA",
+    "visits": []
   }
 ]
