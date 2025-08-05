@@ -69,7 +69,10 @@ const countryMap = {
   UKR: "Ukraine", ARE: "United Arab Emirates", GBR: "United Kingdom",
   USA: "United States", URY: "Uruguay", UZB: "Uzbekistan", VUT: "Vanuatu",
   VAT: "Vatican City", VEN: "Venezuela", VNM: "Vietnam", ZMB: "Zambia",
-  ZWE: "Zimbabwe"
+  ZWE: "Zimbabwe", BLM: "Saint Barthélemy", CUW: "Curaçao", FJI: "Fiji",
+  FSM: "Micronesia", MAF: "Saint-Martin", PRI: "Puerto Rico",
+  SXM: "Sint Maarten", VIR: "U.S. Virgin Islands", PYF:"French Polynesia",
+  MAC: "Macau", TWN: "Taiwan", GLP: "Guadeloupe", TCA: "Turks and Caicos Islands"
 };
 
 function setTitleAndVisibility(user) {
