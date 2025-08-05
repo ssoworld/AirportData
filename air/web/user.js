@@ -239,16 +239,23 @@ function displayUserSummary(userList) {
       const airportList = await fetchUserData(user);
       let arrivals = 0, departures = 0, layovers = 0;
       let visitedCount = 0;
+      let other = 0;
 
       airportList.forEach(ap => {
         const hasA = ap.visits.includes("A");
         const hasD = ap.visits.includes("D");
         const hasL = ap.visits.includes("L");
+        const hasX = ap.visits.includes("X");
 
         if (hasA || hasD || hasL) visitedCount++;
         if (hasA) arrivals++;
         if (hasD) departures++;
         if (hasL) layovers++;
+
+        // If has visits, but none of A, D, L — count as Other
+        if (!hasA && !hasD && !hasL && (ap.visits.length > 0)) {
+          other++;
+        }
       });
 
       const total = visitedCount;
@@ -259,6 +266,7 @@ function displayUserSummary(userList) {
         arrivals.toString(),
         departures.toString(),
         layovers.toString(),
+        other.toString()   // <-- Add this for Other
       ];
 
       addRow(userSummaryTableBody, row);
