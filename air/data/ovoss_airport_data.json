@@ -189,6 +189,22 @@
     "visits": []
   },
   {
+    "code": "YGP",
+    "name": "Michel-Pouliot Gasp\u00e9 Airport",
+    "lat": 48.775,
+    "lon": -64.4817,
+    "country": "CAN",
+    "visits": []
+  },
+  {
+    "code": "YGR",
+    "name": "\u00celes-de-la-Madeleine Airport",
+    "lat": 47.425,
+    "lon": -61.7781,
+    "country": "CAN",
+    "visits": []
+  },
+  {
     "code": "YHO",
     "name": "Hopedale Airport",
     "lat": 55.4489,
@@ -215,6 +231,14 @@
     "name": "Kelowna International Airport",
     "lat": 49.9561,
     "lon": -119.3778,
+    "country": "CAN",
+    "visits": []
+  },
+  {
+    "code": "YQB",
+    "name": "Qu\u00e9bec City Jean Lesage International Airport",
+    "lat": 46.7911,
+    "lon": -71.3933,
     "country": "CAN",
     "visits": []
   },
@@ -309,6 +333,14 @@
     "visits": []
   },
   {
+    "code": "YXY",
+    "name": "Erik Nielsen Whitehorse International Airport",
+    "lat": 60.7094,
+    "lon": -135.0672,
+    "country": "CAN",
+    "visits": []
+  },
+  {
     "code": "YYC",
     "name": "Calgary International Airport",
     "lat": 51.1139,
@@ -340,6 +372,14 @@
     "name": "St. John's International Airport",
     "lat": 47.6186,
     "lon": -52.7519,
+    "country": "CAN",
+    "visits": []
+  },
+  {
+    "code": "YYY",
+    "name": "Mont-Joli Airport",
+    "lat": 48.6089,
+    "lon": -68.2081,
     "country": "CAN",
     "visits": []
   },
@@ -466,6 +506,14 @@
     "lat": 50.10083,
     "lon": 14.26,
     "country": "CZE",
+    "visits": []
+  },
+  {
+    "code": "DUS",
+    "name": "D\u00fcsseldorf Airport",
+    "lat": 51.2894,
+    "lon": 6.7667,
+    "country": "DEU",
     "visits": []
   },
   {
@@ -1422,6 +1470,14 @@
     ]
   },
   {
+    "code": "APF",
+    "name": "Naples Airport",
+    "lat": 26.1525,
+    "lon": -81.7756,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "APN",
     "name": "Alpena County Regional Airport",
     "lat": 45.07808,
@@ -1840,6 +1896,14 @@
     "name": "Fort Lauderdale\u2013Hollywood International Airport",
     "lat": 26.0726,
     "lon": -80.1527,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "FNL",
+    "name": "Northern Colorado Regional Airport",
+    "lat": 40.4519,
+    "lon": -105.0114,
     "country": "USA",
     "visits": []
   },
@@ -2498,6 +2562,22 @@
     ]
   },
   {
+    "code": "PAE",
+    "name": "Seattle Paine Field International Airport",
+    "lat": 47.9061,
+    "lon": -122.2814,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "PBI",
+    "name": "Palm Beach International Airport",
+    "lat": 26.6831,
+    "lon": -80.0956,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "PDX",
     "name": "Portland International Airport",
     "lat": 45.5898,
@@ -2615,6 +2695,14 @@
     "name": "Rapid City Regional Airport",
     "lat": 44.04532,
     "lon": -103.05722,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "RCI",
+    "name": "Richmond County Airport",
+    "lat": 34.8914,
+    "lon": -79.7594,
     "country": "USA",
     "visits": []
   },
@@ -2984,22 +3072,6 @@
     "lat": 21.2139,
     "lon": 105.8031,
     "country": "VNM",
-    "visits": []
-  },
-  {
-    "code": "PBI",
-    "name": "Palm Beach International Airport",
-    "lat": 26.6831,
-    "lon": -80.0956,
-    "country": "USA",
-    "visits": []
-  },
-  {
-    "code": "FNL",
-    "name": "Northern Colorado Regional Airport",
-    "lat": 40.4519,
-    "lon": -105.0114,
-    "country": "USA",
     "visits": []
   }
 ]
