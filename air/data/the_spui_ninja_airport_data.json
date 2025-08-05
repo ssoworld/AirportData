@@ -112,6 +112,14 @@
     "visits": []
   },
   {
+    "code": "SBH",
+    "name": "Gustaf III Airport",
+    "lat": 17.9044,
+    "lon": -62.8439,
+    "country": "BLM",
+    "visits": []
+  },
+  {
     "code": "BDA",
     "name": "L.F. Wade International Airport",
     "lat": 32.36417,
@@ -125,6 +133,14 @@
     "lat": 13.0744,
     "lon": -59.4922,
     "country": "BRB",
+    "visits": []
+  },
+  {
+    "code": "CXH",
+    "name": "Vancouver Harbour Water Airport",
+    "lat": 49.2944,
+    "lon": -123.1114,
+    "country": "CAN",
     "visits": []
   },
   {
@@ -669,6 +685,14 @@
     "visits": []
   },
   {
+    "code": "ABZ",
+    "name": "Aberdeen International Airport",
+    "lat": 57.2025,
+    "lon": -2.1981,
+    "country": "GBR",
+    "visits": []
+  },
+  {
     "code": "BFS",
     "name": "Belfast International Airport",
     "lat": 54.6575,
@@ -697,6 +721,14 @@
     "name": "Glasgow International Airport",
     "lat": 55.8651,
     "lon": -4.4332,
+    "country": "GBR",
+    "visits": []
+  },
+  {
+    "code": "KOI",
+    "name": "Kirkwall Airport",
+    "lat": 58.9581,
+    "lon": -2.9006,
     "country": "GBR",
     "visits": []
   },
@@ -1081,6 +1113,14 @@
     "visits": []
   },
   {
+    "code": "SFG",
+    "name": "L'Esp\u00e9rance Airport",
+    "lat": 18.1,
+    "lon": -63.05,
+    "country": "MAF",
+    "visits": []
+  },
+  {
     "code": "CUN",
     "name": "Canc\u00fan International Airport",
     "lat": 21.0367,
@@ -1362,6 +1402,14 @@
     "visits": []
   },
   {
+    "code": "ABE",
+    "name": "Lehigh Valley International Airport",
+    "lat": 40.6523,
+    "lon": -75.4405,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "ABQ",
     "name": "Albuquerque International Sunport",
     "lat": 35.0403,
@@ -1442,6 +1490,14 @@
     ]
   },
   {
+    "code": "ART",
+    "name": "Watertown International Airport",
+    "lat": 43.9919,
+    "lon": -76.0206,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "ATL",
     "name": "Hartsfield\u2013Jackson Atlanta International Airport",
     "lat": 33.6407,
@@ -1491,6 +1547,14 @@
     "name": "Bradley International Airport",
     "lat": 41.9389,
     "lon": -72.6833,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "BDR",
+    "name": "Igor I. Sikorsky Memorial Airport",
+    "lat": 41.1633,
+    "lon": -73.1261,
     "country": "USA",
     "visits": []
   },
@@ -1658,6 +1722,14 @@
     "visits": []
   },
   {
+    "code": "CHO",
+    "name": "Charlottesville\u2013Albemarle Airport",
+    "lat": 38.1386,
+    "lon": -78.4528,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "CIU",
     "name": "Chippewa County International Airport",
     "lat": 46.25083,
@@ -1691,6 +1763,14 @@
     "name": "John Glenn Columbus International Airport",
     "lat": 39.995,
     "lon": -82.8892,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "CTH",
+    "name": "Chester County G. O. Carlson Airport",
+    "lat": 39.9789,
+    "lon": -75.8656,
     "country": "USA",
     "visits": []
   },
@@ -1801,6 +1881,22 @@
     "visits": []
   },
   {
+    "code": "DXR",
+    "name": "Danbury Municipal Airport",
+    "lat": 41.3715,
+    "lon": -73.4822,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "EEN",
+    "name": "Dillant\u2013Hopkins Airport",
+    "lat": 42.8983,
+    "lon": -72.2708,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "ELP",
     "name": "El Paso International Airport",
     "lat": 31.8072,
@@ -1856,6 +1952,14 @@
     "name": "Bishop International Airport",
     "lat": 42.9656,
     "lon": -83.7436,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "FRG",
+    "name": "Republic Airport",
+    "lat": 40.7289,
+    "lon": -73.4133,
     "country": "USA",
     "visits": []
   },
@@ -1930,10 +2034,26 @@
     "visits": []
   },
   {
+    "code": "GTB",
+    "name": "Wheeler-Sack Army Airfield",
+    "lat": 44.0556,
+    "lon": -75.7194,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "GUM",
     "name": "Antonio B. Won Pat International Airport",
     "lat": 13.4839,
     "lon": 144.797,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "HGR",
+    "name": "Hagerstown Regional Airport - Richard A. Henson Field",
+    "lat": 39.7086,
+    "lon": -77.7264,
     "country": "USA",
     "visits": []
   },
@@ -1962,6 +2082,14 @@
     "visits": []
   },
   {
+    "code": "HVN",
+    "name": "Tweed New Haven Airport",
+    "lat": 41.2637,
+    "lon": -72.8877,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "IAD",
     "name": "Washington Dulles International Airport",
     "lat": 38.9519,
@@ -1985,6 +2113,14 @@
     "name": "Wichita Dwight D. Eisenhower National Airport",
     "lat": 37.6499,
     "lon": -97.4331,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "ILG",
+    "name": "Wilmington Airport",
+    "lat": 39.6786,
+    "lon": -75.6066,
     "country": "USA",
     "visits": []
   },
@@ -2280,6 +2416,14 @@
     "visits": []
   },
   {
+    "code": "MMU",
+    "name": "Morristown Municipal Airport",
+    "lat": 40.7994,
+    "lon": -74.415,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "MOB",
     "name": "Mobile Regional Airport",
     "lat": 30.69142,
@@ -2364,6 +2508,14 @@
     "visits": []
   },
   {
+    "code": "OGS",
+    "name": "Ogdensburg International Airport",
+    "lat": 44.6819,
+    "lon": -75.4656,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "OKC",
     "name": "Will Rogers World Airport",
     "lat": 35.3931,
@@ -2395,6 +2547,14 @@
     "name": "Ontario International Airport",
     "lat": 34.0561,
     "lon": -117.6011,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "OQN",
+    "name": "Brandywine Regional Airport",
+    "lat": 39.9901,
+    "lon": -75.5819,
     "country": "USA",
     "visits": []
   },
@@ -2435,10 +2595,26 @@
     "visits": []
   },
   {
+    "code": "OXC",
+    "name": "Waterbury-Oxford Airport",
+    "lat": 41.4783,
+    "lon": -73.1352,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "PAE",
     "name": "Seattle Paine Field International Airport",
     "lat": 47.9061,
     "lon": -122.2814,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "PBG",
+    "name": "Plattsburgh International Airport",
+    "lat": 44.6508,
+    "lon": -73.4681,
     "country": "USA",
     "visits": []
   },
@@ -2523,6 +2699,22 @@
     "visits": []
   },
   {
+    "code": "POU",
+    "name": "Hudson Valley Regional Airport",
+    "lat": 41.6267,
+    "lon": -73.8842,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "PPM",
+    "name": "Pompano Beach Airpark",
+    "lat": 26.2472,
+    "lon": -80.1111,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "PSC",
     "name": "Tri-Cities Airport",
     "lat": 46.2647,
@@ -2537,6 +2729,14 @@
     "name": "Petersburg James A. Johnson Airport",
     "lat": 56.8017,
     "lon": -132.945,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "PSM",
+    "name": "Portsmouth International Airport at Pease",
+    "lat": 43.0781,
+    "lon": -70.8233,
     "country": "USA",
     "visits": []
   },
@@ -2588,6 +2788,14 @@
     "name": "Redding Municipal Airport",
     "lat": 40.5089,
     "lon": -122.2933,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "RDG",
+    "name": "Reading Regional Airport/Carl A Spaatz Field",
+    "lat": 40.3786,
+    "lon": -75.9653,
     "country": "USA",
     "visits": []
   },
@@ -2664,6 +2872,14 @@
     "visits": []
   },
   {
+    "code": "SAV",
+    "name": "Savannah/Hilton Head International Airport",
+    "lat": 32.1275,
+    "lon": -81.2022,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "SBP",
     "name": "San Luis Obispo County Regional Airport",
     "lat": 35.2368,
@@ -2676,6 +2892,14 @@
     "name": "Deadhorse Airport",
     "lat": 70.1947,
     "lon": -148.4644,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "SCE",
+    "name": "State College Regional Airport",
+    "lat": 40.8492,
+    "lon": -77.8486,
     "country": "USA",
     "visits": []
   },
@@ -2812,6 +3036,14 @@
     "visits": []
   },
   {
+    "code": "TEB",
+    "name": "Teterboro Airport",
+    "lat": 40.85,
+    "lon": -74.0608,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "TKA",
     "name": "Talkeetna Airport",
     "lat": 62.3205,
@@ -2856,6 +3088,14 @@
     "name": "Cherry Capital Airport",
     "lat": 44.7415,
     "lon": -85.5822,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "USA",
+    "name": "Concord-Padgett Regional Airport",
+    "lat": 35.3878,
+    "lon": -80.7091,
     "country": "USA",
     "visits": []
   },
