@@ -2631,7 +2631,9 @@
     "lat": 62.3205,
     "lon": -150.0937,
     "country": "USA",
-    "visits": []
+    "visits": [
+      "X"
+    ]
   },
   {
     "code": "TKE",
@@ -2741,6 +2743,8 @@
     "lat": 40.4519,
     "lon": -105.0114,
     "country": "USA",
-    "visits": []
+    "visits": [
+      "X"
+    ]
   }
 ]
