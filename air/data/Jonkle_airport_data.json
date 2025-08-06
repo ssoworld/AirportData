@@ -2739,7 +2739,10 @@
     "lat": 19.738889,
     "lon": -156.045556,
     "country": "USA",
-    "visits": []
+    "visits": [
+      "A",
+      "D"
+    ]
   },
   {
     "code": "KSM",
