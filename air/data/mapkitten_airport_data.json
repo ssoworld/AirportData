@@ -104,6 +104,22 @@
     "visits": []
   },
   {
+    "code": "BAH",
+    "name": "Bahrain International Airport",
+    "lat": 26.2708,
+    "lon": 50.6336,
+    "country": "BHR",
+    "visits": []
+  },
+  {
+    "code": "MHH",
+    "name": "Leonard M. Thompson International Airport",
+    "lat": 26.5114,
+    "lon": -77.0836,
+    "country": "BHS",
+    "visits": []
+  },
+  {
     "code": "NAS",
     "name": "Lynden Pindling International Airport",
     "lat": 25.0389,
@@ -408,6 +424,14 @@
     "visits": []
   },
   {
+    "code": "SCL",
+    "name": "Arturo Merino Ben\u00edtez International Airport",
+    "lat": -33.3928,
+    "lon": -70.7856,
+    "country": "CHL",
+    "visits": []
+  },
+  {
     "code": "HKG",
     "name": "Hong Kong International Airport",
     "lat": 22.3089,
@@ -536,6 +560,14 @@
     "visits": []
   },
   {
+    "code": "JIB",
+    "name": "Djibouti\u2013Ambouli International Airport",
+    "lat": 11.5463,
+    "lon": 43.1592,
+    "country": "DJI",
+    "visits": []
+  },
+  {
     "code": "CPH",
     "name": "Copenhagen Airport",
     "lat": 55.6136,
@@ -642,6 +674,14 @@
     "name": "Adolfo Su\u00e1rez Madrid\u2013Barajas Airport",
     "lat": 40.4722,
     "lon": -3.5608,
+    "country": "ESP",
+    "visits": []
+  },
+  {
+    "code": "OZP",
+    "name": "Mor\u00f3n Air Base",
+    "lat": 37.1749,
+    "lon": -5.6159,
     "country": "ESP",
     "visits": []
   },
@@ -811,6 +851,14 @@
     "lat": 37.9372,
     "lon": 23.9452,
     "country": "GRC",
+    "visits": []
+  },
+  {
+    "code": "GUA",
+    "name": "La Aurora International Airport",
+    "lat": 14.5817,
+    "lon": -90.5267,
+    "country": "GTM",
     "visits": []
   },
   {
@@ -990,6 +1038,22 @@
     "visits": []
   },
   {
+    "code": "KIN",
+    "name": "Norman Manley International Airport",
+    "lat": 17.9356,
+    "lon": -76.7875,
+    "country": "JAM",
+    "visits": []
+  },
+  {
+    "code": "MBJ",
+    "name": "Sangster International Airport",
+    "lat": 18.5036,
+    "lon": -77.9133,
+    "country": "JAM",
+    "visits": []
+  },
+  {
     "code": "CTS",
     "name": "New Chitose Airport",
     "lat": 42.7753,
@@ -1113,6 +1177,14 @@
     "visits": []
   },
   {
+    "code": "UVF",
+    "name": "Hewanorra International Airport",
+    "lat": 13.7333,
+    "lon": -60.9525,
+    "country": "LCA",
+    "visits": []
+  },
+  {
     "code": "LUX",
     "name": "Luxembourg Airport",
     "lat": 49.6266,
@@ -1157,6 +1229,14 @@
     "name": "Benito Juarez International Airport",
     "lat": 19.4363,
     "lon": -99.0721,
+    "country": "MEX",
+    "visits": []
+  },
+  {
+    "code": "MTY",
+    "name": "Monterrey International Airport",
+    "lat": 25.7783,
+    "lon": -100.1064,
     "country": "MEX",
     "visits": []
   },
@@ -1273,6 +1353,14 @@
     "visits": []
   },
   {
+    "code": "XJD",
+    "name": "Al Udeid Air Base",
+    "lat": 25.1173,
+    "lon": 51.315,
+    "country": "QAT",
+    "visits": []
+  },
+  {
     "code": "LED",
     "name": "Pulkovo Airport",
     "lat": 59.8003,
@@ -1302,6 +1390,14 @@
     "lat": 13.4408,
     "lon": -89.0556,
     "country": "SLV",
+    "visits": []
+  },
+  {
+    "code": "FSP",
+    "name": "Saint-Pierre Pointe-Blanche Airport",
+    "lat": 46.7631,
+    "lon": -56.1742,
+    "country": "SPM",
     "visits": []
   },
   {
@@ -1409,6 +1505,14 @@
     "visits": []
   },
   {
+    "code": "QUE",
+    "name": "Queenstown Airport",
+    "lat": -33.9648,
+    "lon": 18.87,
+    "country": "UGA",
+    "visits": []
+  },
+  {
     "code": "ABE",
     "name": "Lehigh Valley International Airport",
     "lat": 40.6523,
@@ -1453,6 +1557,14 @@
     "name": "Alexandria International Airport",
     "lat": 31.3275,
     "lon": -92.5486,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "AFF",
+    "name": "Air Force Academy Airfield",
+    "lat": 38.9747,
+    "lon": -104.8228,
     "country": "USA",
     "visits": []
   },
@@ -1699,6 +1811,14 @@
     "visits": []
   },
   {
+    "code": "BPT",
+    "name": "Jack Brooks Regional Airport",
+    "lat": 29.9508,
+    "lon": -94.0206,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "BQK",
     "name": "Brunswick Golden Isles Airport",
     "lat": 31.2589,
@@ -1803,6 +1923,14 @@
     "visits": []
   },
   {
+    "code": "CHA",
+    "name": "Chattanooga Metropolitan Airport",
+    "lat": 35.0353,
+    "lon": -85.2039,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "CHO",
     "name": "Charlottesville\u2013Albemarle Airport",
     "lat": 38.1386,
@@ -1880,6 +2008,14 @@
     "visits": []
   },
   {
+    "code": "CMX",
+    "name": "Houghton County Memorial Airport",
+    "lat": 47.1683,
+    "lon": -88.4892,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "COS",
     "name": "Colorado Springs Airport",
     "lat": 38.8058,
@@ -1947,6 +2083,14 @@
     ]
   },
   {
+    "code": "CWA",
+    "name": "Central Wisconsin Airport",
+    "lat": 44.7778,
+    "lon": -89.6658,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "CXC",
     "name": "Chitina Airport",
     "lat": 61.582778,
@@ -1975,6 +2119,14 @@
     "name": "James M. Cox Dayton International Airport",
     "lat": 39.9025,
     "lon": -84.2194,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "DBQ",
+    "name": "Dubuque Regional Airport",
+    "lat": 42.402,
+    "lon": -90.7095,
     "country": "USA",
     "visits": []
   },
@@ -2025,6 +2177,14 @@
     "name": "Dillingham Airport",
     "lat": 59.0454,
     "lon": -158.505,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "DMA",
+    "name": "Davis\u2013Monthan Air Force Base",
+    "lat": 32.1665,
+    "lon": -110.8831,
     "country": "USA",
     "visits": []
   },
@@ -2157,6 +2317,14 @@
     "visits": []
   },
   {
+    "code": "FAT",
+    "name": "Fresno Yosemite International Airport",
+    "lat": 36.7767,
+    "lon": -119.7189,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "FAY",
     "name": "Fayetteville Regional Airport",
     "lat": 34.9911,
@@ -2165,10 +2333,34 @@
     "visits": []
   },
   {
+    "code": "FFT",
+    "name": "Capital City Airport",
+    "lat": 38.1819,
+    "lon": -84.9061,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "FLL",
     "name": "Fort Lauderdale\u2013Hollywood International Airport",
     "lat": 26.0726,
     "lon": -80.1527,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "FLO",
+    "name": "Florence Regional Airport",
+    "lat": 34.1854,
+    "lon": -79.7239,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "FMY",
+    "name": "Page Field Airport",
+    "lat": 26.5866,
+    "lon": -81.8632,
     "country": "USA",
     "visits": []
   },
@@ -2424,6 +2616,14 @@
     "visits": []
   },
   {
+    "code": "IAG",
+    "name": "Niagara Falls International Airport",
+    "lat": 43.1072,
+    "lon": -78.9461,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "IAH",
     "name": "George Bush Intercontinental Airport",
     "lat": 29.9902,
@@ -2452,6 +2652,14 @@
     "name": "Wilmington International Airport",
     "lat": 34.2711,
     "lon": -77.9029,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "IMM",
+    "name": "Immokalee Regional Airport",
+    "lat": 26.4339,
+    "lon": -81.4014,
     "country": "USA",
     "visits": []
   },
@@ -2846,6 +3054,22 @@
     "visits": []
   },
   {
+    "code": "MQT",
+    "name": "Marquette Sawyer Regional Airport",
+    "lat": 46.3536,
+    "lon": -87.3953,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "MSL",
+    "name": "Northwest Alabama Regional Airport",
+    "lat": 34.7453,
+    "lon": -87.6102,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "MSN",
     "name": "Dane County Regional Airport",
     "lat": 43.14,
@@ -3048,6 +3272,14 @@
     "name": "Palm Beach International Airport",
     "lat": 26.6831,
     "lon": -80.0956,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "PDK",
+    "name": "DeKalb\u2013Peachtree Airport",
+    "lat": 33.876,
+    "lon": -84.302,
     "country": "USA",
     "visits": []
   },
@@ -3598,6 +3830,14 @@
     "visits": []
   },
   {
+    "code": "TUP",
+    "name": "Tupelo Regional Airport",
+    "lat": 34.269,
+    "lon": -88.7699,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "TUS",
     "name": "Tucson International Airport",
     "lat": 32.1161,
@@ -3675,6 +3915,14 @@
     "lat": 59.5033,
     "lon": -139.6603,
     "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "SPB",
+    "name": "Charlotte Amalie Harbor Seaplane Base",
+    "lat": 18.3386,
+    "lon": -64.9408,
+    "country": "VIR",
     "visits": []
   },
   {
