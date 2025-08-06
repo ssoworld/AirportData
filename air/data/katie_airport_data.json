@@ -3236,7 +3236,10 @@
     "lat": 35.8772,
     "lon": -78.7889,
     "country": "USA",
-    "visits": []
+    "visits": [
+      "A",
+      "D"
+    ]
   },
   {
     "code": "RIC",
