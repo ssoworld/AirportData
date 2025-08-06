@@ -3235,9 +3235,7 @@
     "lat": 34.8914,
     "lon": -79.7594,
     "country": "USA",
-    "visits": [
-      "A"
-    ]
+    "visits": []
   },
   {
     "code": "RDD",
@@ -3277,7 +3275,9 @@
     "lat": 37.505,
     "lon": -77.3194,
     "country": "USA",
-    "visits": []
+    "visits": [
+      "A"
+    ]
   },
   {
     "code": "RNO",
