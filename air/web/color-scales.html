@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Color Scale Preview</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+    }
+    .scale {
+      margin-bottom: 30px;
+    }
+    .scale-title {
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    .markers {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    .marker {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+    .marker svg {
+      width: 24px;
+      height: 24px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Color Scale Marker Comparison</h1>
+
+  <div id="scales"></div>
+
+  <script>
+    const MAX = 100;
+    const values = [1, 25, 50, 75, 100];
+
+    const colorScales = [
+      {
+        name: "Scale 1: Red (high) to Cyan (low)",
+        getColor: (count) => {
+          const ratio = Math.min(count / MAX, 1);
+          const r = Math.floor(255 * ratio);
+          const g = Math.floor(255 * (1 - ratio));
+          const b = Math.floor(255 * (1 - ratio));
+          return `rgb(${r},${g},${b})`;
+        }
+      },
+      {
+        name: "Scale 2: Blue (low) to Orange (high)",
+        getColor: (count) => {
+          const ratio = Math.min(count / MAX, 1);
+          const r = Math.floor(255 * ratio);
+          const g = Math.floor(100 + 100 * (1 - ratio));
+          const b = Math.floor(255 * (1 - ratio));
+          return `rgb(${r},${g},${b})`;
+        }
+      },
+      {
+        name: "Scale 3: Green to Magenta",
+        getColor: (count) => {
+          const ratio = Math.min(count / MAX, 1);
+          const r = Math.floor(255 * ratio);
+          const g = Math.floor(255 * (1 - ratio));
+          const b = Math.floor(255 * ratio);
+          return `rgb(${r},${g},${b})`;
+        }
+      },
+      {
+        name: "Scale 4: Grayscale (black to white)",
+        getColor: (count) => {
+          const shade = Math.floor(255 * (count / MAX));
+          return `rgb(${shade},${shade},${shade})`;
+        }
+      }
+    ];
+
+    const container = document.getElementById("scales");
+
+    colorScales.forEach((scale, i) => {
+      const section = document.createElement("div");
+      section.className = "scale";
+
+      const title = document.createElement("div");
+      title.className = "scale-title";
+      title.textContent = scale.name;
+
+      const markersDiv = document.createElement("div");
+      markersDiv.className = "markers";
+
+      values.forEach(val => {
+        const color = scale.getColor(val);
+        const marker = document.createElement("div");
+        marker.className = "marker";
+
+        marker.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10" fill="${color}" stroke="black" />
+          </svg>
+          <div>${val}</div>
+        `;
+
+        markersDiv.appendChild(marker);
+      });
+
+      section.appendChild(title);
+      section.appendChild(markersDiv);
+      container.appendChild(section);
+    });
+  </script>
+</body>
+</html>
