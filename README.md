@@ -12,7 +12,7 @@ Maps are generated from "alist" files submitted via GitHub. The filename should 
 
 *the third and fourth fields are optional.
 
-N can be any of the following codes: A (for arrival), D (for departure), L (for layover), or X (for any visit to the airport outside the secure area, e.g. to tour the facility or to pick up a traveler)
+N can be any of the following codes: A (for arrival), D (for departure), L (for layover), or X (for any visit to the airport outside the secure area, e.g. to tour the facility or to pick up a traveler).
 
 **Example file lines:**
 
