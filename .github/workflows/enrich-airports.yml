@@ -1,7 +1,7 @@
 name: Enrich Airports CSV
 
 on:
-  workflow_dispatch:  # Allows manual runs
+  workflow_dispatch:    # Manual trigger
   push:
     paths:
       - 'air/data/unknown_codes.txt'
@@ -9,22 +9,26 @@ on:
 jobs:
   enrich:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
+          python-version: '3.x'   # You can pin to '3.11' or '3.13' if you want
+
+      - name: Check Python version
+        run: python --version
 
       - name: Install dependencies
         run: |
-          pip install --upgrade pip
-          pip install pycountry
+          python -m pip install --upgrade pip
+          python -m pip install pycountry
 
-      - name: Download OurAirports lookup CSV from GitHub
-        run: curl -L -o ourairports.csv https://raw.githubusercontent.com/davidmegginson/ourairports-data/main/airports.csv
+      - name: Download OurAirports lookup CSV
+        run: curl -o ourairports.csv https://github.com/davidmegginson/ourairports-data/raw/master/airports.csv
 
       - name: Run enrichment script
         run: python air/scripts/enrich_airports.py
