@@ -29,7 +29,7 @@ If you have visited an airport not currently included in the project, please put
 
 When you receive a notification that your alist has been pulled in, expect to see your updated map on Airport Mapping at the next :15 past the hour.
 
-## The map
+## Viewing and interacting with the map
 
 The user's airport map will appear at https://tmairports.teresco.org/AirportData/air/web/user.html?user=[usernamre]. A list of all users can be found via the link at the top of that page, or at https://tmairports.teresco.org/AirportData/air/web/user.html (without the user parameter).
 
