@@ -21,7 +21,7 @@ N can be any of the following codes: A (for arrival), D (for departure), L (for 
 | `ATL A D L`| User arrived at and departed from Atlanta, and had a layover there. |
 | `LAX A D`  | User arrived at and departed from Los Angeles.                      |
 | `ORD L`    | User had a layover at Chicago O'Hare, but no arrival or departure.  |
-| 'FFO X'    | User toured Wright-Patterson AFB but did not fly.                   |
+| `FFO X`    | User toured Wright-Patterson AFB but did not fly.                   |
 
 Each airport should be on a separate line. X is used only when the user has not visited the airport as a traveler. The order of the A, D, and L does not matter. The file should be submitted via a GitHub pull request, currently to TravelMapping/AirportData/air/data (email submissions will be available soon but are not currently supported). Once the file is merged, their map will update automatically within an hour.
 
