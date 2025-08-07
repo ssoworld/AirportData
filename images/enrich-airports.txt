@@ -21,8 +21,8 @@ jobs:
       - name: Install dependencies
         run: pip install --upgrade pip
 
-      - name: Download OurAirports lookup CSV
-        run: curl -o ourairports.csv https://ourairports.com/data/airports.csv
+      - name: Download OurAirports lookup CSV from GitHub
+        run: curl -L -o ourairports.csv https://raw.githubusercontent.com/davidmegginson/ourairports-data/main/airports.csv
 
       - name: Run enrichment script
         run: python air/scripts/enrich_airports.py
