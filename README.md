@@ -39,13 +39,13 @@ Clicking on the icon will identify the airport with a popup message. The popup w
 
 The map of all airports currently included is located at https://tmairports.teresco.org/AirportData/air/web/airports.html. This page provides a locator map for all airports (color-coded by number of visitors) and a table with the same information.
 
-## Known issues:
+## Known issues
 
 * After a user's .alist is updated, the browser cache must be cleared manually in order to see the updated map.
 * Many airports are missing. So far only airports visited by at least one user have been added.
 * Airport placement is inconsistent. Some icons are centered on runways, some on terminals, and some at other positions on airport property. Many locations were automatically generated using Copilot.
 
-## Future plans:
+## Future plans
 
 * Additional basemaps may become available.
 * The map currently shows any airports requested by users. This may become difficult to maintain. A decision will need to be reached regarding which airports should be included. Public airports with scheduled commercial flights are the main scope for the project, but "public", "scheduled", and "commercial" may need to be clarified.
