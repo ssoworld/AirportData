@@ -1018,7 +1018,7 @@
   },
   {
     "code": "FLR",
-    "name": "Florence Airport, Peretola",
+    "name": "Florence Airport Peretola",
     "lat": 43.81,
     "lon": 11.2051,
     "country": "ITA",
@@ -2136,6 +2136,14 @@
     "name": "Houghton County Memorial Airport",
     "lat": 47.1683,
     "lon": -88.4892,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "CNY",
+    "name": "Canyonlands Regional Airport",
+    "lat": 38.7615,
+    "lon": -109.7449,
     "country": "USA",
     "visits": []
   },
@@ -3268,6 +3276,14 @@
       "A",
       "D"
     ]
+  },
+  {
+    "code": "MEI",
+    "name": "Meridian Regional Airport",
+    "lat": 32.3337,
+    "lon": -88.7451,
+    "country": "USA",
+    "visits": []
   },
   {
     "code": "MEM",

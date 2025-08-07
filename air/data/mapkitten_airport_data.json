@@ -999,7 +999,7 @@
   },
   {
     "code": "FLR",
-    "name": "Florence Airport, Peretola",
+    "name": "Florence Airport Peretola",
     "lat": 43.81,
     "lon": 11.2051,
     "country": "ITA",
@@ -2016,6 +2016,14 @@
     "visits": []
   },
   {
+    "code": "CNY",
+    "name": "Canyonlands Regional Airport",
+    "lat": 38.7615,
+    "lon": -109.7449,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "COS",
     "name": "Colorado Springs Airport",
     "lat": 38.8058,
@@ -2938,6 +2946,14 @@
     "name": "Chicago Midway International Airport",
     "lat": 41.7868,
     "lon": -87.7522,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "MEI",
+    "name": "Meridian Regional Airport",
+    "lat": 32.3337,
+    "lon": -88.7451,
     "country": "USA",
     "visits": []
   },
