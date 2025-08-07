@@ -19,7 +19,9 @@ jobs:
           python-version: '3.x'
 
       - name: Install dependencies
-        run: pip install --upgrade pip
+        run: |
+          pip install --upgrade pip
+          pip install pycountry
 
       - name: Download OurAirports lookup CSV from GitHub
         run: curl -L -o ourairports.csv https://raw.githubusercontent.com/davidmegginson/ourairports-data/main/airports.csv
