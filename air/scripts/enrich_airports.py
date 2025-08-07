@@ -1,4 +1,5 @@
 import csv
+import pycountry
 
 UNKNOWN_CODES_FILE = "air/data/unknown_codes.txt"
 CURRENT_DB_FILE = "air/data/airports.csv"
@@ -16,14 +17,22 @@ def load_lookup_dict(csv_path):
     with open(csv_path, newline='', encoding='utf-8') as f:
         return {row["iata_code"]: row for row in csv.DictReader(f) if row["iata_code"]}
 
+# Convert 2-letter to 3-letter ISO country code
+def convert_to_alpha3(alpha2):
+    try:
+        return pycountry.countries.get(alpha_2=alpha2).alpha_3
+    except:
+        return alpha2  # fallback if conversion fails
+
 # Format row to match your CSV structure
 def map_to_custom_format(row):
     return {
-        "country": row["iso_country"],
+        "country": convert_to_alpha3(row["iso_country"]),
         "iata_code": row["iata_code"],
         "name": row["name"],
         "latitude": row["latitude_deg"],
-        "longitude": row["longitude_deg"]
+        "longitude": row["longitude_deg"],
+        "alt_codes": ""  # add blank alt_codes field
     }
 
 def main():
@@ -44,7 +53,7 @@ def main():
 
     if new_rows:
         with open(OUTPUT_FILE, "a", newline='', encoding='utf-8') as f:
-            fieldnames = ["country", "iata_code", "name", "latitude", "longitude"]
+            fieldnames = ["country", "iata_code", "name", "latitude", "longitude", "alt_codes"]
             writer = csv.DictWriter(f, fieldnames=fieldnames, delimiter=';')
             for row in new_rows:
                 writer.writerow(row)
