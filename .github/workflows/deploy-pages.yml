@@ -26,6 +26,11 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Install Python dependencies
+        run: |
+          pip install --upgrade pip
+          pip install pycountry
+
       - name: Run build_data.py
         run: python air/scripts/build_data.py
 
