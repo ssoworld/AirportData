@@ -22,9 +22,9 @@ N can be any of the following codes: A (for arrival), D (for departure), and L (
 | `LAX A D`  | Traveler arrived at and departed from Los Angeles.                      |
 | `ORD L`    | Traveler had a layover at Chicago O'Hare, but no arrival or departure.  |
 
-Each airport should be on a separate line. The order of the A, D, and L does not matter. The file should be submitted via a GitHub pull request, currently to TravelMapping/AirportData (email submissions will be available soon but are not currently supported). Once the file is merged, their map should update automatically within a few minutes.
+Each airport should be on a separate line. The order of the A, D, and L does not matter. The file should be submitted via a GitHub pull request, currently to TravelMapping/AirportData/air/data (email submissions will be available soon but are not currently supported). Once the file is merged, their map will update automatically.
 
-If you have visited an airport not currently included in the project, please put it in your alist anyway. When your alist is processed, unknown airports are flagged for addition to the airport database (airports.csv) and should be added as part of the update process.
+If you have visited an airport not currently included in the project, please put it in your alist anyway. When your alist is processed, unknown airports are flagged for addition to the airport database (airports.csv) and will get added as part of the update process.
 
 When you receive a notification that your alist has been pulled in, expect to see your updated map on Airport Mapping at the next :15 past the hour.
 
