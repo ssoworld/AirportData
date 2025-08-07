@@ -4169,5 +4169,157 @@
     "lon": 105.8031,
     "country": "VNM",
     "visits": []
+  },
+  {
+    "code": "BLV",
+    "name": "Scott AFB/Midamerica Airport",
+    "lat": 38.5452,
+    "lon": -89.835197,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "COF",
+    "name": "Patrick Space Force Base",
+    "lat": 28.2349,
+    "lon": -80.6101,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "FFO",
+    "name": "Wright-Patterson Air Force Base",
+    "lat": 39.826099,
+    "lon": -84.048302,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "GSB",
+    "name": "Seymour Johnson Air Force Base",
+    "lat": 35.339401,
+    "lon": -77.960602,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "HMN",
+    "name": "Holloman Air Force Base",
+    "lat": 32.852501,
+    "lon": -106.107002,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "LFI",
+    "name": "Langley Air Force Base",
+    "lat": 37.082901,
+    "lon": -76.360497,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "LSV",
+    "name": "Nellis Air Force Base",
+    "lat": 36.2361984253,
+    "lon": -115.033996582,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "LUF",
+    "name": "Luke Air Force Base",
+    "lat": 33.535,
+    "lon": -112.383003,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "MCF",
+    "name": "MacDill Air Force Base",
+    "lat": 27.8493,
+    "lon": -82.521202,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "MXF",
+    "name": "Maxwell Air Force Base",
+    "lat": 32.3829,
+    "lon": -86.365799,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "OFF",
+    "name": "Offutt Air Force Base",
+    "lat": 41.119307,
+    "lon": -95.90851,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "PAM",
+    "name": "Tyndall Air Force Base",
+    "lat": 30.069599,
+    "lon": -85.575401,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "POB",
+    "name": "Pope Field",
+    "lat": 35.170898,
+    "lon": -79.014503,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "QRO",
+    "name": "Quer\u00e9taro Intercontinental Airport",
+    "lat": 20.6173,
+    "lon": -100.185997,
+    "country": "MEX",
+    "visits": []
+  },
+  {
+    "code": "RND",
+    "name": "Randolph Air Force Base",
+    "lat": 29.529699,
+    "lon": -98.2789,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "SKF",
+    "name": "Lackland Air Force Base",
+    "lat": 29.38419914,
+    "lon": -98.58110046,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "SUU",
+    "name": "Travis Air Force Base",
+    "lat": 38.262699,
+    "lon": -121.927002,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "TIK",
+    "name": "Tinker Air Force Base",
+    "lat": 35.4147,
+    "lon": -97.386597,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "YOW",
+    "name": "Ottawa Macdonald-Cartier International Airport",
+    "lat": 45.322498,
+    "lon": -75.669197,
+    "country": "CAN",
+    "visits": []
   }
 ]
