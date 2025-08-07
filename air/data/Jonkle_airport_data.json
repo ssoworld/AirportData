@@ -454,10 +454,7 @@
     "lat": -33.3928,
     "lon": -70.7856,
     "country": "CHL",
-    "visits": [
-      "A",
-      "D"
-    ]
+    "visits": []
   },
   {
     "code": "HKG",
@@ -1586,10 +1583,7 @@
     "lat": -33.9648,
     "lon": 18.87,
     "country": "UGA",
-    "visits": [
-      "A",
-      "D"
-    ]
+    "visits": []
   },
   {
     "code": "ABE",
@@ -1707,7 +1701,6 @@
     "lon": -149.9975,
     "country": "USA",
     "visits": [
-      "A",
       "D"
     ]
   },
@@ -4077,7 +4070,10 @@
     "lat": 37.36395,
     "lon": -121.92894,
     "country": "USA",
-    "visits": []
+    "visits": [
+      "A",
+      "D"
+    ]
   },
   {
     "code": "SJT",
