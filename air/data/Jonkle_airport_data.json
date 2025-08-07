@@ -1212,7 +1212,10 @@
     "lat": -1.3192,
     "lon": 36.9275,
     "country": "KEN",
-    "visits": []
+    "visits": [
+      "A",
+      "D"
+    ]
   },
   {
     "code": "GMP",
@@ -1963,7 +1966,9 @@
     "lat": 25.9069,
     "lon": -97.4258,
     "country": "USA",
-    "visits": []
+    "visits": [
+      "X"
+    ]
   },
   {
     "code": "BRW",
@@ -2091,8 +2096,7 @@
     "lon": -80.0407,
     "country": "USA",
     "visits": [
-      "A",
-      "D"
+      "X"
     ]
   },
   {
