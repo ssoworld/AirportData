@@ -881,7 +881,9 @@
     "lat": 47.437,
     "lon": 19.2572,
     "country": "HUN",
-    "visits": []
+    "visits": [
+      "A"
+    ]
   },
   {
     "code": "BDJ",
