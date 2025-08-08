@@ -2805,7 +2805,9 @@
     "lat": 33.9416,
     "lon": -118.4085,
     "country": "USA",
-    "visits": []
+    "visits": [
+      "L"
+    ]
   },
   {
     "code": "LBB",
@@ -4111,6 +4113,14 @@
     "lat": 45.322498,
     "lon": -75.669197,
     "country": "CAN",
+    "visits": []
+  },
+  {
+    "code": "ZLO",
+    "name": "Playa de Oro International Airport",
+    "lat": 19.1448,
+    "lon": -104.558998,
+    "country": "MEX",
     "visits": []
   }
 ]
