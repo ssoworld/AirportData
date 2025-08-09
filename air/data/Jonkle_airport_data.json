@@ -4596,5 +4596,13 @@
       "A",
       "D"
     ]
+  },
+  {
+    "code": "CAN",
+    "name": "Guangzhou Baiyun International Airport",
+    "lat": 23.392401,
+    "lon": 113.299004,
+    "country": "CHN",
+    "visits": []
   }
 ]
