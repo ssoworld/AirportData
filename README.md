@@ -25,7 +25,7 @@ N can be any of the following codes: A (for arrival), D (for departure), L (for 
 
 Each airport should be on a separate line. X is used only when the user has not visited the airport as a traveler. The order of the A, D, and L does not matter. The file should be submitted via a GitHub pull request, currently to TravelMapping/AirportData/air/data (email submissions will be available soon but are not currently supported). Once the file is merged, their map will update automatically within an hour.
 
-If you have visited an airport not currently included in the project, please put it in your alist anyway. When your alist is processed, unknown airports are added automatically to the airport database (airports.csv)s. There's never a need to edit the database manually.
+If you have visited an airport not currently included in the project, please put it in your alist anyway. When your alist is processed, unknown airports are added automatically to the airport database (airports.csv). There's never a need to edit the database manually.
 
 When you receive a notification that your alist has been pulled in, expect to see your updated map on Airport Mapping at the next :15 past the hour.
 
