@@ -1765,8 +1765,7 @@
     "lon": -97.67,
     "country": "USA",
     "visits": [
-      "A",
-      "D"
+      "L"
     ]
   },
   {
@@ -1959,9 +1958,7 @@
     "lat": 25.9069,
     "lon": -97.4258,
     "country": "USA",
-    "visits": [
-      "X"
-    ]
+    "visits": []
   },
   {
     "code": "BRW",
@@ -4365,10 +4362,7 @@
     "lat": 18.3386,
     "lon": -64.9408,
     "country": "VIR",
-    "visits": [
-      "A",
-      "D"
-    ]
+    "visits": []
   },
   {
     "code": "SSB",
@@ -4384,7 +4378,10 @@
     "lat": 18.3373,
     "lon": -64.9734,
     "country": "VIR",
-    "visits": []
+    "visits": [
+      "A",
+      "D"
+    ]
   },
   {
     "code": "HAN",
