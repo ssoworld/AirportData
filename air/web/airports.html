@@ -65,7 +65,7 @@
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-<script>
+/* ---- Country mapping (copied from your user.js) ---- */
 const countryMap = {
   AFG: "Afghanistan", ALB: "Albania", DZA: "Algeria", AND: "Andorra",
   AGO: "Angola", AIA: "Anguilla", ATA: "Antarctica", ARG: "Argentina",
@@ -121,6 +121,7 @@ const countryMap = {
   SXM: "Sint Maarten", VIR: "U.S. Virgin Islands", PYF:"French Polynesia",
   MAC: "Macau", TWN: "Taiwan", GLP: "Guadeloupe", TCA: "Turks and Caicos Islands"
 };
+
 const csvUrl = '../data/airports.csv';
 const manifestUrl = '../data/manifest.json';
 const dataPath = '../data/';
@@ -165,20 +166,20 @@ async function fetchAirports() {
   }
   populateDropdown();
 
-await computeAirportVisitCounts();
-placeAllMarkers();
-createAirportSummaryTable();  // Add this line to show the summary table if no airport selected
+  await computeAirportVisitCounts();
+  placeAllMarkers();
+  createAirportSummaryTable();  // show the summary table if no airport selected
 
-updateHomeLinkVisibility();
-const params = new URLSearchParams(window.location.search);
-const airportParam = params.get('airport');
-if (airportParam && airports[airportParam.toUpperCase()]) {
-  document.getElementById('airportSelect').value = airportParam.toUpperCase();
-  handleAirportSelect(airportParam.toUpperCase());
-} else {
-  // If no airport param, make sure the summary table is visible
-  document.getElementById('airportSummaryTable').style.display = 'table';
-}
+  updateHomeLinkVisibility();
+  const params = new URLSearchParams(window.location.search);
+  const airportParam = params.get('airport');
+  if (airportParam && airports[airportParam.toUpperCase()]) {
+    document.getElementById('airportSelect').value = airportParam.toUpperCase();
+    handleAirportSelect(airportParam.toUpperCase());
+  } else {
+    // If no airport param, make sure the summary table is visible
+    document.getElementById('airportSummaryTable').style.display = 'table';
+  }
 }
 
 function populateDropdown() {
@@ -309,7 +310,7 @@ async function handleAirportSelect(code) {
   const airport = airports[code];
   if (!airport) return;
 
-    // ✅ HIDE the summary table if an airport is selected
+  // ✅ HIDE the summary table if an airport is selected
   document.getElementById('airportSummaryTable').style.display = 'none';
 
   history.replaceState(null, '', `?airport=${code}`);
@@ -368,6 +369,7 @@ function updateTable(data) {
 document.getElementById('airportSelect').addEventListener('change', (e) => {
   handleAirportSelect(e.target.value.toUpperCase());
 });
+
 function createAirportSummaryTable() {
   const params = new URLSearchParams(window.location.search);
   if (params.get('airport')) {
@@ -387,13 +389,14 @@ function createAirportSummaryTable() {
     visitors: airportVisitCounts[a.code] || 0,
   }));
 
-  // Sort by visitor count descending by default (optional)
+  // Sort by visitor count descending by default
   rows.sort((a, b) => b.visitors - a.visitors);
 
   for (const row of rows) {
+    const countryName = countryMap[row.country] || countryMap[(row.country || '').toUpperCase()] || row.country || '';
     const tr = document.createElement('tr');
     tr.innerHTML = `
-      <td>${countryMap[row.country] || row.country || ''}</td>
+      <td>${countryName}</td>
       <td><a href="?airport=${row.code}">${row.code}</a></td>
       <td>${row.name}</td>
       <td>${row.visitors}</td>
