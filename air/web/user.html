@@ -49,14 +49,6 @@
   <label for="userSelect">Select user:</label>
   <select id="userSelect" aria-label="User selection menu"></select>
   
-  <!-- Basemap dropdown added here -->
-  <label for="basemapSelect" style="margin-left: 1em;">Select basemap:</label>
-  <select id="basemapSelect" aria-label="Basemap selection menu" style="margin-left: 0.5em;">
-    <option value="osm">OpenStreetMap Default</option>
-    <option value="carto">Carto Positron</option>
-    <option value="stamen">Stamen Terrain</option>
-  </select>
-  
   <!-- Show totals only in user mode -->
   <span id="totals" style="margin-left: 1em; font-weight: bold; display:none;"></span>
   
@@ -103,49 +95,9 @@
   </table>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
   <script>
     console.log("Leaflet loaded?", typeof L, "L.marker?", typeof L.marker);
-
-    // Initialize map and base layers
-    window.map = L.map('map').setView([51.505, -0.09], 5);
-
-    var baseLayers = {
-      osm: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors',
-        maxZoom: 19
-      }),
-      carto: L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-        maxZoom: 19
-      }),
-      stamen: L.tileLayer('https://stamen-tiles.a.ssl.fastly.net/terrain/{z}/{x}/{y}.png', {
-        attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, ' +
-                     '<a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; ' +
-                     'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-        maxZoom: 18
-      })
-    };
-
-    // Add default basemap (OpenStreetMap)
-    baseLayers.osm.addTo(map);
-
-    // Basemap selector event listener
-    document.getElementById('basemapSelect').addEventListener('change', function(e) {
-      var selected = e.target.value;
-
-      // Remove all base layers
-      for (var key in baseLayers) {
-        if (map.hasLayer(baseLayers[key])) {
-          map.removeLayer(baseLayers[key]);
-        }
-      }
-
-      // Add selected basemap
-      baseLayers[selected].addTo(map);
-    });
   </script>
-
   <script src="user.js" defer></script>
 </body>
 </html>
