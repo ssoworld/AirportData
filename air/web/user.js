@@ -72,7 +72,8 @@ const countryMap = {
   ZWE: "Zimbabwe", BLM: "Saint Barthélemy", CUW: "Curaçao", FJI: "Fiji",
   FSM: "Micronesia", MAF: "Saint-Martin", PRI: "Puerto Rico",
   SXM: "Sint Maarten", VIR: "U.S. Virgin Islands", PYF:"French Polynesia",
-  MAC: "Macau", TWN: "Taiwan", GLP: "Guadeloupe", TCA: "Turks and Caicos Islands"
+  MAC: "Macau", TWN: "Taiwan", GLP: "Guadeloupe", TCA: "Turks and Caicos Islands",
+  SPM: "Saint Pierre & Miquelon"
 };
 
 function setTitleAndVisibility(user) {
