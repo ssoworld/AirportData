@@ -108,7 +108,7 @@
     console.log("Leaflet loaded?", typeof L, "L.marker?", typeof L.marker);
 
     // Initialize map and base layers
-    var map = L.map('map').setView([51.505, -0.09], 5);
+    window.map = L.map('map').setView([51.505, -0.09], 5);
 
     var baseLayers = {
       osm: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
