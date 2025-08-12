@@ -211,14 +211,6 @@
     "visits": []
   },
   {
-    "code": "YFP",
-    "name": "Fort Resolution Airport",
-    "lat": 61.18,
-    "lon": -113.69,
-    "country": "CAN",
-    "visits": []
-  },
-  {
     "code": "YGP",
     "name": "Michel-Pouliot Gasp\u00e9 Airport",
     "lat": 48.775,
@@ -263,6 +255,14 @@
     "name": "Fort McMurray International Airport",
     "lat": 56.6533,
     "lon": -111.2233,
+    "country": "CAN",
+    "visits": []
+  },
+  {
+    "code": "YOW",
+    "name": "Ottawa Macdonald-Cartier International Airport",
+    "lat": 45.322498,
+    "lon": -75.669197,
     "country": "CAN",
     "visits": []
   },
@@ -446,6 +446,14 @@
     "lat": -33.3928,
     "lon": -70.7856,
     "country": "CHL",
+    "visits": []
+  },
+  {
+    "code": "CAN",
+    "name": "Guangzhou Baiyun International Airport",
+    "lat": 23.392401,
+    "lon": 113.299004,
+    "country": "CHN",
     "visits": []
   },
   {
@@ -1244,6 +1252,14 @@
     "visits": []
   },
   {
+    "code": "GDL",
+    "name": "Guadalajara International Airport",
+    "lat": 20.523342,
+    "lon": -103.310108,
+    "country": "MEX",
+    "visits": []
+  },
+  {
     "code": "MEX",
     "name": "Benito Juarez International Airport",
     "lat": 19.4363,
@@ -1256,6 +1272,22 @@
     "name": "Monterrey International Airport",
     "lat": 25.7783,
     "lon": -100.1064,
+    "country": "MEX",
+    "visits": []
+  },
+  {
+    "code": "QRO",
+    "name": "Quer\u00e9taro Intercontinental Airport",
+    "lat": 20.6173,
+    "lon": -100.185997,
+    "country": "MEX",
+    "visits": []
+  },
+  {
+    "code": "ZLO",
+    "name": "Playa de Oro International Airport",
+    "lat": 19.1448,
+    "lon": -104.558998,
     "country": "MEX",
     "visits": []
   },
@@ -1348,14 +1380,6 @@
     "visits": []
   },
   {
-    "code": "VQX",
-    "name": "Vieques Airport",
-    "lat": 18.1158,
-    "lon": -65.4227,
-    "country": "PRI",
-    "visits": []
-  },
-  {
     "code": "LIS",
     "name": "Humberto Delgado Airport",
     "lat": 38.7742,
@@ -1428,14 +1452,6 @@
     "visits": []
   },
   {
-    "code": "ARN",
-    "name": "Stockholm Arlanda Airport",
-    "lat": 59.6519,
-    "lon": 17.9186,
-    "country": "SWE",
-    "visits": []
-  },
-  {
     "code": "SXM",
     "name": "Princess Juliana International Airport",
     "lat": 18.041,
@@ -1472,14 +1488,6 @@
     "name": "Don Mueang International Airport",
     "lat": 13.9125,
     "lon": 100.6067,
-    "country": "THA",
-    "visits": []
-  },
-  {
-    "code": "NNT",
-    "name": "Nan Nakhon Airport",
-    "lat": 18.8078,
-    "lon": 100.7833,
     "country": "THA",
     "visits": []
   },
@@ -1788,6 +1796,14 @@
     "visits": []
   },
   {
+    "code": "BLV",
+    "name": "Scott AFB/Midamerica Airport",
+    "lat": 38.5452,
+    "lon": -89.835197,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "BMI",
     "name": "Central Illinois Regional Airport",
     "lat": 40.4772,
@@ -2036,6 +2052,14 @@
     "name": "Canyonlands Regional Airport",
     "lat": 38.7615,
     "lon": -109.7449,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "COF",
+    "name": "Patrick Space Force Base",
+    "lat": 28.2349,
+    "lon": -80.6101,
     "country": "USA",
     "visits": []
   },
@@ -2362,6 +2386,14 @@
     "visits": []
   },
   {
+    "code": "FFO",
+    "name": "Wright-Patterson Air Force Base",
+    "lat": 39.826099,
+    "lon": -84.048302,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "FFT",
     "name": "Capital City Airport",
     "lat": 38.1819,
@@ -2522,6 +2554,14 @@
     "visits": []
   },
   {
+    "code": "GSB",
+    "name": "Seymour Johnson Air Force Base",
+    "lat": 35.339401,
+    "lon": -77.960602,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "GSO",
     "name": "Piedmont Triad International Airport",
     "lat": 36.0978,
@@ -2582,6 +2622,14 @@
     "name": "Hilton Head Island Airport",
     "lat": 32.2244,
     "lon": -80.6975,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "HMN",
+    "name": "Holloman Air Force Base",
+    "lat": 32.852501,
+    "lon": -106.107002,
     "country": "USA",
     "visits": []
   },
@@ -2853,6 +2901,14 @@
     "visits": []
   },
   {
+    "code": "LFI",
+    "name": "Langley Air Force Base",
+    "lat": 37.082901,
+    "lon": -76.360497,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "LFT",
     "name": "Lafayette Regional Airport",
     "lat": 30.2053,
@@ -2917,6 +2973,22 @@
     "visits": []
   },
   {
+    "code": "LSV",
+    "name": "Nellis Air Force Base",
+    "lat": 36.2361984253,
+    "lon": -115.033996582,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "LUF",
+    "name": "Luke Air Force Base",
+    "lat": 33.535,
+    "lon": -112.383003,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "LUP",
     "name": "Kalaupapa Airport",
     "lat": 21.2111,
@@ -2937,6 +3009,14 @@
     "name": "MBS International Airport",
     "lat": 43.5328,
     "lon": -84.0797,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "MCF",
+    "name": "MacDill Air Force Base",
+    "lat": 27.8493,
+    "lon": -82.521202,
     "country": "USA",
     "visits": []
   },
@@ -3159,6 +3239,14 @@
     "visits": []
   },
   {
+    "code": "MXF",
+    "name": "Maxwell Air Force Base",
+    "lat": 32.3829,
+    "lon": -86.365799,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "MYR",
     "name": "Myrtle Beach International Airport",
     "lat": 33.6797,
@@ -3179,6 +3267,14 @@
     "name": "Oakland International Airport",
     "lat": 37.7214,
     "lon": -122.2208,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "OFF",
+    "name": "Offutt Air Force Base",
+    "lat": 41.119307,
+    "lon": -95.90851,
     "country": "USA",
     "visits": []
   },
@@ -3302,6 +3398,14 @@
     ]
   },
   {
+    "code": "PAM",
+    "name": "Tyndall Air Force Base",
+    "lat": 30.069599,
+    "lon": -85.575401,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "PBG",
     "name": "Plattsburgh International Airport",
     "lat": 44.6508,
@@ -3350,6 +3454,14 @@
     "visits": []
   },
   {
+    "code": "PHK",
+    "name": "Palm Beach County Glades Airport",
+    "lat": 26.78499985,
+    "lon": -80.69339752,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "PHL",
     "name": "Philadelphia International Airport",
     "lat": 39.8744,
@@ -3394,6 +3506,14 @@
     "name": "Pensacola International Airport",
     "lat": 30.4733,
     "lon": -87.1867,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "POB",
+    "name": "Pope Field",
+    "lat": 35.170898,
+    "lon": -79.014503,
     "country": "USA",
     "visits": []
   },
@@ -3478,14 +3598,6 @@
     "visits": []
   },
   {
-    "code": "RCI",
-    "name": "Richmond County Airport",
-    "lat": 34.8914,
-    "lon": -79.7594,
-    "country": "USA",
-    "visits": []
-  },
-  {
     "code": "RDD",
     "name": "Redding Municipal Airport",
     "lat": 40.5089,
@@ -3526,6 +3638,14 @@
     "visits": [
       "A"
     ]
+  },
+  {
+    "code": "RND",
+    "name": "Randolph Air Force Base",
+    "lat": 29.529699,
+    "lon": -98.2789,
+    "country": "USA",
+    "visits": []
   },
   {
     "code": "RNO",
@@ -3719,6 +3839,14 @@
     "visits": []
   },
   {
+    "code": "SKF",
+    "name": "Lackland Air Force Base",
+    "lat": 29.38419914,
+    "lon": -98.58110046,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "SLC",
     "name": "Salt Lake City International Airport",
     "lat": 40.7899,
@@ -3769,6 +3897,22 @@
     "visits": []
   },
   {
+    "code": "SRW",
+    "name": "Mid-Carolina Regional Airport",
+    "lat": 35.645901,
+    "lon": -80.520302,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "SSF",
+    "name": "Stinson Municipal Airport",
+    "lat": 29.336999893188,
+    "lon": -98.471099853516,
+    "country": "USA",
+    "visits": []
+  },
+  {
     "code": "STL",
     "name": "St. Louis Lambert International Airport",
     "lat": 38.7487,
@@ -3789,6 +3933,14 @@
     "name": "Spirit of St. Louis Airport",
     "lat": 38.6622,
     "lon": -90.6519,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "SUU",
+    "name": "Travis Air Force Base",
+    "lat": 38.262699,
+    "lon": -121.927002,
     "country": "USA",
     "visits": []
   },
@@ -3821,6 +3973,14 @@
     "name": "Teterboro Airport",
     "lat": 40.85,
     "lon": -74.0608,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "TIK",
+    "name": "Tinker Air Force Base",
+    "lat": 35.4147,
+    "lon": -97.386597,
     "country": "USA",
     "visits": []
   },
@@ -3990,206 +4150,6 @@
     "lat": 21.2139,
     "lon": 105.8031,
     "country": "VNM",
-    "visits": []
-  },
-  {
-    "code": "BLV",
-    "name": "Scott AFB/Midamerica Airport",
-    "lat": 38.5452,
-    "lon": -89.835197,
-    "country": "USA",
-    "visits": []
-  },
-  {
-    "code": "COF",
-    "name": "Patrick Space Force Base",
-    "lat": 28.2349,
-    "lon": -80.6101,
-    "country": "USA",
-    "visits": []
-  },
-  {
-    "code": "FFO",
-    "name": "Wright-Patterson Air Force Base",
-    "lat": 39.826099,
-    "lon": -84.048302,
-    "country": "USA",
-    "visits": []
-  },
-  {
-    "code": "GSB",
-    "name": "Seymour Johnson Air Force Base",
-    "lat": 35.339401,
-    "lon": -77.960602,
-    "country": "USA",
-    "visits": []
-  },
-  {
-    "code": "HMN",
-    "name": "Holloman Air Force Base",
-    "lat": 32.852501,
-    "lon": -106.107002,
-    "country": "USA",
-    "visits": []
-  },
-  {
-    "code": "LFI",
-    "name": "Langley Air Force Base",
-    "lat": 37.082901,
-    "lon": -76.360497,
-    "country": "USA",
-    "visits": []
-  },
-  {
-    "code": "LSV",
-    "name": "Nellis Air Force Base",
-    "lat": 36.2361984253,
-    "lon": -115.033996582,
-    "country": "USA",
-    "visits": []
-  },
-  {
-    "code": "LUF",
-    "name": "Luke Air Force Base",
-    "lat": 33.535,
-    "lon": -112.383003,
-    "country": "USA",
-    "visits": []
-  },
-  {
-    "code": "MCF",
-    "name": "MacDill Air Force Base",
-    "lat": 27.8493,
-    "lon": -82.521202,
-    "country": "USA",
-    "visits": []
-  },
-  {
-    "code": "MXF",
-    "name": "Maxwell Air Force Base",
-    "lat": 32.3829,
-    "lon": -86.365799,
-    "country": "USA",
-    "visits": []
-  },
-  {
-    "code": "OFF",
-    "name": "Offutt Air Force Base",
-    "lat": 41.119307,
-    "lon": -95.90851,
-    "country": "USA",
-    "visits": []
-  },
-  {
-    "code": "PAM",
-    "name": "Tyndall Air Force Base",
-    "lat": 30.069599,
-    "lon": -85.575401,
-    "country": "USA",
-    "visits": []
-  },
-  {
-    "code": "POB",
-    "name": "Pope Field",
-    "lat": 35.170898,
-    "lon": -79.014503,
-    "country": "USA",
-    "visits": []
-  },
-  {
-    "code": "QRO",
-    "name": "Quer\u00e9taro Intercontinental Airport",
-    "lat": 20.6173,
-    "lon": -100.185997,
-    "country": "MEX",
-    "visits": []
-  },
-  {
-    "code": "RND",
-    "name": "Randolph Air Force Base",
-    "lat": 29.529699,
-    "lon": -98.2789,
-    "country": "USA",
-    "visits": []
-  },
-  {
-    "code": "SKF",
-    "name": "Lackland Air Force Base",
-    "lat": 29.38419914,
-    "lon": -98.58110046,
-    "country": "USA",
-    "visits": []
-  },
-  {
-    "code": "SUU",
-    "name": "Travis Air Force Base",
-    "lat": 38.262699,
-    "lon": -121.927002,
-    "country": "USA",
-    "visits": []
-  },
-  {
-    "code": "TIK",
-    "name": "Tinker Air Force Base",
-    "lat": 35.4147,
-    "lon": -97.386597,
-    "country": "USA",
-    "visits": []
-  },
-  {
-    "code": "YOW",
-    "name": "Ottawa Macdonald-Cartier International Airport",
-    "lat": 45.322498,
-    "lon": -75.669197,
-    "country": "CAN",
-    "visits": []
-  },
-  {
-    "code": "ZLO",
-    "name": "Playa de Oro International Airport",
-    "lat": 19.1448,
-    "lon": -104.558998,
-    "country": "MEX",
-    "visits": []
-  },
-  {
-    "code": "CAN",
-    "name": "Guangzhou Baiyun International Airport",
-    "lat": 23.392401,
-    "lon": 113.299004,
-    "country": "CHN",
-    "visits": []
-  },
-  {
-    "code": "GDL",
-    "name": "Guadalajara International Airport",
-    "lat": 20.523342,
-    "lon": -103.310108,
-    "country": "MEX",
-    "visits": []
-  },
-  {
-    "code": "PHK",
-    "name": "Palm Beach County Glades Airport",
-    "lat": 26.78499985,
-    "lon": -80.69339752,
-    "country": "USA",
-    "visits": []
-  },
-  {
-    "code": "SRW",
-    "name": "Mid-Carolina Regional Airport",
-    "lat": 35.645901,
-    "lon": -80.520302,
-    "country": "USA",
-    "visits": []
-  },
-  {
-    "code": "SSF",
-    "name": "Stinson Municipal Airport",
-    "lat": 29.336999893188,
-    "lon": -98.471099853516,
-    "country": "USA",
     "visits": []
   }
 ]
