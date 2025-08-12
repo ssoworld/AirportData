@@ -238,19 +238,20 @@ function getColorForCount(count, maxCount) {
     return '#aaaaaa'; // gray for no visits
   }
 
-  // Adjust so that count=1 starts the gradient
   const ratio = Math.min((count - 1) / (maxCount - 1), 1); // normalize 1..maxCount → 0..1
   let r, g, b;
 
   if (ratio < 0.5) {
-    // Blue → Yellow
-    r = Math.floor((ratio * 2) * 255);
-    g = Math.floor((ratio * 2) * 255);
-    b = 255;
+    // Dark blue (0,0,136) → Yellow (255,255,0)
+    const t = ratio / 0.5; // 0..0.5 → 0..1
+    r = Math.floor(255 * t);
+    g = Math.floor(255 * t);
+    b = Math.floor(136 * (1 - t));
   } else {
-    // Yellow → Red
+    // Yellow (255,255,0) → Red (255,0,0)
+    const t = (ratio - 0.5) / 0.5; // 0.5..1 → 0..1
     r = 255;
-    g = Math.floor((1 - (ratio - 0.5) * 2) * 255);
+    g = Math.floor(255 * (1 - t));
     b = 0;
   }
 
