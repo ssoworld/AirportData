@@ -332,7 +332,7 @@ function loadData() {
   fetch("../data/manifest.json")
     .then(res => res.json())
     .then(async users => {
-      users.sort();
+      users.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base', numeric: true }));
       users.forEach(user => {
         const option = document.createElement("option");
         option.value = user;
