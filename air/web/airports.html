@@ -233,25 +233,45 @@ async function computeAirportVisitCounts() {
   airportVisitCounts = counts;
 }
 
+// linear interpolation helper
+function lerp(a, b, t) { return a + (b - a) * t; }
+
 function getColorForCount(count, maxCount) {
   if (count === 0) return '#aaaaaa'; // gray for no visits
 
-  // Normalize to 0–1, shifting so min=1
-  const ratio = (count - 1) / (maxCount - 1);
+  // Normalize so 1..maxCount -> 0..1
+  const ratio = Math.min(Math.max((count - 1) / (Math.max(1, maxCount - 1)), 0), 1);
 
-  // Hue sweep: 240° (blue) → 60° (yellow) → 0° (red)
-  // At ratio=0 → hue=240, ratio=0.5 → hue=60, ratio=1 → hue=0
+  // Hue sweep: 240 (blue) -> 60 (yellow) -> 0 (red)
   let hue;
   if (ratio <= 0.5) {
-    hue = 240 - (ratio / 0.5) * (240 - 60); // blue → yellow
+    const t = ratio / 0.5; // 0..1
+    hue = lerp(240, 60, t); // blue -> yellow
   } else {
-    hue = 60 - ((ratio - 0.5) / 0.5) * 60; // yellow → red
+    const t = (ratio - 0.5) / 0.5; // 0..1
+    hue = lerp(60, 0, t); // yellow -> red
   }
 
-  const saturation = 100;
-  const lightness = 50;
+  // Adjust saturation and lightness to mute cool colors and boost warm colors
+  let saturation, lightness;
 
-  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+  if (ratio <= 0.5) {
+    // Cool side: keep saturation moderate and lightness lower so blues/cyans look darker
+    const t = ratio / 0.5; // 0..1
+    // Saturation: 60% at the very low end -> 100% near midpoint
+    saturation = Math.round(lerp(60, 100, Math.pow(t, 0.9)));
+    // Lightness: start darker (30%) and increase to 50% at the midpoint (nonlinear)
+    lightness = Math.round(lerp(30, 50, Math.pow(t, 0.8)));
+  } else {
+    // Warm side: keep saturation high and make lightness brighter so yellows/oranges/red pop
+    const t = (ratio - 0.5) / 0.5; // 0..1
+    saturation = Math.round(lerp(100, 90, t)); // stays high
+    // Lightness increases from 50% (midpoint) to 68% (max) to emphasize warmth
+    lightness = Math.round(lerp(50, 68, Math.pow(t, 1.0)));
+  }
+
+  // Return HSL color string (nice smooth perceptual sweep)
+  return `hsl(${Math.round(hue)}, ${saturation}%, ${lightness}%)`;
 }
 
 function createLegend(maxVisits) {
@@ -264,10 +284,12 @@ function createLegend(maxVisits) {
     const div = L.DomUtil.create('div', 'legend');
     div.innerHTML = '<strong>Users per airport</strong><br>';
 
+    // Provide 0, 1, midpoint, max (midpoint chosen as exact half of max)
+    const mid = Math.max(1, Math.floor(maxVisits / 2));
     const stops = [
       { label: '0', count: 0 },
       { label: '1', count: 1 },
-      { label: `${Math.floor(maxVisits / 2)}`, count: Math.floor(maxVisits / 2) },
+      { label: `${mid}`, count: mid },
       { label: `${maxVisits}`, count: maxVisits }
     ];
 
@@ -275,7 +297,6 @@ function createLegend(maxVisits) {
       const color = getColorForCount(stop.count, maxVisits);
       div.innerHTML += `<i style="background:${color}"></i> ${stop.label}<br>`;
     }
-
     return div;
   };
 
