@@ -307,11 +307,22 @@ function createLegend(maxVisits) {
 function placeAllMarkers() {
   const maxVisits = Math.max(...Object.values(airportVisitCounts), 1);
   createLegend(maxVisits); 
-  
-  for (const code in airports) {
-    const a = airports[code];
-    const count = airportVisitCounts[code] || 0;
-    const color = getColorForCount(count, maxVisits);
+
+  // Build array of airport objects with counts
+  const airportArr = Object.values(airports).map(a => ({
+    code: a.code,
+    lat: a.lat,
+    lon: a.lon,
+    count: airportVisitCounts[a.code] || 0,
+    name: a.name
+  }));
+
+  // Sort ascending by count so low counts get drawn first, high counts last
+  airportArr.sort((a, b) => a.count - b.count);
+
+  // Now add markers in sorted order
+  for (const a of airportArr) {
+    const color = getColorForCount(a.count, maxVisits);
 
     const marker = L.circleMarker([a.lat, a.lon], {
       radius: 6,
@@ -321,9 +332,9 @@ function placeAllMarkers() {
       weight: 1
     })
     .addTo(map)
-    .bindPopup(`<b>${a.code}</b><br>${a.name}<br>${count} user(s) visited<br><a href="?airport=${a.code}">View visits</a>`);
+    .bindPopup(`<b>${a.code}</b><br>${a.name}<br>${a.count} user(s) visited<br><a href="?airport=${a.code}">View visits</a>`);
 
-    marker.on('click', () => handleAirportSelect(code));
+    marker.on('click', () => handleAirportSelect(a.code));
   }
 }
 
