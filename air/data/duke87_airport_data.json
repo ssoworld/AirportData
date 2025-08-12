@@ -4221,5 +4221,37 @@
     "lon": 113.299004,
     "country": "CHN",
     "visits": []
+  },
+  {
+    "code": "GDL",
+    "name": "Guadalajara International Airport",
+    "lat": 20.523342,
+    "lon": -103.310108,
+    "country": "MEX",
+    "visits": []
+  },
+  {
+    "code": "PHK",
+    "name": "Palm Beach County Glades Airport",
+    "lat": 26.78499985,
+    "lon": -80.69339752,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "SRW",
+    "name": "Mid-Carolina Regional Airport",
+    "lat": 35.645901,
+    "lon": -80.520302,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "SSF",
+    "name": "Stinson Municipal Airport",
+    "lat": 29.336999893188,
+    "lon": -98.471099853516,
+    "country": "USA",
+    "visits": []
   }
 ]
