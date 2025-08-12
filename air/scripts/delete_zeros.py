@@ -2,7 +2,7 @@ import os
 import csv
 
 # Path to the cloned repo's air/data folder
-AIR_DATA_DIR = ./air/data
+AIR_DATA_DIR = .AirportData/air/data/AirportData/air/data
 
 # Choose either airports.csv or airports-manifest.csv (change here)
 AIRPORTS_CSV = os.path.join(AIR_DATA_DIR, 'airports.csv')
