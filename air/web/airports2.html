@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Airport Visits</title>
+  <link rel="icon" type="image/x-icon" href="../../images/favicon.ico">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    body { font-family: sans-serif; padding: 1em; }
+    #map { height: 600px; margin-top: 1em; }
+    table { border-collapse: collapse; margin-top: 1em; width: 100%; }
+    th, td { border: 1px solid #ccc; padding: 0.5em; text-align: center; }
+    th { background: #eee; }
+    .legend {
+      position: absolute;
+      bottom: 30px;
+      left: 10px;
+      background: white;
+      padding: 8px;
+      border-radius: 6px;
+      font-size: 0.9em;
+      box-shadow: 0 0 5px rgba(0,0,0,0.3);
+      line-height: 1.4;
+    }
+    .legend i {
+      display: inline-block;
+      width: 20px;
+      height: 12px;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+  <h1>Airport Visit Tracker</h1>
+  <p id="homeLink"><a href="airports.html" style="font-size: 1em;">← Airports home</a></p>
+  <label for="airportSelect">Select an airport:</label>
+  <select id="airportSelect">
+    <option value="">-- Choose --</option>
+  </select>
+
+  <div id="map"></div>
+  <h2 id="visitCount"></h2>
+  <table id="airportSummaryTable" style="margin-top: 1em; width: 100%; display: none; border-collapse: collapse;">
+    <thead>
+        <tr>
+          <th data-sort="string">Country</th>
+          <th data-sort="string">IATA</th>
+          <th data-sort="string">Airport Name</th>
+          <th data-sort="number">Visitors</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <table id="visitTable" style="display:none;">
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Arrival</th>
+        <th>Departure</th>
+        <th>Layover</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const csvUrl = '../data/airports.csv';
+const manifestUrl = '../data/manifest.json';
+const dataPath = '../data/';
+
+let airports = {};
+let airportList = [];
+let airportVisitCounts = {}; // A/D/L counts
+let airportsWithXOnlyCount = {}; // X-only counts
+let airportsWithXOnlySet = new Set();
+
+const map = L.map('map').setView([20, 0], 2);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
+const selectedMarker = L.marker([0, 0]);
+
+async function fetchAirports() {
+  const res = await fetch(csvUrl);
+  const text = await res.text();
+  const lines = text.trim().split('\n');
+  lines.shift(); // remove header
+  for (const line of lines) {
+    const [country, code, name, lat, lon] = line.split(';');
+    if (!code) continue;
+    airports[code.toUpperCase()] = { country, code: code.toUpperCase(), name, lat: parseFloat(lat), lon: parseFloat(lon) };
+    airportList.push({ code: code.toUpperCase(), name });
+  }
+  populateDropdown();
+  await computeAirportVisitCounts();
+  placeAllMarkers();
+  createAirportSummaryTable();
+  updateHomeLinkVisibility();
+  const params = new URLSearchParams(window.location.search);
+  const airportParam = params.get('airport');
+  if (airportParam && airports[airportParam.toUpperCase()]) {
+    document.getElementById('airportSelect').value = airportParam.toUpperCase();
+    handleAirportSelect(airportParam.toUpperCase());
+  }
+}
+
+function populateDropdown() {
+  const sel = document.getElementById('airportSelect');
+  for (const airport of airportList.sort((a, b) => a.code.localeCompare(b.code))) {
+    const opt = document.createElement('option');
+    opt.value = airport.code;
+    opt.textContent = `${airport.code} - ${airport.name}`;
+    sel.appendChild(opt);
+  }
+}
+
+async function fetchManifest() {
+  const res = await fetch(manifestUrl);
+  return await res.json();
+}
+
+async function fetchAlist(username) {
+  const res = await fetch(`${dataPath}${username}.alist`);
+  const text = await res.text();
+  return text.split('\n').filter(line => !line.startsWith('#'));
+}
+
+async function computeAirportVisitCounts() {
+  const manifest = await fetchManifest();
+  const counts = {};
+  const xOnlyCounts = {};
+  const xOnlySet = new Set();
+
+  for (const user of manifest) {
+    try {
+      const lines = await fetchAlist(user);
+      for (const line of lines) {
+        const [code, ...flags] = line.trim().split(/\s+/);
+        if (!code) continue;
+        const iata = code.toUpperCase();
+        if (!(iata in airports)) continue;
+
+        const flagStr = flags.join('').toUpperCase();
+        const hasVisit = /[ADL]/.test(flagStr);
+        const hasX = /X/.test(flagStr);
+
+        if (hasVisit) {
+          counts[iata] = (counts[iata] || 0) + 1;
+          // if it was previously X-only, remove it
+          if (xOnlySet.has(iata)) {
+            xOnlySet.delete(iata);
+            delete xOnlyCounts[iata];
+          }
+        } else if (hasX) {
+          if (!counts[iata]) {
+            xOnlyCounts[iata] = (xOnlyCounts[iata] || 0) + 1;
+            xOnlySet.add(iata);
+          }
+        }
+      }
+    } catch (e) {
+      console.warn(`Error loading ALIST for ${user}`);
+    }
+  }
+  airportVisitCounts = counts;
+  airportsWithXOnlyCount = xOnlyCounts;
+  airportsWithXOnlySet = xOnlySet;
+}
+
+function getColorForCount(count, code) {
+  if (airportsWithXOnlySet.has(code)) return '#888888'; // gray for X-only
+  if (count === 0) return '#aaaaaa'; // gray for 0 visits
+
+  // linear interpolation as before
+  const maxCount = Math.max(...Object.values(airportVisitCounts), 1);
+  const ratio = Math.min(Math.max((count - 1) / (Math.max(1, maxCount - 1)), 0), 1);
+  let hue;
+  if (ratio <= 0.5) { hue = 240 - 180*ratio/0.5; } else { hue = 60 - 60*(ratio-0.5)/0.5; }
+  let saturation = ratio <=0.5 ? 60+40*Math.pow(ratio/0.5,0.9) : 100-10*((ratio-0.5)/0.5);
+  let lightness = ratio <=0.5 ? 30+20*Math.pow(ratio/0.5,0.8) : 50+18*((ratio-0.5)/0.5);
+  return `hsl(${Math.round(hue)}, ${Math.round(saturation)}%, ${Math.round(lightness)}%)`;
+}
+
+function createLegend(maxVisits) {
+  if (map.legendControl) { map.removeControl(map.legendControl); }
+  const legend = L.control({ position: 'bottomleft' });
+  legend.onAdd = function () {
+    const div = L.DomUtil.create('div', 'legend');
+    div.innerHTML = '<strong>Users per airport</strong><br>';
+    const mid = Math.max(1, Math.floor(maxVisits / 2));
+    const stops = [{label:'0',count:0},{label:'1',count:1},{label:`${mid}`,count:mid},{label:`${maxVisits}`,count:maxVisits}];
+    for (const stop of stops) {
+      const color = getColorForCount(stop.count, '');
+      div.innerHTML += `<i style="background:${color}"></i> ${stop.label}<br>`;
+    }
+    div.innerHTML += `<i style="background:#888888"></i> X-only (non-flying)`;
+    return div;
+  };
+  legend.addTo(map);
+  map.legendControl = legend;
+}
+
+function placeAllMarkers() {
+  const maxVisits = Math.max(...Object.values(airportVisitCounts),1);
+  createLegend(maxVisits);
+  const airportArr = Object.values(airports).map(a => ({
+    code: a.code,
+    lat: a.lat,
+    lon: a.lon,
+    count: airportVisitCounts[a.code] || 0,
+    name: a.name
+  })).sort((a,b)=>a.count-b.count);
+
+  for (const a of airportArr) {
+    const color = getColorForCount(a.count, a.code);
+    const flyingCount = airportVisitCounts[a.code] || 0;
+    const xOnlyCount = airportsWithXOnlyCount[a.code] || 0;
+    const popupText = `${a.code} - ${a.name}<br>${flyingCount}${xOnlyCount?` + ${xOnlyCount} (non-flying)`:''} user(s) visited<br><a href="?airport=${a.code}">View visits</a>`;
+
+    L.circleMarker([a.lat, a.lon], { radius:6, color, fillColor:color, fillOpacity:0.9, weight:1 })
+      .addTo(map)
+      .bindPopup(popupText)
+      .on('click', ()=>handleAirportSelect(a.code));
+  }
+}
+
+// ...rest of your existing functions remain unchanged (populateDropdown, handleAirportSelect, parseAlist, updateTable, createAirportSummaryTable, makeTableSortable, etc.) ...
+
+document.getElementById('airportSelect').addEventListener('change', (e)=>{ handleAirportSelect(e.target.value.toUpperCase()); });
+fetchAirports();
+</script>
+</body>
+</html>
