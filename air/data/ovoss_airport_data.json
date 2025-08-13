@@ -275,14 +275,6 @@
     "visits": []
   },
   {
-    "code": "YOW",
-    "name": "Ottawa Macdonald-Cartier International Airport",
-    "lat": 45.322498,
-    "lon": -75.669197,
-    "country": "CAN",
-    "visits": []
-  },
-  {
     "code": "YQB",
     "name": "Qu\u00e9bec City Jean Lesage International Airport",
     "lat": 46.7911,
@@ -466,14 +458,6 @@
     "lat": 47.4647,
     "lon": 8.5492,
     "country": "CHE",
-    "visits": []
-  },
-  {
-    "code": "SCL",
-    "name": "Arturo Merino Ben\u00edtez International Airport",
-    "lat": -33.3928,
-    "lon": -70.7856,
-    "country": "CHL",
     "visits": []
   },
   {
@@ -1567,14 +1551,6 @@
     "lat": 25.0694,
     "lon": 121.5525,
     "country": "TWN",
-    "visits": []
-  },
-  {
-    "code": "QUE",
-    "name": "Queenstown Airport",
-    "lat": -33.9648,
-    "lon": 18.87,
-    "country": "UGA",
     "visits": []
   },
   {
