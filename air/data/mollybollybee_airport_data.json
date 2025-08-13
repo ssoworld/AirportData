@@ -4156,5 +4156,29 @@
     "lon": 105.8031,
     "country": "VNM",
     "visits": []
+  },
+  {
+    "code": "GTF",
+    "name": "Great Falls International Airport",
+    "lat": 47.48199844,
+    "lon": -111.3710022,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "RHI",
+    "name": "Rhinelander Oneida County Airport",
+    "lat": 45.63119888305664,
+    "lon": -89.46749877929688,
+    "country": "USA",
+    "visits": []
+  },
+  {
+    "code": "SAC",
+    "name": "Sacramento Executive Airport",
+    "lat": 38.5125007629,
+    "lon": -121.492996216,
+    "country": "USA",
+    "visits": []
   }
 ]
