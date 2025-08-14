@@ -152,12 +152,57 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 const selectedMarker = L.circleMarker([0, 0], {
     radius: 10,          // bigger than other markers
-    color: '#ff0000',    // bright red outline
-    fillColor: '#ff6666',// slightly lighter fill
+    color: '',           // will be set dynamically
+    fillColor: '',       // will be set dynamically
     fillOpacity: 0.9,
-    weight: 2             // thicker border
+    weight: 2            // thicker border
 });
 
+function pulseMarker(marker) {
+    const originalRadius = marker.options.radius;
+    const pulseRadius = originalRadius + 4; // slightly bigger
+    const pulseDuration = 300; // ms
+
+    function singlePulse() {
+        // Grow
+        marker.setStyle({ radius: pulseRadius });
+        // Shrink back
+        setTimeout(() => {
+            marker.setStyle({ radius: originalRadius });
+        }, pulseDuration);
+    }
+
+    // Repeat twice
+    singlePulse();
+    setTimeout(singlePulse, pulseDuration * 2);
+}
+
+function highlightSelectedMarker(code) {
+    const airport = airports[code];
+    if (!airport) return;
+
+    const flyingCount = airportVisitCounts[code] || 0;
+    const maxVisits = Math.max(...Object.values(airportVisitCounts), 1);
+    const color = getMarkerColor(code, flyingCount, maxVisits);
+
+    selectedMarker.setStyle({
+        color: color,
+        fillColor: color,
+        radius: 10,
+        weight: 2
+    });
+
+    selectedMarker.setLatLng([airport.lat, airport.lon])
+        .bindPopup(`${airport.code} - ${airport.name}`)
+        .openPopup();
+
+    if (!map.hasLayer(selectedMarker)) {
+        selectedMarker.addTo(map);
+    }
+
+    pulseMarker(selectedMarker);
+}
+  
 function updateHomeLinkVisibility() {
   const params = new URLSearchParams(window.location.search);
   const airportParam = params.get('airport');
