@@ -150,7 +150,13 @@ const map = L.map('map').setView([20, 0], 2);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
-const selectedMarker = L.marker([0, 0]);
+const selectedMarker = L.circleMarker([0, 0], {
+    radius: 10,          // bigger than other markers
+    color: '#ff0000',    // bright red outline
+    fillColor: '#ff6666',// slightly lighter fill
+    fillOpacity: 0.9,
+    weight: 2             // thicker border
+});
 
 function updateHomeLinkVisibility() {
   const params = new URLSearchParams(window.location.search);
