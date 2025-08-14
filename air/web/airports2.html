@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Airport Visits</title>
+  <title>Airport Visit Tracker</title>
   <link rel="icon" type="image/x-icon" href="../../images/favicon.ico">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
@@ -41,18 +41,20 @@
 
   <div id="map"></div>
   <h2 id="visitCount"></h2>
+
   <table id="airportSummaryTable" style="margin-top: 1em; width: 100%; display: none; border-collapse: collapse;">
     <thead>
-        <tr>
-          <th data-sort="string">Country</th>
-          <th data-sort="string">IATA</th>
-          <th data-sort="string">Airport Name</th>
-          <th data-sort="number">Visitors</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-    <table id="visitTable" style="display:none;">
+      <tr>
+        <th data-sort="string">Country</th>
+        <th data-sort="string">IATA</th>
+        <th data-sort="string">Airport Name</th>
+        <th data-sort="number">Visitors</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <table id="visitTable" style="display:none;">
     <thead>
       <tr>
         <th>User</th>
@@ -66,14 +68,73 @@
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
+/* ---- Country mapping (restored) ---- */
+const countryMap = {
+  AFG: "Afghanistan", ALB: "Albania", DZA: "Algeria", AND: "Andorra",
+  AGO: "Angola", AIA: "Anguilla", ATA: "Antarctica", ARG: "Argentina",
+  ARM: "Armenia", ABW: "Aruba", AUS: "Australia", AUT: "Austria",
+  AZE: "Azerbaijan", BHS: "Bahamas", BHR: "Bahrain", BGD: "Bangladesh",
+  BRB: "Barbados", BLR: "Belarus", BEL: "Belgium", BLZ: "Belize",
+  BEN: "Benin", BMU: "Bermuda", BTN: "Bhutan", BOL: "Bolivia",
+  BIH: "Bosnia & Herzegovina", BWA: "Botswana", BRA: "Brazil",
+  BRN: "Brunei", BGR: "Bulgaria", BFA: "Burkina Faso", BDI: "Burundi",
+  KHM: "Cambodia", CMR: "Cameroon", CAN: "Canada", CPV: "Cape Verde",
+  CAF: "Central African Republic", TCD: "Chad", CHL: "Chile", CHN: "China",
+  COL: "Colombia", COM: "Comoros", COD: "DR Congo", COG: "Congo",
+  CRI: "Costa Rica", CIV: "Ivory Coast", HRV: "Croatia", CUB: "Cuba",
+  CYP: "Cyprus", CZE: "Czech Republic", DNK: "Denmark", DJI: "Djibouti",
+  DMA: "Dominica", DOM: "Dominican Republic", ECU: "Ecuador", EGY: "Egypt",
+  SLV: "El Salvador", GNQ: "Equatorial Guinea", ERI: "Eritrea",
+  EST: "Estonia", SWZ: "eSwatini", ETH: "Ethiopia", FIN: "Finland",
+  FRA: "France", GAB: "Gabon", GMB: "Gambia", GEO: "Georgia",
+  DEU: "Germany", GHA: "Ghana", GRC: "Greece", GRD: "Grenada",
+  GTM: "Guatemala", GIN: "Guinea", GNB: "Guinea-Bissau", GUY: "Guyana",
+  HTI: "Haiti", HND: "Honduras", HUN: "Hungary", ISL: "Iceland",
+  IND: "India", IDN: "Indonesia", IRN: "Iran", IRQ: "Iraq", IRL: "Ireland",
+  ISR: "Israel", ITA: "Italy", JAM: "Jamaica", JPN: "Japan", JOR: "Jordan",
+  KAZ: "Kazakhstan", KEN: "Kenya", KIR: "Kiribati", KWT: "Kuwait",
+  KGZ: "Kyrgyzstan", LAO: "Laos", LVA: "Latvia", LBN: "Lebanon",
+  LSO: "Lesotho", LBR: "Liberia", LBY: "Libya", LIE: "Liechtenstein",
+  LTU: "Lithuania", LUX: "Luxembourg", MDG: "Madagascar", MWI: "Malawi",
+  MYS: "Malaysia", MDV: "Maldives", MLI: "Mali", MLT: "Malta",
+  MRT: "Mauritania", MUS: "Mauritius", MEX: "Mexico", MDA: "Moldova",
+  MCO: "Monaco", MNG: "Mongolia", MNE: "Montenegro", MAR: "Morocco",
+  MOZ: "Mozambique", MMR: "Myanmar", NAM: "Namibia", NPL: "Nepal",
+  NLD: "Netherlands", NZL: "New Zealand", NIC: "Nicaragua", NER: "Niger",
+  NGA: "Nigeria", PRK: "North Korea", MKD: "North Macedonia", NOR: "Norway",
+  OMN: "Oman", PAK: "Pakistan", PAN: "Panama", PNG: "Papua New Guinea",
+  PRY: "Paraguay", PER: "Peru", PHL: "Philippines", POL: "Poland",
+  PRT: "Portugal", QAT: "Qatar", ROU: "Romania", RUS: "Russia",
+  RWA: "Rwanda", KNA: "Saint Kitts & Nevis", LCA: "Saint Lucia",
+  VCT: "Saint Vincent & Grenadines", WSM: "Samoa", SMR: "San Marino",
+  STP: "São Tomé & Príncipe", SAU: "Saudi Arabia", SEN: "Senegal",
+  SRB: "Serbia", SYC: "Seychelles", SLE: "Sierra Leone", SGP: "Singapore",
+  SVK: "Slovakia", SVN: "Slovenia", SLB: "Solomon Islands",
+  SOM: "Somalia", ZAF: "South Africa", KOR: "South Korea",
+  SSD: "South Sudan", ESP: "Spain", LKA: "Sri Lanka", SDN: "Sudan",
+  SUR: "Suriname", SWE: "Sweden", CHE: "Switzerland", SYR: "Syria",
+  TJK: "Tajikistan", TZA: "Tanzania", THA: "Thailand", TLS: "Timor-Leste",
+  TGO: "Togo", TON: "Tonga", TTO: "Trinidad & Tobago", TUN: "Tunisia",
+  TUR: "Turkey", TKM: "Turkmenistan", TUV: "Tuvalu", UGA: "Uganda",
+  UKR: "Ukraine", ARE: "United Arab Emirates", GBR: "United Kingdom",
+  USA: "United States", URY: "Uruguay", UZB: "Uzbekistan", VUT: "Vanuatu",
+  VAT: "Vatican City", VEN: "Venezuela", VNM: "Vietnam", ZMB: "Zambia",
+  ZWE: "Zimbabwe", BLM: "Saint Barthélemy", CUW: "Curaçao", FJI: "Fiji",
+  FSM: "Micronesia", MAF: "Saint-Martin", PRI: "Puerto Rico",
+  SXM: "Sint Maarten", VIR: "U.S. Virgin Islands", PYF:"French Polynesia",
+  MAC: "Macau", TWN: "Taiwan", GLP: "Guadeloupe", TCA: "Turks and Caicos Islands",
+  SPM: "Saint Pierre & Miquelon"
+};
+
 const csvUrl = '../data/airports.csv';
 const manifestUrl = '../data/manifest.json';
 const dataPath = '../data/';
 
 let airports = {};
 let airportList = [];
-let airportVisitCounts = {};
-let airportXOnlyCounts = {};
+let airportVisitCounts = {};       // users with A/D/L
+let airportsWithXOnlyCount = {};   // users with X-only (no A/D/L)
+let airportsWithXOnlySet = new Set();
 
 const map = L.map('map').setView([20, 0], 2);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -81,17 +142,31 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 const selectedMarker = L.marker([0, 0]);
 
+function updateHomeLinkVisibility() {
+  const params = new URLSearchParams(window.location.search);
+  const airportParam = params.get('airport');
+  const homeLink = document.getElementById('homeLink');
+  if (airportParam && airports[airportParam.toUpperCase()]) {
+    homeLink.style.display = 'block';
+  } else {
+    homeLink.style.display = 'none';
+  }
+}
+
 async function fetchAirports() {
   const res = await fetch(csvUrl);
   const text = await res.text();
   const lines = text.trim().split('\n');
-  lines.shift();
+  lines.shift(); // remove header
   for (const line of lines) {
     const [country, code, name, lat, lon] = line.split(';');
     if (!code) continue;
     airports[code.toUpperCase()] = {
-      country, code: code.toUpperCase(), name,
-      lat: parseFloat(lat), lon: parseFloat(lon)
+      country: (country || '').trim(), // ISO-3 from CSV
+      code: code.toUpperCase(),
+      name,
+      lat: parseFloat(lat),
+      lon: parseFloat(lon)
     };
     airportList.push({ code: code.toUpperCase(), name });
   }
@@ -100,14 +175,15 @@ async function fetchAirports() {
   await computeAirportVisitCounts();
   placeAllMarkers();
   createAirportSummaryTable();
-  updateHomeLinkVisibility();
 
+  updateHomeLinkVisibility();
   const params = new URLSearchParams(window.location.search);
   const airportParam = params.get('airport');
   if (airportParam && airports[airportParam.toUpperCase()]) {
     document.getElementById('airportSelect').value = airportParam.toUpperCase();
     handleAirportSelect(airportParam.toUpperCase());
   } else {
+    // If no airport param, show summary
     document.getElementById('airportSummaryTable').style.display = 'table';
   }
 }
@@ -136,13 +212,13 @@ async function fetchAlist(username) {
 async function computeAirportVisitCounts() {
   const manifest = await fetchManifest();
   const counts = {};
-  const xCounts = {};
+  const xOnlyCounts = {};
 
   for (const user of manifest) {
     try {
       const lines = await fetchAlist(user);
-      const visitedAirports = new Set();
-      const xOnlyAirports = new Set();
+      const flyingSet = new Set();
+      const xOnlySetForUser = new Set();
 
       for (const line of lines) {
         const [code, ...flags] = line.trim().split(/\s+/);
@@ -150,44 +226,85 @@ async function computeAirportVisitCounts() {
         const iata = code.toUpperCase();
         if (!(iata in airports)) continue;
 
-        const hasVisit = flags.some(f => /[ADL]/i.test(f));
-        const hasOnlyX = flags.some(f => /X/i.test(f)) && !hasVisit;
+        const flagStr = flags.join('').toUpperCase();
+        const hasVisit = /[ADL]/.test(flagStr);
+        const hasX = /X/.test(flagStr);
 
-        if (hasVisit) visitedAirports.add(iata);
-        if (hasOnlyX) xOnlyAirports.add(iata);
+        if (hasVisit) {
+          flyingSet.add(iata);
+          // ensure not X-only if same user also has visit flags
+          xOnlySetForUser.delete(iata);
+        } else if (hasX) {
+          if (!flyingSet.has(iata)) xOnlySetForUser.add(iata);
+        }
       }
 
-      for (const iata of visitedAirports) counts[iata] = (counts[iata] || 0) + 1;
-      for (const iata of xOnlyAirports) xCounts[iata] = (xCounts[iata] || 0) + 1;
-    } catch(e) {
+      // Per-user de-dup
+      for (const iata of flyingSet) counts[iata] = (counts[iata] || 0) + 1;
+      for (const iata of xOnlySetForUser) xOnlyCounts[iata] = (xOnlyCounts[iata] || 0) + 1;
+    } catch (e) {
       console.warn(`Error loading ALIST for ${user}`);
     }
   }
 
   airportVisitCounts = counts;
-  airportXOnlyCounts = xCounts;
+  airportsWithXOnlyCount = xOnlyCounts;
+  // X-only means: appears with X-only for some users, and has **no** flying visits overall
+  airportsWithXOnlySet = new Set(Object.keys(airportsWithXOnlyCount).filter(code => !(code in airportVisitCounts)));
 }
 
+// helpers
 function lerp(a, b, t) { return a + (b - a) * t; }
 
-function getColorForCount(count, maxCount) {
-  if (count === 0) return '#aaaaaa';
+function colorForFlyingCount(count, maxCount) {
+  if (count === 0) return '#aaaaaa'; // gray for 0 visits
   const ratio = Math.min(Math.max((count - 1) / (Math.max(1, maxCount - 1)), 0), 1);
-  let hue = ratio <= 0.5 ? lerp(240, 60, ratio / 0.5) : lerp(60, 0, (ratio - 0.5)/0.5);
-  let saturation = ratio <= 0.5 ? Math.round(lerp(60,100,Math.pow(ratio/0.5,0.9))) : Math.round(lerp(100,90,(ratio-0.5)/0.5));
-  let lightness = ratio <= 0.5 ? Math.round(lerp(30,50,Math.pow(ratio/0.5,0.8))) : Math.round(lerp(50,68,(ratio-0.5)/0.5));
+  // Hue: 240->60->0 (blue->yellow->red)
+  let hue;
+  if (ratio <= 0.5) hue = lerp(240, 60, ratio / 0.5);
+  else hue = lerp(60, 0, (ratio - 0.5) / 0.5);
+  // Saturation/lightness shaping
+  let saturation, lightness;
+  if (ratio <= 0.5) {
+    const t = ratio / 0.5;
+    saturation = Math.round(lerp(60, 100, Math.pow(t, 0.9)));
+    lightness  = Math.round(lerp(30, 50, Math.pow(t, 0.8)));
+  } else {
+    const t = (ratio - 0.5) / 0.5;
+    saturation = Math.round(lerp(100, 90, t));
+    lightness  = Math.round(lerp(50, 68, t));
+  }
   return `hsl(${Math.round(hue)}, ${saturation}%, ${lightness}%)`;
 }
 
+function getMarkerColor(code, flyingCount, maxCount) {
+  // X-only airports always gray (#888)
+  if (airportsWithXOnlySet.has(code)) return '#888888';
+  return colorForFlyingCount(flyingCount, maxCount);
+}
+
 function createLegend(maxVisits) {
-  if (map.legendControl) map.removeControl(map.legendControl);
+  if (map.legendControl) {
+    map.removeControl(map.legendControl);
+  }
   const legend = L.control({ position: 'bottomleft' });
   legend.onAdd = function () {
     const div = L.DomUtil.create('div', 'legend');
     div.innerHTML = '<strong>Users per airport</strong><br>';
-    const mid = Math.max(1, Math.floor(maxVisits/2));
-    const stops = [{label:'0',count:0},{label:'1',count:1},{label:`${mid}`,count:mid},{label:`${maxVisits}`,count:maxVisits}];
-    for (const stop of stops) div.innerHTML += `<i style="background:${getColorForCount(stop.count,maxVisits)}"></i> ${stop.label}<br>`;
+
+    const mid = Math.max(1, Math.floor(maxVisits / 2));
+    const stops = [
+      { label: '0', count: 0 },
+      { label: '1', count: 1 },
+      { label: `${mid}`, count: mid },
+      { label: `${maxVisits}`, count: maxVisits }
+    ];
+
+    for (const stop of stops) {
+      const color = colorForFlyingCount(stop.count, maxVisits);
+      div.innerHTML += `<i style="background:${color}"></i> ${stop.label}<br>`;
+    }
+    div.innerHTML += `<i style="background:#888888"></i> X-only (non-flying)`;
     return div;
   };
   legend.addTo(map);
@@ -195,116 +312,196 @@ function createLegend(maxVisits) {
 }
 
 function placeAllMarkers() {
-  const maxVisits = Math.max(...Object.values(airportVisitCounts),1);
+  const maxVisits = Math.max(...Object.values(airportVisitCounts), 1);
   createLegend(maxVisits);
+
   const airportArr = Object.values(airports).map(a => ({
-    code: a.code, lat: a.lat, lon: a.lon,
+    code: a.code,
+    lat: a.lat,
+    lon: a.lon,
     count: airportVisitCounts[a.code] || 0,
+    xOnly: airportsWithXOnlyCount[a.code] || 0,
     name: a.name
   }));
-  airportArr.sort((a,b)=>a.count-b.count);
+
+  // Draw low counts first (so higher counts are on top). X-only has count 0 too; that’s fine.
+  airportArr.sort((a, b) => a.count - b.count);
 
   for (const a of airportArr) {
-    const color = getColorForCount(a.count, maxVisits);
-    const marker = L.circleMarker([a.lat,a.lon],{
-      radius:6, color:color, fillColor:color, fillOpacity:0.9, weight:1
-    }).addTo(map)
-      .bindPopup(`<b>${a.code}</b><br>${a.name}<br>${a.count} user(s) visited<br><a href="?airport=${a.code}">View visits</a>`);
-    marker.on('click',()=>handleAirportSelect(a.code));
+    const color = getMarkerColor(a.code, a.count, maxVisits);
+    const flyingCount = a.count;
+    const xOnlyCount = a.xOnly;
+
+    const popupText = `<b>${a.code}</b><br>${a.name}<br>` +
+      `${flyingCount}${xOnlyCount ? ` + ${xOnlyCount} (non-flying)` : ''} user(s)` +
+      `<br><a href="?airport=${a.code}">View visits</a>`;
+
+    const marker = L.circleMarker([a.lat, a.lon], {
+      radius: 6,
+      color: color,
+      fillColor: color,
+      fillOpacity: 0.9,
+      weight: 1
+    })
+    .addTo(map)
+    .bindPopup(popupText);
+
+    marker.on('click', () => handleAirportSelect(a.code));
   }
 }
 
 function parseAlist(lines, selectedCode) {
   const result = {};
   for (const line of lines) {
-    const [code,...flags] = line.trim().split(/\s+/);
-    if (!code) continue;
+    const [code, ...flags] = line.trim().split(/\s+/);
+    if (!code || !flags) continue;
     if (code.toUpperCase() !== selectedCode) continue;
-    for (const flag of flags) for (const ch of flag.toUpperCase()) if('ADL'.includes(ch)) result[ch]=true;
+    for (const flag of flags) {
+      for (const ch of flag.toUpperCase()) {
+        if ('ADL'.includes(ch)) result[ch] = true; // we still only show A/D/L in the per-airport table
+      }
+    }
   }
   return result;
 }
 
-async function handleAirportSelect(code){
-  const airport = airports[code]; if(!airport) return;
-  document.getElementById('airportSummaryTable').style.display='none';
-  history.replaceState(null,'',`?airport=${code}`);
-  map.setView([airport.lat,airport.lon],13);
-  if(!map.hasLayer(selectedMarker)) selectedMarker.addTo(map);
-  selectedMarker.setLatLng([airport.lat,airport.lon]).bindPopup(`${airport.code} - ${airport.name}`).openPopup();
+async function handleAirportSelect(code) {
+  const airport = airports[code];
+  if (!airport) return;
+
+  // Hide the summary table when viewing a specific airport
+  document.getElementById('airportSummaryTable').style.display = 'none';
+
+  history.replaceState(null, '', `?airport=${code}`);
+  updateHomeLinkVisibility(); // <-- ensure the Home link toggles on
+
+  map.setView([airport.lat, airport.lon], 13);
+
+  if (!map.hasLayer(selectedMarker)) {
+    selectedMarker.addTo(map);
+  }
+  selectedMarker.setLatLng([airport.lat, airport.lon])
+    .bindPopup(`${airport.code} - ${airport.name}`)
+    .openPopup();
+
   const manifest = await fetchManifest();
   const visitData = {};
-  for(const user of manifest){
-    try{
+  for (const user of manifest) {
+    try {
       const lines = await fetchAlist(user);
       const visits = parseAlist(lines, code);
-      if(Object.keys(visits).length>0) visitData[user]=visits;
-    }catch(e){console.warn(`Error loading ALIST for ${user}`);}
+      if (Object.keys(visits).length > 0) {
+        visitData[user] = visits;
+      }
+    } catch (e) {
+      console.warn(`Error loading ALIST for ${user}`);
+    }
   }
+
   updateTable(visitData);
 }
 
-function updateTable(data){
-  const tbody=document.querySelector('#visitTable tbody');
-  tbody.innerHTML='';
-  const users=Object.keys(data).sort();
-  document.getElementById('visitTable').style.display=users.length?'table':'none';
-  document.getElementById('visitCount').textContent=`${users.length} user(s) have visited this airport.`;
-  for(const user of users){
-    const row=document.createElement('tr');
-    const tdUser=document.createElement('td');
-    const link=document.createElement('a'); link.href=`user.html?user=${encodeURIComponent(user)}`; link.textContent=user;
-    tdUser.appendChild(link); row.appendChild(tdUser);
-    for(const type of ['A','D','L']){const td=document.createElement('td'); td.textContent=data[user][type]?'✔':''; row.appendChild(td);}
+function updateTable(data) {
+  const tbody = document.querySelector('#visitTable tbody');
+  tbody.innerHTML = '';
+  const users = Object.keys(data).sort();
+  document.getElementById('visitTable').style.display = users.length ? 'table' : 'none';
+  document.getElementById('visitCount').textContent = `${users.length} user(s) have visited this airport.`;
+
+  for (const user of users) {
+    const row = document.createElement('tr');
+    const tdUser = document.createElement('td');
+    const link = document.createElement('a');
+    link.href = `user.html?user=${encodeURIComponent(user)}`;
+    link.textContent = user;
+    tdUser.appendChild(link);
+    row.appendChild(tdUser);
+    for (const type of ['A', 'D', 'L']) {
+      const td = document.createElement('td');
+      td.textContent = data[user][type] ? '✔' : '';
+      row.appendChild(td);
+    }
     tbody.appendChild(row);
   }
 }
 
-function createAirportSummaryTable(){
-  const tbody=document.querySelector('#airportSummaryTable tbody'); tbody.innerHTML='';
-  const rows=Object.values(airports).map(a=>({
-    country:a.country||'', code:a.code, name:a.name,
-    visitors:airportVisitCounts[a.code]||0, xOnly:airportXOnlyCounts[a.code]||0
+function createAirportSummaryTable() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('airport')) {
+    document.getElementById('airportSummaryTable').style.display = 'none';
+    return;
+  }
+
+  const tbody = document.querySelector('#airportSummaryTable tbody');
+  tbody.innerHTML = '';
+
+  const rows = Object.values(airports).map(a => ({
+    country: a.country || '',  // ISO 3-letter code from CSV
+    code: a.code,
+    name: a.name,
+    visitors: airportVisitCounts[a.code] || 0,
+    xOnly: airportsWithXOnlyCount[a.code] || 0
   }));
-  rows.sort((a,b)=>b.visitors-a.visitors);
-  for(const row of rows){
-    const tr=document.createElement('tr');
-    const visitorText=row.visitors+(row.xOnly?` + ${row.xOnly} (non-flying)`:'');
-    tr.innerHTML=`<td>${row.country}</td><td><a href="?airport=${row.code}">${row.code}</a></td><td>${row.name}</td><td>${visitorText}</td>`;
+
+  // Sort by visitor count descending by default
+  rows.sort((a, b) => b.visitors - a.visitors);
+
+  for (const row of rows) {
+    const countryName =
+      countryMap[row.country] ||
+      countryMap[(row.country || '').toUpperCase()] ||
+      row.country || '';
+    const visitorText = row.visitors + (row.xOnly ? ` + ${row.xOnly} (non-flying)` : '');
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${countryName}</td>
+      <td><a href="?airport=${row.code}">${row.code}</a></td>
+      <td>${row.name}</td>
+      <td>${visitorText}</td>
+    `;
     tbody.appendChild(tr);
   }
-  document.getElementById('airportSummaryTable').style.display='table';
+
+  document.getElementById('airportSummaryTable').style.display = 'table';
   makeTableSortable(document.getElementById('airportSummaryTable'));
 }
 
-function makeTableSortable(table){
-  const headers=table.querySelectorAll('th');
-  headers.forEach((header,i)=>{
-    header.style.cursor='pointer';
-    header.addEventListener('click',()=>{
-      const sortType=header.dataset.sort||'string';
-      const tbody=table.tBodies[0];
-      const rows=Array.from(tbody.rows);
-      const ascending=!header.classList.contains('asc');
-      rows.sort((a,b)=>{
-        const cellA=a.cells[i].textContent.trim(); const cellB=b.cells[i].textContent.trim();
-        if(sortType==='number') return ascending?(parseInt(cellA)-parseInt(cellB)):(parseInt(cellB)-parseInt(cellA));
-        else return ascending?cellA.localeCompare(cellB):cellB.localeCompare(cellA);
+// Simple sort on click handler
+function makeTableSortable(table) {
+  const headers = table.querySelectorAll('th');
+  headers.forEach((header, i) => {
+    header.style.cursor = 'pointer';
+    header.addEventListener('click', () => {
+      const sortType = header.dataset.sort || 'string';
+      const tbody = table.tBodies[0];
+      const rows = Array.from(tbody.rows);
+      const ascending = !header.classList.contains('asc');
+
+      rows.sort((a, b) => {
+        const cellA = a.cells[i].textContent.trim();
+        const cellB = b.cells[i].textContent.trim();
+
+        if (sortType === 'number') {
+          const aNum = parseInt(cellA) || 0;
+          const bNum = parseInt(cellB) || 0;
+          return ascending ? (aNum - bNum) : (bNum - aNum);
+        } else {
+          return ascending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+        }
       });
-      headers.forEach(h=>h.classList.remove('asc','desc'));
-      header.classList.add(ascending?'asc':'desc');
-      rows.forEach(row=>tbody.appendChild(row));
+
+      headers.forEach(h => h.classList.remove('asc', 'desc'));
+      header.classList.add(ascending ? 'asc' : 'desc');
+
+      rows.forEach(row => tbody.appendChild(row));
     });
   });
 }
 
-document.getElementById('airportSelect').addEventListener('change',(e)=>{handleAirportSelect(e.target.value.toUpperCase());});
-
-function updateHomeLinkVisibility(){
-  const params=new URLSearchParams(window.location.search);
-  const airportParam=params.get('airport');
-  document.getElementById('homeLink').style.display=(airportParam&&airports[airportParam.toUpperCase()])?'block':'none';
-}
+document.getElementById('airportSelect').addEventListener('change', (e) => {
+  const code = e.target.value.toUpperCase();
+  handleAirportSelect(code);
+});
 
 fetchAirports();
 </script>
