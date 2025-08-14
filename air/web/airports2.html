@@ -314,7 +314,7 @@ function createLegend(maxVisits) {
       const color = colorForFlyingCount(stop.count, maxVisits);
       div.innerHTML += `<i style="background:${color}"></i> ${stop.label}<br>`;
     }
-    div.innerHTML += `<i style="background:#888888"></i> X-only (non-flying)`;
+    div.innerHTML += `<i style="background:#888888"></i> Non-flying only`;
     return div;
   };
   legend.addTo(map);
