@@ -2632,7 +2632,10 @@
     "lat": 39.1225,
     "lon": -108.5267,
     "country": "USA",
-    "visits": []
+    "visits": [
+      "A",
+      "D"
+    ]
   },
   {
     "code": "GNV",
