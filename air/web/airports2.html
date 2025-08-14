@@ -65,6 +65,16 @@
     </thead>
     <tbody></tbody>
   </table>
+  
+  <h3 id="xOnlyHeader" style="display:none; margin-top: 1em;">Non-flying users (X)</h3>
+  <table id="xOnlyTable" style="display:none;">
+    <thead>
+      <tr>
+        <th>User</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
@@ -365,6 +375,22 @@ function parseAlist(lines, selectedCode) {
   return result;
 }
 
+function userHasXOnly(lines, selectedCode) {
+  let hasVisit = false; // any of A/D/L
+  let hasX = false;
+
+  for (const line of lines) {
+    const [code, ...flags] = line.trim().split(/\s+/);
+    if (!code) continue;
+    if (code.toUpperCase() !== selectedCode) continue;
+
+    const flagStr = flags.join('').toUpperCase();
+    if (/[ADL]/.test(flagStr)) hasVisit = true;
+    if (/X/.test(flagStr))     hasX = true;
+  }
+  return hasX && !hasVisit; // X present and NO A/D/L for this user+airport
+}
+
 async function handleAirportSelect(code) {
   const airport = airports[code];
   if (!airport) return;
@@ -384,21 +410,30 @@ async function handleAirportSelect(code) {
     .bindPopup(`${airport.code} - ${airport.name}`)
     .openPopup();
 
-  const manifest = await fetchManifest();
-  const visitData = {};
-  for (const user of manifest) {
-    try {
-      const lines = await fetchAlist(user);
-      const visits = parseAlist(lines, code);
-      if (Object.keys(visits).length > 0) {
-        visitData[user] = visits;
-      }
-    } catch (e) {
-      console.warn(`Error loading ALIST for ${user}`);
-    }
-  }
+function updateXOnlyList(usernames) {
+  const header = document.getElementById('xOnlyHeader');
+  const table  = document.getElementById('xOnlyTable');
+  const tbody  = table.querySelector('tbody');
 
-  updateTable(visitData);
+  tbody.innerHTML = '';
+  if (usernames.length > 0) {
+    header.style.display = '';
+    table.style.display  = 'table';
+
+    usernames.sort().forEach(user => {
+      const tr = document.createElement('tr');
+      const td = document.createElement('td');
+      const link = document.createElement('a');
+      link.href = `user.html?user=${encodeURIComponent(user)}`;
+      link.textContent = user;
+      td.appendChild(link);
+      tr.appendChild(td);
+      tbody.appendChild(tr);
+    });
+  } else {
+    header.style.display = 'none';
+    table.style.display  = 'none';
+  }
 }
 
 function updateTable(data) {
@@ -425,6 +460,32 @@ function updateTable(data) {
   }
 }
 
+function updateXOnlyList(usernames) {
+  const header = document.getElementById('xOnlyHeader');
+  const table  = document.getElementById('xOnlyTable');
+  const tbody  = table.querySelector('tbody');
+
+  tbody.innerHTML = '';
+  if (usernames.length > 0) {
+    header.style.display = '';
+    table.style.display  = 'table';
+
+    usernames.sort().forEach(user => {
+      const tr = document.createElement('tr');
+      const td = document.createElement('td');
+      const link = document.createElement('a');
+      link.href = `user.html?user=${encodeURIComponent(user)}`;
+      link.textContent = user;
+      td.appendChild(link);
+      tr.appendChild(td);
+      tbody.appendChild(tr);
+    });
+  } else {
+    header.style.display = 'none';
+    table.style.display  = 'none';
+  }
+}
+  
 function createAirportSummaryTable() {
   const params = new URLSearchParams(window.location.search);
   if (params.get('airport')) {
