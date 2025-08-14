@@ -391,51 +391,6 @@ function userHasXOnly(lines, selectedCode) {
   return hasX && !hasVisit; // X present and NO A/D/L for this user+airport
 }
 
-async function handleAirportSelect(code) {
-  const airport = airports[code];
-  if (!airport) return;
-
-  // Hide the summary table when viewing a specific airport
-  document.getElementById('airportSummaryTable').style.display = 'none';
-
-  history.replaceState(null, '', `?airport=${code}`);
-  updateHomeLinkVisibility(); // <-- ensure the Home link toggles on
-
-  map.setView([airport.lat, airport.lon], 13);
-
-  if (!map.hasLayer(selectedMarker)) {
-    selectedMarker.addTo(map);
-  }
-  selectedMarker.setLatLng([airport.lat, airport.lon])
-    .bindPopup(`${airport.code} - ${airport.name}`)
-    .openPopup();
-
-function updateXOnlyList(usernames) {
-  const header = document.getElementById('xOnlyHeader');
-  const table  = document.getElementById('xOnlyTable');
-  const tbody  = table.querySelector('tbody');
-
-  tbody.innerHTML = '';
-  if (usernames.length > 0) {
-    header.style.display = '';
-    table.style.display  = 'table';
-
-    usernames.sort().forEach(user => {
-      const tr = document.createElement('tr');
-      const td = document.createElement('td');
-      const link = document.createElement('a');
-      link.href = `user.html?user=${encodeURIComponent(user)}`;
-      link.textContent = user;
-      td.appendChild(link);
-      tr.appendChild(td);
-      tbody.appendChild(tr);
-    });
-  } else {
-    header.style.display = 'none';
-    table.style.display  = 'none';
-  }
-}
-
 function updateTable(data) {
   const tbody = document.querySelector('#visitTable tbody');
   tbody.innerHTML = '';
@@ -459,7 +414,7 @@ function updateTable(data) {
     tbody.appendChild(row);
   }
 }
-
+  
 function updateXOnlyList(usernames) {
   const header = document.getElementById('xOnlyHeader');
   const table  = document.getElementById('xOnlyTable');
@@ -484,6 +439,46 @@ function updateXOnlyList(usernames) {
     header.style.display = 'none';
     table.style.display  = 'none';
   }
+}
+
+async function handleAirportSelect(code) {
+    const airport = airports[code];
+    if (!airport) return;
+
+    document.getElementById('airportSummaryTable').style.display = 'none';
+
+    history.replaceState(null, '', `?airport=${code}`);
+    updateHomeLinkVisibility();
+
+    map.setView([airport.lat, airport.lon], 13);
+
+    if (!map.hasLayer(selectedMarker)) {
+        selectedMarker.addTo(map);
+    }
+    selectedMarker.setLatLng([airport.lat, airport.lon])
+        .bindPopup(`${airport.code} - ${airport.name}`)
+        .openPopup();
+
+    const manifest = await fetchManifest();
+    const visitData = {};
+    const xOnlyUsers = [];
+
+    for (const user of manifest) {
+        try {
+            const lines = await fetchAlist(user);
+            const visits = parseAlist(lines, code);
+            if (Object.keys(visits).length > 0) {
+                visitData[user] = visits;
+            } else if (userHasXOnly(lines, code)) {
+                xOnlyUsers.push(user);
+            }
+        } catch (e) {
+            console.warn(`Error loading ALIST for ${user}`);
+        }
+    }
+
+    updateTable(visitData);
+    updateXOnlyList(xOnlyUsers);
 }
   
 function createAirportSummaryTable() {
